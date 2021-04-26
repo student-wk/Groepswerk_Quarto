@@ -1,33 +1,63 @@
 package Quarto.Model;
 
 public class Quarto {
-    private Blok[] gegevenBlok;
-
-    private Speler speler1;
-    private Speler speler2;
-    private Speelbord speelbord;
-    private BlokkenBox blokkenBox;
-
-// DEZE KLASSE NOG UITWERKEN
+    private final BlokkenBox blokkenBox;
+    private final Speelbord speelbord;
+    private Blok gekozenBlok;
 
     public Quarto() {
-
-        speler1 = new Speler("speler1",0);
-        speler2 = new Speler("speler2",0);
-        speelbord = new Speelbord();
-        blokkenBox = new BlokkenBox();
-        gegevenBlok = new Blok[1];
-
-        // constructor van het spel, bevat objecten van de andere klassen
+        this.blokkenBox = new BlokkenBox();
+        this.speelbord = new Speelbord();
+        this.gekozenBlok = null;
     }
 
-    public void Start() {
-        // eerst namen spelers vragen
-        // eerste speler loten
-        // spelverloop hierin plaatsen
-        // met while loop doorgaan zolang niemand gewonnen is en er nog zetten mogelijk zijn (dus nog geen gelijkspel)
-        // na spelverloop de score aan spelers toewijzen resultaten wegschrijven in de ranking
+/*
+* Geeft telkens een specifieke blok aan gekozenBlok.
+* */
+
+    public void kiesBlok(Blok blok) {
+        try {
+            if (gekozenBlok != null) {
+                throw new IllegalStateException("Er is al een blok als gekozenBlok geselecteerd.");
+            } else {
+                this.gekozenBlok = blokkenBox.neemBlok(blok);
+            }
+
+        } catch (QuartoException ex) {
+            System.out.println("error: " + ex.getMessage());
+        }
     }
 
+/*
+* Plaatst blok op speelBord.
+* */
 
+    public void plaatsBlok(Positie positie) throws QuartoException {
+        if (this.gekozenBlok == null) {
+            throw new IllegalStateException("Er is geen gekozenBlok geselecteerd.");
+        } else {
+            speelbord.voegBlokToe(gekozenBlok, positie);
+            this.gekozenBlok = null;
+        }
+    }
+
+    public boolean spelGedaan() throws QuartoException {
+        return (speelbord.isVol() || speelbord.heeftCombinatie());
+    }
+
+    public BlokkenBox getBlokkenBox() {
+        return blokkenBox;
+    }
+
+    public Speelbord getSpeelbord() {
+        return speelbord;
+    }
+
+    public Blok getGekozenBlok() {
+        if (gekozenBlok == null) {
+            throw new IllegalStateException("Er is geen gekozenBlok geselecteerd.");
+        } else {
+            return gekozenBlok;
+        }
+    }
 }

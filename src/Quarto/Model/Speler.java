@@ -19,10 +19,21 @@ public class Speler {
         //generische naam "speler1", "speler2" overschrijven
     }
 
-    public void geefScore() {
-
+    public String getNaam() {
+        return naam;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setNaam(String naam) {
+        this.naam = naam;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 
     @Override
     public String toString() {

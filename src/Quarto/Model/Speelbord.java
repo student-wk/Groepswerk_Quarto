@@ -8,19 +8,29 @@ public class Speelbord {
     private Blok[][] blokkenOpBord;
     public static final int GROOTTE = 4;
 
+    //mss nog toString methode maken van Speelbord? om uit te testen fzo?
+
     public Speelbord() {
         this.blokkenOpBord = new Blok[GROOTTE][GROOTTE];
     }
 
     /*
-    * Constructor met blokkenOpBord als parameter. (om Speelbord te updaten.)
+    * Constructor met blokkenOpBord als parameter. (om Speelbord te updaten denk ik.)
     * */
 
     public Speelbord(Blok[][] blokkenOpBord) {this.blokkenOpBord = blokkenOpBord; }
 
+    /*
+    * Checkt of de positie op het bord leeg is (true).
+    * */
+
     public boolean isLeeg(Positie positie) {
         return(blokkenOpBord[positie.getRij()][positie.getKollom()]) == null;
     }
+
+    /*
+    * Voegt blok aan speelbord toe.
+    * */
 
     public void voegBlokToe(Blok blok, Positie positie) throws QuartoException {
         if (isLeeg(positie) == false) {
@@ -30,7 +40,10 @@ public class Speelbord {
         }
     }
 
-//mss nog toString methode maken van Speelbord? om uit te testen fzo?
+    /*
+    * Als er een positie op het bord leeg is, geeft deze methode "false" terug.
+    * heeftCombinatie() komt samen met isVol() in spelGedaan() in de Quarto klasse.
+    * */
 
     public boolean isVol() {
         boolean isVol = true;
@@ -49,7 +62,12 @@ public class Speelbord {
         return isVol;
     }
 
-    //snap ik nog ni helemaal
+/*
+* De combo methodes worden hier samengevoegd en op alle mogelijke manieren diagonaal overlopen. Als er een combo van 4
+* is (grootte-1) dan is de boolean true. RijIncrement en KolomIncrement is eigenlijk telkens rij +1 en kolom +1.
+* diagonaal() en rijKolom() komen samen in heeftCombinatie().
+* */
+
     public boolean diagonaal() throws QuartoException {
         int grootte = blokkenOpBord.length;
         return ((kleurenCombo(0,0,1,1) == grootte-1)
@@ -63,7 +81,11 @@ public class Speelbord {
 
     }
 
-    //snap ik nog ni helemaal
+/*
+* Gaat alle rijen en kolomen af op zoek naar een winnende combo.
+* diagonaal() en rijKolom() komen samen in heeftCombinatie().
+* */
+
     public boolean rijKolom() throws QuartoException {
         int i = 0;
         boolean gewonnen = false;
@@ -83,14 +105,24 @@ public class Speelbord {
         return gewonnen;
     }
 
-    //snap ik nog ni helemaal
+    /*
+    * Onderdeel van Combo methodes. Gebruikt isLeeg methode om te controleren of er blokken aanwezig zijn om een combo
+    * te vormen.
+    * */
+
     public boolean leeg(int rij, int kollom, int rijIncrement, int kolomIncrement) throws QuartoException /*weet ni of exception werkt/nodig is*/ {
         return ((!isLeeg(new Positie(rij,kollom))))
                 && ((!isLeeg(new Positie(rij + rijIncrement, kollom + kolomIncrement))));
 
     }
 
-    //snap ik nog ni helemaal
+    /*
+    * De combo methodes zijn een onderdeel van de diagonaal en rijKolom methode. De methode zoekt naar een combinatie
+    * en checkt daarbij of de loop binnen het bord blijft, of er een positie leeg is en of de opeenvolgende blokken
+    * dezelfde eigenschap hebben (bv dezelfde kleur).
+    * De methode geeft een int met de hoogste combo terug.
+    * */
+
     public int kleurenCombo(int rij, int kollom, int rijIncrement, int kolomIncrement) throws QuartoException {
         int combo = 0;
         int a = rijIncrement;
@@ -146,6 +178,10 @@ public class Speelbord {
         }
         return combo;
     }
+
+/*
+* heeftCombinatie() komt samen met isVol() in spelGedaan() in de Quarto klasse.
+* */
 
     public boolean heeftCombinatie() throws QuartoException { return (rijKolom() || diagonaal());}
 

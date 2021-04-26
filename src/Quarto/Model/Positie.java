@@ -4,6 +4,11 @@ package Quarto.Model;
  * @author Willem Kuijpers
  * @version 1.0 23-4-2021 10:26
  */
+
+/*
+* Klasse om de positie van blokken op het speelbord te bepalen.
+* */
+
 public class Positie {
     private final int rij;
     private final int kollom;

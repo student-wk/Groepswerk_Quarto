@@ -15,8 +15,7 @@ public class BlokkenBox {
         maakBlokken();
     }
 
-    // nog sorteren met Collections.sort
-    // equals en hashcode methodes aanmaken
+    // mss nog sorteren met Collections.sort?
 
     public void maakBlokken() {
         for (Blok.Grootte grootte : Blok.Grootte.values()) {
@@ -32,14 +31,19 @@ public class BlokkenBox {
         }
     }
 
+/*
+* Verwijdert een gekozen blok uit de blokkenSet en geeft die als return.
+* Wordt gebruikt in Quarto.kiesBlok.
+* */
+
     public Blok neemBlok(Blok blok) throws QuartoException {
         if (blokkenSet.contains(blok.hashCode()) == false) {
-            throw new QuartoException("De index is incorrect");
+            throw new QuartoException("Er is geen geldige blok geselecteerd.");
         } else {
             blokkenSet.remove(blok);
             return blok;
         }
-    } //nog eens testen, weet niet of het werkt
+    }
 
     public int aantalBlokken(BlokkenBox blokkenBox) {return (blokkenBox.blokkenSet.size());}
 
