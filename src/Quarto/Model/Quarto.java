@@ -1,5 +1,7 @@
 package Quarto.Model;
 
+import java.util.Scanner;
+
 public class Quarto {
     private final BlokkenBox blokkenBox;
     private final Speelbord speelbord;
@@ -15,12 +17,12 @@ public class Quarto {
 * Geeft telkens een specifieke blok aan gekozenBlok.
 * */
 
-    public void kiesBlok(Blok blok) {
+    public void kiesBlok(int index) {
         try {
             if (gekozenBlok != null) {
                 throw new IllegalStateException("Er is al een blok als gekozenBlok geselecteerd.");
             } else {
-                this.gekozenBlok = blokkenBox.neemBlok(blok);
+                this.gekozenBlok = this.blokkenBox.neemBlok(index);
             }
 
         } catch (QuartoException ex) {
@@ -41,8 +43,40 @@ public class Quarto {
         }
     }
 
-    public boolean spelGedaan() throws QuartoException {
+    public boolean spelGedaan() {
         return (speelbord.isVol() || speelbord.heeftCombinatie());
+    }
+
+    /*
+    * Methode die 1 spelronde volledig afwerkt. Moet nog aangepast worden als de view en presenter worden uitgewerkt.
+    * Ik weet nog niet zeker of hier al bepaald moet worden welke speler telkens een actie uitvoert, dat is mss iets
+    * voor in de presenter te doen?
+    * Er wordt hier geen winnaar/gelijkspel gecheckt en er worden ook geen spelers aangemaakt.
+    * */
+
+    public void spelRonde() {
+// speelbord afprinten
+        System.out.println(getSpeelbord() + "\n");
+// blokkenbox afprinten
+        System.out.println(getBlokkenBox() + "\n");
+// actieve speler het blok laten kiezen
+        System.out.println("Kies een blok"  + "\n");
+        Scanner keyboard = new Scanner(System.in);
+        int i = keyboard.nextInt();
+        this.kiesBlok(i);
+// gekozen blok afprinten
+        System.out.println("Gekozen blok is: " + this.getGekozenBlok() + "\n");
+// niet actieve speler het blok op het bord laten plaatsen
+        System.out.println("Kies een positie om het blok te plaatsen."  + "\n");
+        System.out.println("Kies eerst een rij:"  + "\n");
+        int rij = keyboard.nextInt();
+        System.out.println("Kies nu een kolom:"  + "\n");
+        int kolom = keyboard.nextInt();
+        Positie positie = new Positie(rij,kolom);
+        try { this.plaatsBlok(positie);
+        } catch (QuartoException e) {
+            e.printStackTrace();
+        }
     }
 
     public BlokkenBox getBlokkenBox() {
@@ -60,4 +94,5 @@ public class Quarto {
             return gekozenBlok;
         }
     }
+
 }

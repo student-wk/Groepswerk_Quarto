@@ -83,8 +83,19 @@ public class Blok {
         return Objects.hash(grootte, kleur, vorm, vulling);
     }
 
+/*
+* De blokString methode is een combinatie van telkens de eerste letter van de enums, bv kzvV.
+* De vulling (hol,vol) is met hoofdletter weergegeven om verwarring met vorm (rond, Vierkant) te voorkomen.
+* De methode dient om de blokken duidelijk op het speelbord te kunnen weergeven.
+* */
+
+    public String blokString() {
+        return grootte.toString().substring(0,1) + kleur.toString().substring(0,1)
+                + vorm.toString().substring(0,1) + vulling.toString().substring(0,1).toUpperCase();
+    }
+
     @Override
     public String toString() {
-        return grootte + " " + kleur + " " + vorm  + " " + vulling;
+        return (grootte + " " + kleur + " " + vorm + " " + vulling + " ");
     }
 }

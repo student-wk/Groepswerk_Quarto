@@ -11,6 +11,7 @@ public class Ranking {
     private List<Speler> ranglijst = new ArrayList<>();
 
 // NOG DOEN!!
+// als speler wint +1000, bij gelijkspel beide spelers 500, bij verlies +0?
 
     public void updateRanking (Speler speler) {
         // checken of speler al in ranglijst zit (alleen via naam)

@@ -13,12 +13,12 @@ public class Positie {
     private final int rij;
     private final int kollom;
 
-    public Positie(int rij, int kollom) throws QuartoException{
+    public Positie(int rij, int kollom) {
         if ((rij<Speelbord.GROOTTE) && (rij>=0) && (kollom<Speelbord.GROOTTE) && (kollom>=0)) {
             this.rij = rij;
             this.kollom = kollom;
         } else {
-            throw new QuartoException("Positie ligt buiten het bereik van het speelbord."); //normaal illigalargumentexception maar dat lukt niet
+            throw new IllegalArgumentException("Positie ligt buiten het bereik van het speelbord.");
         }
     }
 

@@ -1,6 +1,6 @@
 package Quarto.Model;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -11,20 +11,20 @@ public class BlokkenBox {
     private final Set<Blok> blokkenSet;
 
     public BlokkenBox() {
-        this.blokkenSet = new HashSet<>();
+        this.blokkenSet = new LinkedHashSet<>();
         maakBlokken();
     }
 
-    // mss nog sorteren met Collections.sort?
+    // mss eerder linkedhashset
+    // geen idee hoe ik specifieke elementen eruit moet halen
 
     public void maakBlokken() {
         for (Blok.Grootte grootte : Blok.Grootte.values()) {
             for (Blok.Kleur kleur : Blok.Kleur.values()) {
                 for (Blok.Vorm vorm : Blok.Vorm.values()) {
                     for (Blok.Vulling vulling : Blok.Vulling.values()) {
-                        Blok blok  = new Blok(grootte,kleur,vorm,vulling);
+                        Blok blok = new Blok(grootte,kleur,vorm,vulling);
                         blokkenSet.add(blok);
-
                     }
                 }
             }
@@ -36,12 +36,14 @@ public class BlokkenBox {
 * Wordt gebruikt in Quarto.kiesBlok.
 * */
 
-    public Blok neemBlok(Blok blok) throws QuartoException {
-        if (blokkenSet.contains(blok.hashCode()) == false) {
+    public Blok neemBlok(int index) throws QuartoException {
+        if ((index-1 >= blokkenSet.size()) || (index < 1)) {
             throw new QuartoException("Er is geen geldige blok geselecteerd.");
         } else {
-            blokkenSet.remove(blok);
-            return blok;
+            Blok[] blokArray = new Blok[blokkenSet.size()];
+            blokArray = blokkenSet.toArray(blokArray);
+            blokkenSet.remove(blokArray[index-1]);
+            return blokArray[index-1];
         }
     }
 
@@ -56,10 +58,10 @@ public class BlokkenBox {
     @Override
     public String toString() {
         String resultaat = "";
-        int i = 0;
+        int i = 1;
         for (Blok blok:
              this.blokkenSet) {
-            resultaat = resultaat + "\n" + (i++) + blok;
+            resultaat = resultaat + "\n" + (i++) + "\t" + blok;
         }
         return resultaat;
     }

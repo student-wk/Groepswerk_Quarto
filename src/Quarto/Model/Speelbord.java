@@ -8,8 +8,6 @@ public class Speelbord {
     private Blok[][] blokkenOpBord;
     public static final int GROOTTE = 4;
 
-    //mss nog toString methode maken van Speelbord? om uit te testen fzo?
-
     public Speelbord() {
         this.blokkenOpBord = new Blok[GROOTTE][GROOTTE];
     }
@@ -68,7 +66,7 @@ public class Speelbord {
 * diagonaal() en rijKolom() komen samen in heeftCombinatie().
 * */
 
-    public boolean diagonaal() throws QuartoException {
+    public boolean diagonaal() {
         int grootte = blokkenOpBord.length;
         return ((kleurenCombo(0,0,1,1) == grootte-1)
                 || ((vormCombo(0,0,1,1) == grootte-1)
@@ -86,7 +84,7 @@ public class Speelbord {
 * diagonaal() en rijKolom() komen samen in heeftCombinatie().
 * */
 
-    public boolean rijKolom() throws QuartoException {
+    public boolean rijKolom() {
         int i = 0;
         boolean gewonnen = false;
         while ((i < blokkenOpBord.length) && (!gewonnen)) {
@@ -110,7 +108,7 @@ public class Speelbord {
     * te vormen.
     * */
 
-    public boolean leeg(int rij, int kollom, int rijIncrement, int kolomIncrement) throws QuartoException /*weet ni of exception werkt/nodig is*/ {
+    public boolean leeg(int rij, int kollom, int rijIncrement, int kolomIncrement) {
         return ((!isLeeg(new Positie(rij,kollom))))
                 && ((!isLeeg(new Positie(rij + rijIncrement, kollom + kolomIncrement))));
 
@@ -123,7 +121,7 @@ public class Speelbord {
     * De methode geeft een int met de hoogste combo terug.
     * */
 
-    public int kleurenCombo(int rij, int kollom, int rijIncrement, int kolomIncrement) throws QuartoException {
+    public int kleurenCombo(int rij, int kollom, int rijIncrement, int kolomIncrement) {
         int combo = 0;
         int a = rijIncrement;
         int b = kolomIncrement;
@@ -137,7 +135,7 @@ public class Speelbord {
         return combo;
     }
 
-    public int vormCombo(int rij, int kollom, int richtingRij, int kolomIncrement) throws QuartoException {
+    public int vormCombo(int rij, int kollom, int richtingRij, int kolomIncrement) {
         int combo = 0;
         int a = richtingRij;
         int b = kolomIncrement;
@@ -151,7 +149,7 @@ public class Speelbord {
         return combo;
     }
 
-    public int grootteCombo(int rij, int kollom, int rijIncrement, int kolomIncrement) throws QuartoException {
+    public int grootteCombo(int rij, int kollom, int rijIncrement, int kolomIncrement) {
         int combo = 0;
         int a = rijIncrement;
         int b = kolomIncrement;
@@ -165,7 +163,7 @@ public class Speelbord {
         return combo;
     }
 
-    public int vullingCombo(int rij, int kollom, int rijIncrement, int kolomIncrement) throws QuartoException {
+    public int vullingCombo(int rij, int kollom, int rijIncrement, int kolomIncrement) {
         int combo = 0;
         int a = rijIncrement;
         int b = kolomIncrement;
@@ -183,9 +181,105 @@ public class Speelbord {
 * heeftCombinatie() komt samen met isVol() in spelGedaan() in de Quarto klasse.
 * */
 
-    public boolean heeftCombinatie() throws QuartoException { return (rijKolom() || diagonaal());}
+    public boolean heeftCombinatie() { return (rijKolom() || diagonaal());}
 
     public Blok[][] getBlokkenOpBord() {
         return blokkenOpBord;
     }
+
+
+
+// checken of .blokString() wel past in de weergave van het speelbord!!!!
+
+/*
+* Visualiseert het speelbord.
+* */
+
+    @Override
+    public String toString() {
+        String bordString = "    ";
+        bordString = for1(bordString);
+        return bordString;
+    }
+
+/*
+* Deel van de toString methode dat een lijn tussen de verschillende rijen maakt.
+* */
+
+    public String lijn() {
+        String bordString = "";
+        for (Blok[] blok : blokkenOpBord) {
+            bordString = bordString + "-----";
+        }
+        return bordString;
+    }
+
+/*
+* Deel van de toString methode. Genereert eerst de cijfers van de verschillende kolommen bovenaan het bordt.
+* In de tweede for loop voegt het eerst een cijfer voor de juiste rij toe. Daarna genereert hij mbv for2(), for3()
+* en lijn() de rest van het speelbord.
+* */
+
+    public String for1(String bordString) {
+        for (int i = 0; i < blokkenOpBord.length; i++) {
+            bordString = bordString + i + "    ";
+        }
+        bordString = (bordString + "\n -" + lijn() + "\n");
+        for (int i = 0; i < blokkenOpBord.length; i++) {
+            bordString = bordString + (i);
+            bordString = for2(bordString, i);
+            bordString = bordString + "|" + "\n -" + lijn() + "\n";
+        }
+        return bordString;
+    }
+
+    /*
+    *     public String for1(String bordString) {
+        for (int i = 0; i < blokkenOpBord.length; i++) {
+            bordString = bordString + i + "   ";
+        }
+        bordString = (bordString + "\n -" + lijn() + "\n");
+        for (int i = 0; i < blokkenOpBord.length; i++) {
+            bordString = bordString + (i);
+            bordString = for2(bordString, i);
+            bordString = bordString + "|" + "\n |";
+            bordString = for3(bordString, i);
+            bordString = bordString + ("\n -" + lijn() + "\n");
+        }
+        return bordString;
+    }
+    * */
+
+/*
+* voegt telkens achter het rijnummer dat in for1 aangemaakt is, een rij toe waar Blokken op kunnen staan.
+* */
+
+    public String for2(String bordString, int rij) {
+        for (int kolom = 0; kolom < blokkenOpBord[0].length; kolom++) {
+            bordString = bordString + "|";
+            if (blokkenOpBord[rij][kolom] != null) {
+                bordString = bordString + (blokkenOpBord[rij][kolom].blokString());
+            } else {
+                bordString = bordString + ("    ");
+            }
+        }
+        return bordString;
+    }
+
+
+/*
+* Voegt een rij toe tussen de rij met rijnummer en de lijn. - Is niet nodig.
+* */
+
+/*    public String for3(String s, int i) {
+        for (int j = 0; j < blokkenOpBord[0].length; j++) {
+            if (blokkenOpBord[i][j] != null) {
+                s = s + (blokkenOpBord[i][j].blokString());
+            } else {
+                s = s + ("   ");
+            }
+            s = s + ("|");
+        }
+        return s;
+    }*/
 }

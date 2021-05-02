@@ -33,7 +33,7 @@ public class AlleSpelers {
     }
 
 /*
-* i gaat beginnen met random en gaat altijd omhoog in spelverloop met i++, en een oneven getal is telkens
+* i gaat beginnen met random en gaat na iedere ronde omhoog in spelverloop met i++, een oneven getal is telkens
 * actieveSpeler = speler1, even is speler2.
 * */
 
