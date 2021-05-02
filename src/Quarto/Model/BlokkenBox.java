@@ -15,9 +15,6 @@ public class BlokkenBox {
         maakBlokken();
     }
 
-    // mss eerder linkedhashset
-    // geen idee hoe ik specifieke elementen eruit moet halen
-
     public void maakBlokken() {
         for (Blok.Grootte grootte : Blok.Grootte.values()) {
             for (Blok.Kleur kleur : Blok.Kleur.values()) {
