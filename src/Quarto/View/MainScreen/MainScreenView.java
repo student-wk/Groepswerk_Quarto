@@ -14,6 +14,9 @@ public class MainScreenView extends BorderPane  {
     private MenuItem infoMI;
     private UISettings uiSettings;
 
+    private BlokkenBoxView blokkenBoxView;
+
+
     public MainScreenView(UISettings uiSettings) {
         this.uiSettings = uiSettings;
         initialiseNodes();
@@ -27,6 +30,8 @@ public class MainScreenView extends BorderPane  {
         this.settingsMI = new MenuItem("Settings");
         this.aboutMI = new MenuItem("About");
         this.infoMI = new MenuItem("Info");
+        this.blokkenBoxView = new BlokkenBoxView();
+
     }
 
     private void layoutNodes() {
@@ -34,6 +39,11 @@ public class MainScreenView extends BorderPane  {
         Menu menuHelp = new Menu("Help",null, aboutMI, infoMI);
         MenuBar menuBar = new MenuBar(menuFile,menuHelp);
         setTop(menuBar);
+        setCenter(blokkenBoxView);
+    }
+
+    public BlokkenBoxView getBlokkenBoxView() {
+        return blokkenBoxView;
     }
 
     MenuItem getExitItem() {return exitMI;}
