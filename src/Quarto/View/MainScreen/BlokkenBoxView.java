@@ -1,7 +1,6 @@
 package Quarto.View.MainScreen;
 
 import Quarto.Model.Blok;
-import Quarto.Model.BlokkenBox;
 import Quarto.Model.Quarto;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -30,7 +29,6 @@ public class BlokkenBoxView {
     }
 
     private void initialiseNodes() {
-
     }
 
     private void layoutNodes() {
@@ -51,6 +49,7 @@ public class BlokkenBoxView {
     public Circle maakCirkel (Blok blok) {
         Circle cirkel = new Circle(setGrootte(blok),setVulling(blok));
         cirkel.setStrokeType(StrokeType.CENTERED);
+        cirkel.setStroke(setKleur(blok));
         // dit nog testen op kleur van de rand
         return cirkel;
     }
@@ -58,6 +57,7 @@ public class BlokkenBoxView {
     public Rectangle maakVierkant (Blok blok) {
         Rectangle vierkant = new Rectangle(setGrootte(blok),setGrootte(blok),setVulling(blok));
         vierkant.setStrokeType(StrokeType.CENTERED);
+        vierkant.setStroke(setKleur(blok));
         // dit nog testen op kleur van de rand
         return vierkant;
     }
