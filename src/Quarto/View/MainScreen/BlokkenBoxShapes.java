@@ -12,7 +12,7 @@ import javafx.scene.shape.StrokeType;
  * @author Willem Kuijpers
  * @version 1.0 6-5-2021 13:22
  */
-public class BlokkenBoxView {
+public class BlokkenBoxShapes {
 
     private static final int GROOT = 30;
     private static final int KLEIN = 15;
@@ -22,22 +22,16 @@ public class BlokkenBoxView {
     private static final Color TRANSPARANT = Color.TRANSPARENT;
 
     private Shape[] blokkenShapes;
+    private Quarto model;
 
-    public BlokkenBoxView() {
-        initialiseNodes();
-        layoutNodes();
+    public BlokkenBoxShapes() {
+        this.blokkenShapes = new Shape[model.getBlokkenBox().getBlokkenSet().size()];
+        maakBlokkenShapes();
     }
 
-    private void initialiseNodes() {
-    }
-
-    private void layoutNodes() {
-
-    }
-
-    public void maakBlokkenShapes(Quarto quarto) {
+    public void maakBlokkenShapes() {
         int i = 0;
-        for (Blok blok : quarto.getBlokkenBox().getBlokkenSet()) {
+        for (Blok blok : model.getBlokkenBox().getBlokkenSet()) {
             if (blok.getVorm().toString() == "rond") {
                 blokkenShapes[i] = maakCirkel(blok);
                 i++;
@@ -86,4 +80,7 @@ public class BlokkenBoxView {
         }
     }
 
+    public Shape[] getBlokkenShapes() {
+        return blokkenShapes;
+    }
 }
