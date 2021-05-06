@@ -18,7 +18,7 @@ public class QuartoView extends BorderPane {
     private MenuItem infoMI;
     private UISettings uiSettings;
 
-    private BlokkenBoxView blokkenBoxView;
+    private SpeelBordView speelBordView;
 
     public QuartoView(UISettings uiSettings) {
         this.uiSettings = uiSettings;
@@ -33,7 +33,7 @@ public class QuartoView extends BorderPane {
         this.settingsMI = new MenuItem("Settings");
         this.aboutMI = new MenuItem("About");
         this.infoMI = new MenuItem("Info");
-        this.blokkenBoxView = new BlokkenBoxView();
+        this.speelBordView = new SpeelBordView();
     }
 
     private void layoutNodes() {
@@ -41,14 +41,14 @@ public class QuartoView extends BorderPane {
         Menu menuHelp = new Menu("Help",null, aboutMI, infoMI);
         MenuBar menuBar = new MenuBar(menuFile,menuHelp);
         setTop(menuBar);
-        setCenter(blokkenBoxView);
+        setCenter(speelBordView);
 
 
 
     }
 
-    public BlokkenBoxView getBlokkenBoxView() {
-        return blokkenBoxView;
+    public SpeelBordView getSpeelBordView() {
+        return speelBordView;
     }
 
     MenuItem getExitItem() {return exitMI;}

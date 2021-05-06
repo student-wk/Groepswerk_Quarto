@@ -37,11 +37,14 @@ public class Blok {
         }
     }
 
-    private final Grootte grootte;
-    private final Kleur kleur;
-    private final Vorm vorm;
-    private final Vulling vulling;
+    private  Grootte grootte;
+    private  Kleur kleur;
+    private  Vorm vorm;
+    private  Vulling vulling;
 
+
+    public Blok(){
+    }
 
     public Blok(Grootte grootte, Kleur kleur, Vorm vorm, Vulling vulling) {
         if ((grootte != null) && (kleur != null) && (vorm != null) && (vulling != null)) {
@@ -52,6 +55,22 @@ public class Blok {
         } else {
             throw new IllegalArgumentException("Blok is incorrect aangemaakt");
         }
+    }
+
+    public void setGrootte(Grootte grootte) {
+        this.grootte = grootte;
+    }
+
+    public void setKleur(Kleur kleur) {
+        this.kleur = kleur;
+    }
+
+    public void setVorm(Vorm vorm) {
+        this.vorm = vorm;
+    }
+
+    public void setVulling(Vulling vulling) {
+        this.vulling = vulling;
     }
 
     public Grootte getGrootte() {

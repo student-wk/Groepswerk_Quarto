@@ -33,14 +33,19 @@ public class BlokkenBox {
 * Wordt gebruikt in Quarto.kiesBlok.
 * */
 
-    public Blok neemBlok(int index) throws QuartoException {
-        if ((index-1 >= blokkenSet.size()) || (index < 1)) {
+    public void neemBlok(Blok blok) throws QuartoException {
+//        if ((index-1 >= blokkenSet.size()) || (index < 1)) {
+//            throw new QuartoException("Er is geen geldige blok geselecteerd.");
+//        } else {
+//            Blok[] blokArray = new Blok[blokkenSet.size()];
+//            blokArray = blokkenSet.toArray(blokArray);
+//            blokkenSet.remove(blokArray[index-1]);
+//            return blokArray[index-1];
+//        }
+        if (!blokkenSet.contains(blok)) {
             throw new QuartoException("Er is geen geldige blok geselecteerd.");
         } else {
-            Blok[] blokArray = new Blok[blokkenSet.size()];
-            blokArray = blokkenSet.toArray(blokArray);
-            blokkenSet.remove(blokArray[index-1]);
-            return blokArray[index-1];
+            blokkenSet.remove(blok);
         }
     }
 

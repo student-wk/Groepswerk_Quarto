@@ -14,7 +14,9 @@ public class MainScreenView extends BorderPane  {
     private MenuItem infoMI;
     private UISettings uiSettings;
 
-    private BlokkenBoxView blokkenBoxView;
+    private SpeelBordView speelBordView;
+//    private BlokkenBoxView2 blokkenBoxView2;
+    private BlokkenBoxGridPane blokkenBoxGridPane;
 
 
     public MainScreenView(UISettings uiSettings) {
@@ -30,7 +32,9 @@ public class MainScreenView extends BorderPane  {
         this.settingsMI = new MenuItem("Settings");
         this.aboutMI = new MenuItem("About");
         this.infoMI = new MenuItem("Info");
-        this.blokkenBoxView = new BlokkenBoxView();
+        this.speelBordView = new SpeelBordView();
+//        this.blokkenBoxView2 = new BlokkenBoxView2();
+        this.blokkenBoxGridPane = new BlokkenBoxGridPane();
 
     }
 
@@ -39,11 +43,17 @@ public class MainScreenView extends BorderPane  {
         Menu menuHelp = new Menu("Help",null, aboutMI, infoMI);
         MenuBar menuBar = new MenuBar(menuFile,menuHelp);
         setTop(menuBar);
-        setCenter(blokkenBoxView);
+        setCenter(speelBordView);
+        setLeft(blokkenBoxGridPane);
+//        setRight(blokkenBoxView2);
     }
 
-    public BlokkenBoxView getBlokkenBoxView() {
-        return blokkenBoxView;
+    public BlokkenBoxGridPane getBlokkenBoxGridPane() {
+        return blokkenBoxGridPane;
+    }
+
+    public SpeelBordView getSpeelBordView() {
+        return speelBordView;
     }
 
     MenuItem getExitItem() {return exitMI;}
