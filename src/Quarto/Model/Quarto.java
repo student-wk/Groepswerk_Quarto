@@ -18,6 +18,7 @@ public class Quarto {
 * */
 
     public void kiesBlok(Blok blok) {
+        System.out.println("dsdsdsa");
         try {
             if (gekozenBlok != null) {
                 throw new IllegalStateException("Er is al een blok als gekozenBlok geselecteerd.");

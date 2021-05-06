@@ -162,7 +162,7 @@ public class MainScreenPresenter {
 
 
     private void updateSpeelBord(int rowIndex, int colIndex) {
-        view.getSpeelBordView().removeNodeByRowColumnIndex(rowIndex, colIndex);
+//        view.getSpeelBordView().removeNodeByRowColumnIndex(rowIndex, colIndex);
         view.getSpeelBordView().addPiece(rowIndex, colIndex, model.getGekozenBlok());
     }
 
@@ -405,16 +405,16 @@ public class MainScreenPresenter {
                 view.getSpeelBordView().getNodeByRowColumnIndex(i,j).setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-//                        Node node = (Node) mouseEvent.getSource();
-                        view.getSpeelBordView().getChildren().remove((Node) mouseEvent.getSource());
+
                         int rowIndex = GridPane.getRowIndex((Node) mouseEvent.getSource());
                         int colIndex = GridPane.getColumnIndex((Node) mouseEvent.getSource());
+                        updateSpeelBord(rowIndex, colIndex);
                         try {
                             model.plaatsBlok(new Positie(rowIndex,colIndex));
                         } catch (QuartoException e) {
                             e.printStackTrace();
                         }
-                        updateSpeelBord(rowIndex, colIndex);
+
 
                     }
                 });
