@@ -5,7 +5,6 @@ import Quarto.View.AboutScreen.*;
 import Quarto.View.InfoScreen.*;
 import Quarto.View.SettingsScreen.*;
 import Quarto.View.UISettings;
-import javafx.collections.ObservableList;
 import javafx.event.*;
 import javafx.scene.*;
 import javafx.scene.control.Alert;
@@ -160,16 +159,86 @@ public class MainScreenPresenter {
     }
 
 
-
-    private void updateSpeelBord(int rowIndex, int colIndex) {
+    private void updateSpeelBordView(int rowIndex, int colIndex) {
 //        view.getSpeelBordView().removeNodeByRowColumnIndex(rowIndex, colIndex);
         view.getSpeelBordView().addPiece(rowIndex, colIndex, model.getGekozenBlok());
     }
 
-
-
-
     private void EventHandlers() {
+        addMenuEventHandlers();
+        //BlokBox events
+        for (int i = 0; i < view.getBlokkenBoxGridPane().ROW_SIZE; i++) {
+            for (int j = 0; j < view.getBlokkenBoxGridPane().COL_SIZE; j++) {
+                final int row = i;
+                final int col = j;
+                view.getBlokkenBoxGridPane().getCircles()[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        Blok blok = new Blok();
+                        Circle circle = view.getBlokkenBoxGridPane().getCircles()[row][col];
+                        blok.setVorm(Blok.Vorm.ROND);
+                        if (circle.toString().length()>70){
+                            blok.setVulling(Blok.Vulling.HOL);
+                            blok.setGrootte((circle.getRadius() == view.getBlokkenBoxGridPane().BIG_SIZE_EMPTY? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
+                            blok.setKleur(circle.getFill() == view.getBlokkenBoxGridPane().EMPTY_COLOR_BLUE? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                        } else {
+                            blok.setVulling(Blok.Vulling.VOL);
+                            blok.setGrootte((circle.getRadius() == view.getBlokkenBoxGridPane().BIG_SIZE? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
+                            blok.setKleur(circle.getFill() == view.getBlokkenBoxGridPane().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                        }
+                        model.kiesBlok(blok);
+                        updateView();
+                    }
+                });
+                view.getBlokkenBoxGridPane().getRectangles()[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        Blok blok = new Blok();
+                        Rectangle rectangle = view.getBlokkenBoxGridPane().getRectangles()[row][col];
+                        blok.setVorm(Blok.Vorm.VIERKANT);
+                        if (rectangle.toString().length()>70){
+                            blok.setVulling(Blok.Vulling.HOL);
+                            blok.setGrootte((rectangle.getWidth() == view.getBlokkenBoxGridPane().BIG_SIZE_EMPTY*2? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
+                            blok.setKleur(rectangle.getFill() == view.getBlokkenBoxGridPane().EMPTY_COLOR_BLUE? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                        } else {
+                            blok.setVulling(Blok.Vulling.VOL);
+                            blok.setGrootte((rectangle.getWidth() == view.getBlokkenBoxGridPane().BIG_SIZE*2? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
+                            blok.setKleur(rectangle.getFill() == view.getBlokkenBoxGridPane().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                        }
+                        model.kiesBlok(blok);
+                        updateView();
+                    }
+                });
+            }
+        }
+        // Playbord events
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                view.getSpeelBordView().getNodeByRowColumnIndex(i,j).setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+
+                        int rowIndex = GridPane.getRowIndex((Node) mouseEvent.getSource());
+                        int colIndex = GridPane.getColumnIndex((Node) mouseEvent.getSource());
+                        updateSpeelBordView(rowIndex, colIndex);
+                        try {
+                            model.plaatsBlok(new Positie(rowIndex,colIndex));
+
+                            if (model.getSpeelbord().heeftCombinatie()){
+                                System.out.println("Een speler heeft gewonnen");
+                            } else if (model.getSpeelbord().isVol()){
+                                System.out.println("speelbord is vol");
+                            }
+                        } catch (QuartoException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    public void addMenuEventHandlers(){
         view.getSettingsItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -349,81 +418,7 @@ public class MainScreenPresenter {
                 }
                 infoScreenStage.showAndWait();
             }});
-
-        for (int i = 0; i < view.getBlokkenBoxGridPane().ROW_SIZE; i++) {
-            for (int j = 0; j < view.getBlokkenBoxGridPane().COL_SIZE; j++) {
-                final int row = i;
-                final int col = j;
-                view.getBlokkenBoxGridPane().getCircles()[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        Blok blok = new Blok();
-                        Circle circle = view.getBlokkenBoxGridPane().getCircles()[row][col];
-                        blok.setVorm(Blok.Vorm.ROND);
-                        if (circle.toString().length()>70){
-                            blok.setVulling(Blok.Vulling.HOL);
-                            blok.setGrootte((circle.getRadius() == view.getBlokkenBoxGridPane().BIG_SIZE_EMPTY? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                            blok.setKleur(circle.getFill() == view.getBlokkenBoxGridPane().EMPTY_COLOR_BLUE? Blok.Kleur.ZWART: Blok.Kleur.WIT);
-                        } else {
-                            blok.setVulling(Blok.Vulling.VOL);
-                            blok.setGrootte((circle.getRadius() == view.getBlokkenBoxGridPane().BIG_SIZE? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                            blok.setKleur(circle.getFill() == view.getBlokkenBoxGridPane().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
-                        }
-
-                        model.kiesBlok(blok);
-                        updateView();
-                    }
-                });
-                view.getBlokkenBoxGridPane().getRectangles()[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        Blok blok = new Blok();
-                        Rectangle rectangle = view.getBlokkenBoxGridPane().getRectangles()[row][col];
-                        blok.setVorm(Blok.Vorm.VIERKANT);
-                        if (rectangle.toString().length()>70){
-                            blok.setVulling(Blok.Vulling.HOL);
-                            blok.setGrootte((rectangle.getWidth() == view.getBlokkenBoxGridPane().BIG_SIZE_EMPTY*2? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                            blok.setKleur(rectangle.getFill() == view.getBlokkenBoxGridPane().EMPTY_COLOR_BLUE? Blok.Kleur.ZWART: Blok.Kleur.WIT);
-                        } else {
-                            blok.setVulling(Blok.Vulling.VOL);
-                            blok.setGrootte((rectangle.getWidth() == view.getBlokkenBoxGridPane().BIG_SIZE*2? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                            blok.setKleur(rectangle.getFill() == view.getBlokkenBoxGridPane().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
-                        }
-                        model.kiesBlok(blok);
-                        updateView();
-                    }
-                });
-            }
-        }
-
-
-
-
-
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                view.getSpeelBordView().getNodeByRowColumnIndex(i,j).setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-
-                        int rowIndex = GridPane.getRowIndex((Node) mouseEvent.getSource());
-                        int colIndex = GridPane.getColumnIndex((Node) mouseEvent.getSource());
-                        updateSpeelBord(rowIndex, colIndex);
-                        try {
-                            model.plaatsBlok(new Positie(rowIndex,colIndex));
-                        } catch (QuartoException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                });
-
-            }
-        }
     }
-
-
 
 
     public void windowsHandler() {

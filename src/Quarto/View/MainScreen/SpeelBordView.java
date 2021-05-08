@@ -103,7 +103,6 @@ public class SpeelBordView extends GridPane {
         if (gekozenBlok.getVorm().equals(Blok.Vorm.ROND)){
             Circle circle = new Circle();
             if (gekozenBlok.getKleur().equals(Blok.Kleur.WIT)){
-
                 if (gekozenBlok.getVulling().equals(Blok.Vulling.VOL)&& gekozenBlok.getGrootte().equals(Blok.Grootte.GROOT)){
                     circle.setRadius(BIG_SIZE);
                     circle.setFill(RED_COLOR);
@@ -139,12 +138,10 @@ public class SpeelBordView extends GridPane {
                     circle.setFill(EMPTY_COLOR_BLUE);
                     circle.setStrokeWidth(STROKE_WIDTH_SMALL);
                 }
-
-                this.add(circle,colIndex,rowIndex);
-                GridPane.setConstraints(circle, colIndex, rowIndex, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
-
             }
-        } else {
+            this.add(circle,colIndex,rowIndex);
+            GridPane.setConstraints(circle, colIndex, rowIndex, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
+        } else if (gekozenBlok.getVorm().equals(Blok.Vorm.VIERKANT)){
             Rectangle rectangle = new Rectangle();
             if (gekozenBlok.getKleur().equals(Blok.Kleur.WIT)){
                 if (gekozenBlok.getVulling().equals(Blok.Vulling.VOL)&& gekozenBlok.getGrootte().equals(Blok.Grootte.GROOT)){
