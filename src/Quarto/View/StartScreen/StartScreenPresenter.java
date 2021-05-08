@@ -2,6 +2,7 @@ package Quarto.View.StartScreen;
 
 import Quarto.Model.*;
 import Quarto.View.*;
+import Quarto.View.MainScreen.BlokkenBoxView;
 import Quarto.View.MainScreen.MainScreenPresenter;
 import Quarto.View.MainScreen.MainScreenView;
 import javafx.event.*;
@@ -14,6 +15,7 @@ public class StartScreenPresenter {
     private Quarto model;
     private StartScreenView view;
     private UISettings uiSettings;
+    private BlokkenBoxView blokkenBoxView;
 
     public StartScreenPresenter(Quarto model, StartScreenView view, UISettings uiSettings) {
         this.model = model;
@@ -31,7 +33,7 @@ public class StartScreenPresenter {
             @Override
             public void handle(ActionEvent event) {
                 MainScreenView msView = new MainScreenView(uiSettings);
-                MainScreenPresenter msPresenter = new MainScreenPresenter(model, msView, uiSettings);
+                MainScreenPresenter msPresenter = new MainScreenPresenter(model, msView, uiSettings,blokkenBoxView);
                 view.getScene().setRoot(msView);
                 try {
                     msView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());

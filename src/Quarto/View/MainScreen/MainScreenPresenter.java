@@ -28,10 +28,13 @@ public class MainScreenPresenter {
     private MainScreenView view;
     private UISettings uiSettings;
 
-    public MainScreenPresenter(Quarto model, MainScreenView view, UISettings uiSettings) {
+    private BlokkenBoxPresenter blokkenBoxPresenter;
+
+    public MainScreenPresenter(Quarto model, MainScreenView view, UISettings uiSettings,BlokkenBoxView blokkenBoxView) {
         this.model = model;
         this.view = view;
         this.uiSettings = uiSettings;
+        this.blokkenBoxPresenter = new BlokkenBoxPresenter(model,blokkenBoxView);
         updateView();
         EventHandlers();
     }
