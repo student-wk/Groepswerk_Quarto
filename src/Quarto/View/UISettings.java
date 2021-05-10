@@ -26,7 +26,7 @@ public class UISettings {
         this.resY = (int) Screen.getPrimary().getVisualBounds().getHeight();
         this.insetsMargin = this.getLowestRes()/100;
         this.homeDir = System.getProperties().getProperty("user.dir");
-        this.ApplicationName = "MVP";
+        this.ApplicationName = "Quarto";
     };
 
     public int getResX () {return this.resX;}

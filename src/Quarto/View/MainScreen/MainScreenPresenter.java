@@ -441,12 +441,12 @@ public class MainScreenPresenter {
 
     private void handleCloseEvent(Event event){
         final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
-        stopWindow.setHeaderText("You're closing the application.");
-        stopWindow.setContentText("Are you sure? Unsaved data may be lost.");
-        stopWindow.setTitle("WARNING!");
+        stopWindow.setHeaderText("Je gaat de applicatie afsluiten.");
+        stopWindow.setContentText("Ben je zeker? Onopgeslaagde data kan verloren gaan.");
+        stopWindow.setTitle("WAARSCHUWING!");
         stopWindow.getButtonTypes().clear();
-        ButtonType noButton = new ButtonType("No");
-        ButtonType yesButton = new ButtonType("Yes");
+        ButtonType noButton = new ButtonType("Nee");
+        ButtonType yesButton = new ButtonType("Ja");
         stopWindow.getButtonTypes().addAll(yesButton, noButton);
         stopWindow.showAndWait();
         if (stopWindow.getResult() == null || stopWindow.getResult().equals(noButton)) {
