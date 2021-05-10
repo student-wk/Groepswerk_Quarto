@@ -6,11 +6,21 @@ public class Quarto {
     private final BlokkenBox blokkenBox;
     private final Speelbord speelbord;
     private Blok gekozenBlok;
+    private AlleSpelers alleSpelers;
+    Speler speler1 = new Speler("Delawar", 0);
+    Speler speler2 = new Speler("Willem", 0);
+    private static int count = 0;
+
 
     public Quarto() {
         this.blokkenBox = new BlokkenBox();
         this.speelbord = new Speelbord();
         this.gekozenBlok = null;
+        this.alleSpelers = new AlleSpelers(speler1, speler2);
+        this.alleSpelers.kiesSpeler();
+        System.out.println();
+        System.out.println("actieve speler: "+ this.getAlleSpelers().getActieveSpeler());
+
     }
 
 /*
@@ -24,6 +34,7 @@ public class Quarto {
             } else {
                 this.gekozenBlok = blok;
                 blokkenBox.neemBlok(blok);
+                alleSpelers.afwisselen(count++);
             }
 
         } catch (QuartoException ex) {
@@ -48,37 +59,10 @@ public class Quarto {
         return (speelbord.isVol() || speelbord.heeftCombinatie());
     }
 
-    /*
-    * Methode die 1 spelronde volledig afwerkt. Moet nog aangepast worden als de view en presenter worden uitgewerkt.
-    * Ik weet nog niet zeker of hier al bepaald moet worden welke speler telkens een actie uitvoert, dat is mss iets
-    * voor in de presenter te doen?
-    * Er wordt hier geen winnaar/gelijkspel gecheckt en er worden ook geen spelers aangemaakt.
-    * */
-
-//    public void spelRonde() {
-//// speelbord afprinten
-//        System.out.println(getSpeelbord() + "\n");
-//// blokkenbox afprinten
-//        System.out.println(getBlokkenBox() + "\n");
-//// actieve speler het blok laten kiezen
-//        System.out.println("Kies een blok"  + "\n");
-//        Scanner keyboard = new Scanner(System.in);
-//        int i = keyboard.nextInt();
-//        this.kiesBlok(i);
-//// gekozen blok afprinten
-//        System.out.println("Gekozen blok is: " + this.getGekozenBlok() + "\n");
-//// niet actieve speler het blok op het bord laten plaatsen
-//        System.out.println("Kies een positie om het blok te plaatsen."  + "\n");
-//        System.out.println("Kies eerst een rij:"  + "\n");
-//        int rij = keyboard.nextInt();
-//        System.out.println("Kies nu een kolom:"  + "\n");
-//        int kolom = keyboard.nextInt();
-//        Positie positie = new Positie(rij,kolom);
-//        try { this.plaatsBlok(positie);
-//        } catch (QuartoException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    //            alleSpelers.afwisselen(count++);
+    public AlleSpelers getAlleSpelers() {
+        return alleSpelers;
+    }
 
     public BlokkenBox getBlokkenBox() {
         return blokkenBox;

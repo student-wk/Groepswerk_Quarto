@@ -23,23 +23,7 @@ public class SpeelBordView extends GridPane {
     public static final int SMALL_SIZE = 20;
     public static final int SMALL_SIZE_EMPTY = 16;
     public static final int STROKE_WIDTH_SMALL = 8;
-    private Circle CircleRedFullBig;
-    private Circle CircleRedFullSmall;
-    private Circle CircleRedEmptyBig;
-    private Circle CircleRedEmptySmall;
-    private Circle CircleBlueFullBig;
-    private Circle CircleBlueFullSmall;
-    private Circle CircleBlueEmptyBig;
-    private Circle CircleBlueEmptySmall;
 
-    private Rectangle RectRedFullBig;
-    private Rectangle RectRedFullSmall;
-    private Rectangle RectRedEmptyBig;
-    private Rectangle RectRedEmptySmall;
-    private Rectangle RectBlueFullBig;
-    private Rectangle RectBlueFullSmall;
-    private Rectangle RectBlueEmptyBig;
-    private Rectangle RectBlueEmptySmall;
 
 
     public SpeelBordView() {
@@ -81,7 +65,7 @@ public class SpeelBordView extends GridPane {
     public void layoutNodes() {
         layoutBlokkenBox();
         this.setGridLinesVisible(true);
-        setHgap(10);
+        setHgap(5);
         this.setAlignment(Pos.CENTER);
     }
 

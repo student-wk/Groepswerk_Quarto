@@ -41,6 +41,7 @@ public class MainScreenPresenter {
     }
 
     private void updateView() {
+        //update van blokkenbox
         for (Blok.Grootte grootte : Blok.Grootte.values()) {
             for (Blok.Kleur kleur : Blok.Kleur.values()) {
                 for (Blok.Vorm vorm : Blok.Vorm.values()) {
@@ -158,9 +159,8 @@ public class MainScreenPresenter {
         }
     }
 
-
+//update van speelbord
     private void updateSpeelBordView(int rowIndex, int colIndex) {
-//        view.getSpeelBordView().removeNodeByRowColumnIndex(rowIndex, colIndex);
         view.getSpeelBordView().addPiece(rowIndex, colIndex, model.getGekozenBlok());
     }
 
@@ -187,6 +187,7 @@ public class MainScreenPresenter {
                             blok.setKleur(circle.getFill() == view.getBlokkenBoxGridPane().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
                         }
                         model.kiesBlok(blok);
+                        System.out.println("actieve speler: "+ model.getAlleSpelers().getActieveSpeler());
                         updateView();
                     }
                 });
@@ -206,6 +207,9 @@ public class MainScreenPresenter {
                             blok.setKleur(rectangle.getFill() == view.getBlokkenBoxGridPane().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
                         }
                         model.kiesBlok(blok);
+                        System.out.println("actieve speler: "+ model.getAlleSpelers().getActieveSpeler());
+
+
                         updateView();
                     }
                 });
@@ -223,12 +227,14 @@ public class MainScreenPresenter {
                         updateSpeelBordView(rowIndex, colIndex);
                         try {
                             model.plaatsBlok(new Positie(rowIndex,colIndex));
+                            System.out.println("actieve speler: "+ model.getAlleSpelers().getActieveSpeler());
 
                             if (model.getSpeelbord().heeftCombinatie()){
-                                System.out.println("Een speler heeft gewonnen");
+                                System.out.println("Een speler heeft gewonnen:" + model.getAlleSpelers().getActieveSpeler());
                             } else if (model.getSpeelbord().isVol()){
                                 System.out.println("speelbord is vol");
                             }
+
                         } catch (QuartoException e) {
                             e.printStackTrace();
                         }
@@ -237,6 +243,18 @@ public class MainScreenPresenter {
             }
         }
     }
+
+
+
+    private void newGame(){
+
+        this.model = new Quarto();
+        QuartoView newView = new QuartoView(uiSettings);
+        view.getScene().setRoot(newView);
+        new MainScreenPresenter(model,view,uiSettings);
+
+    }
+
 
     public void addMenuEventHandlers(){
         view.getSettingsItem().setOnAction(new EventHandler<ActionEvent>() {

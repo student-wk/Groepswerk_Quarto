@@ -46,7 +46,6 @@ public class BlokkenBoxGridPane extends GridPane {
 
         }
 
-
         for (Blok.Grootte grootte : Blok.Grootte.values()) {
             for (Blok.Kleur kleur : Blok.Kleur.values()) {
                 for (Blok.Vorm vorm : Blok.Vorm.values()) {
