@@ -40,6 +40,14 @@ public class MainScreenPresenter {
         EventHandlers();
     }
 
+    /*
+    * Willem: Als we nog meer elementen aan MainScreenView toevoegen, is het mss handig om de huidige code in
+    * updateView() af te schermen in een nieuwe methode updateBlokkenBoxView() ofzo?
+    *
+    * Deze methode zorgt ervoor dat de afgebeelde blokkenbox telkens geupdated wordt naar de huidige toestand van de
+    * BlokkenBox in het model.
+    * */
+
     private void updateView() {
         for (Blok.Grootte grootte : Blok.Grootte.values()) {
             for (Blok.Kleur kleur : Blok.Kleur.values()) {
@@ -53,46 +61,46 @@ public class MainScreenPresenter {
                                     int rowIndex;
                                     if (blok.getVulling().equals(Blok.Vulling.VOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
                                         rowIndex = 0;
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
                                     } else if (blok.getVulling().equals(Blok.Vulling.VOL) && blok.getGrootte().equals(Blok.Grootte.KLEIN)){
                                         rowIndex = 1;
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxGridPane().BIG_SIZE);
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxView().BIG_SIZE);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
                                     } else if (blok.getVulling().equals(Blok.Vulling.HOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
                                         rowIndex = 2;
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxGridPane().BIG_SIZE);
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setStrokeWidth(0);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxView().BIG_SIZE);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setStrokeWidth(0);
                                     } else {
                                         rowIndex = 3;
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxGridPane().BIG_SIZE);
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setStrokeWidth(0);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxView().BIG_SIZE);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setStrokeWidth(0);
                                     }
                                 } else {
                                     int colIndex = 1;
                                     int rowIndex;
                                     if (blok.getVulling().equals(Blok.Vulling.VOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
                                         rowIndex = 0;
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
                                     } else if (blok.getVulling().equals(Blok.Vulling.VOL) && blok.getGrootte().equals(Blok.Grootte.KLEIN)){
                                         rowIndex = 1;
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxGridPane().BIG_SIZE);
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxView().BIG_SIZE);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
                                     } else if (blok.getVulling().equals(Blok.Vulling.HOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
                                         rowIndex = 2;
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxGridPane().BIG_SIZE);
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setStrokeWidth(0);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxView().BIG_SIZE);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setStrokeWidth(0);
                                     } else {
                                         rowIndex = 3;
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxGridPane().BIG_SIZE);
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
-                                        view.getBlokkenBoxGridPane().getCircles()[rowIndex][colIndex].setStrokeWidth(0);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxView().BIG_SIZE);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setStrokeWidth(0);
                                     }
                                 }
                             } else if (blok.getVorm().equals(Blok.Vorm.VIERKANT)){
@@ -101,52 +109,52 @@ public class MainScreenPresenter {
                                     int rowIndex;
                                     if (blok.getVulling().equals(Blok.Vulling.VOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
                                         rowIndex = 0;
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
                                     } else if (blok.getVulling().equals(Blok.Vulling.VOL) && blok.getGrootte().equals(Blok.Grootte.KLEIN)){
                                         rowIndex = 1;
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxGridPane().BIG_SIZE*2);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxGridPane().BIG_SIZE*2);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxView().BIG_SIZE*2);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxView().BIG_SIZE*2);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
                                     } else if (blok.getVulling().equals(Blok.Vulling.HOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
                                         rowIndex = 2;
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxGridPane().BIG_SIZE*2);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxGridPane().BIG_SIZE*2);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setStrokeWidth(0);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxView().BIG_SIZE*2);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxView().BIG_SIZE*2);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setStrokeWidth(0);
                                     } else {
                                         rowIndex = 3;
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxGridPane().BIG_SIZE*2);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxGridPane().BIG_SIZE*2);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setStrokeWidth(0);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxView().BIG_SIZE*2);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxView().BIG_SIZE*2);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setStrokeWidth(0);
                                     }
                                 } else {
                                     int colIndex = 1;
                                     int rowIndex;
                                     if (blok.getVulling().equals(Blok.Vulling.VOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
                                         rowIndex = 0;
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
                                     } else if (blok.getVulling().equals(Blok.Vulling.VOL) && blok.getGrootte().equals(Blok.Grootte.KLEIN)){
                                         rowIndex = 1;
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxGridPane().BIG_SIZE*2);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxGridPane().BIG_SIZE*2);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxView().BIG_SIZE*2);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxView().BIG_SIZE*2);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
                                     } else if (blok.getVulling().equals(Blok.Vulling.HOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
                                         rowIndex = 2;
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxGridPane().BIG_SIZE*2);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxGridPane().BIG_SIZE*2);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setStrokeWidth(0);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxView().BIG_SIZE*2);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxView().BIG_SIZE*2);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setStrokeWidth(0);
                                     } else {
                                         rowIndex = 3;
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxGridPane().BIG_SIZE*2);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxGridPane().BIG_SIZE*2);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxGridPane().DEFAULT_COLOR);
-                                        view.getBlokkenBoxGridPane().getRectangles()[rowIndex][colIndex].setStrokeWidth(0);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxView().BIG_SIZE*2);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxView().BIG_SIZE*2);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setStrokeWidth(0);
                                     }
                                 }
                             }
@@ -158,52 +166,56 @@ public class MainScreenPresenter {
         }
     }
 
-
     private void updateSpeelBordView(int rowIndex, int colIndex) {
 //        view.getSpeelBordView().removeNodeByRowColumnIndex(rowIndex, colIndex);
         view.getSpeelBordView().addPiece(rowIndex, colIndex, model.getGekozenBlok());
     }
 
+    /*
+    * Willem: We kunnen misschien de eventhandlers voor de blokkenBox en het speelBord in elk een aparte methode zetten
+    * en dan toevoegen aan EventHandlers()?
+    * */
+
     private void EventHandlers() {
         addMenuEventHandlers();
-        //BlokBox events
-        for (int i = 0; i < view.getBlokkenBoxGridPane().ROW_SIZE; i++) {
-            for (int j = 0; j < view.getBlokkenBoxGridPane().COL_SIZE; j++) {
+        //eventhandlers voor de blokkenBox
+        for (int i = 0; i < view.getBlokkenBoxView().ROW_SIZE; i++) {
+            for (int j = 0; j < view.getBlokkenBoxView().COL_SIZE; j++) {
                 final int row = i;
                 final int col = j;
-                view.getBlokkenBoxGridPane().getCircles()[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                view.getBlokkenBoxView().getCircles()[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         Blok blok = new Blok();
-                        Circle circle = view.getBlokkenBoxGridPane().getCircles()[row][col];
+                        Circle circle = view.getBlokkenBoxView().getCircles()[row][col];
                         blok.setVorm(Blok.Vorm.ROND);
                         if (circle.toString().length()>70){
                             blok.setVulling(Blok.Vulling.HOL);
-                            blok.setGrootte((circle.getRadius() == view.getBlokkenBoxGridPane().BIG_SIZE_EMPTY? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                            blok.setKleur(circle.getFill() == view.getBlokkenBoxGridPane().EMPTY_COLOR_BLUE? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                            blok.setGrootte((circle.getRadius() == view.getBlokkenBoxView().BIG_SIZE_EMPTY? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
+                            blok.setKleur(circle.getFill() == view.getBlokkenBoxView().EMPTY_COLOR_BLUE? Blok.Kleur.ZWART: Blok.Kleur.WIT);
                         } else {
                             blok.setVulling(Blok.Vulling.VOL);
-                            blok.setGrootte((circle.getRadius() == view.getBlokkenBoxGridPane().BIG_SIZE? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                            blok.setKleur(circle.getFill() == view.getBlokkenBoxGridPane().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                            blok.setGrootte((circle.getRadius() == view.getBlokkenBoxView().BIG_SIZE? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
+                            blok.setKleur(circle.getFill() == view.getBlokkenBoxView().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
                         }
                         model.kiesBlok(blok);
                         updateView();
                     }
                 });
-                view.getBlokkenBoxGridPane().getRectangles()[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                view.getBlokkenBoxView().getRectangles()[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         Blok blok = new Blok();
-                        Rectangle rectangle = view.getBlokkenBoxGridPane().getRectangles()[row][col];
+                        Rectangle rectangle = view.getBlokkenBoxView().getRectangles()[row][col];
                         blok.setVorm(Blok.Vorm.VIERKANT);
                         if (rectangle.toString().length()>70){
                             blok.setVulling(Blok.Vulling.HOL);
-                            blok.setGrootte((rectangle.getWidth() == view.getBlokkenBoxGridPane().BIG_SIZE_EMPTY*2? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                            blok.setKleur(rectangle.getFill() == view.getBlokkenBoxGridPane().EMPTY_COLOR_BLUE? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                            blok.setGrootte((rectangle.getWidth() == view.getBlokkenBoxView().BIG_SIZE_EMPTY*2? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
+                            blok.setKleur(rectangle.getFill() == view.getBlokkenBoxView().EMPTY_COLOR_BLUE? Blok.Kleur.ZWART: Blok.Kleur.WIT);
                         } else {
                             blok.setVulling(Blok.Vulling.VOL);
-                            blok.setGrootte((rectangle.getWidth() == view.getBlokkenBoxGridPane().BIG_SIZE*2? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                            blok.setKleur(rectangle.getFill() == view.getBlokkenBoxGridPane().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                            blok.setGrootte((rectangle.getWidth() == view.getBlokkenBoxView().BIG_SIZE*2? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
+                            blok.setKleur(rectangle.getFill() == view.getBlokkenBoxView().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
                         }
                         model.kiesBlok(blok);
                         updateView();
@@ -211,7 +223,7 @@ public class MainScreenPresenter {
                 });
             }
         }
-        // Playbord events
+        // eventhandlers voor het speelBord
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 view.getSpeelBordView().getNodeByRowColumnIndex(i,j).setOnMouseClicked(new EventHandler<MouseEvent>() {

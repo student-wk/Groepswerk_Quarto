@@ -23,6 +23,9 @@ public class SpeelBordView extends GridPane {
     public static final int SMALL_SIZE = 20;
     public static final int SMALL_SIZE_EMPTY = 16;
     public static final int STROKE_WIDTH_SMALL = 8;
+
+    //Moeten deze objecten nog worden gebruikt?
+
     private Circle CircleRedFullBig;
     private Circle CircleRedFullSmall;
     private Circle CircleRedEmptyBig;
@@ -65,6 +68,10 @@ public class SpeelBordView extends GridPane {
         return result;
     }
 
+    /*
+    * Verwijdert een node uit een cel van de gridpane.
+    * */
+
     public void removeNodeByRowColumnIndex(final int row,final int column) {
 
         ObservableList<Node> childrens = this.getChildren();
@@ -76,8 +83,6 @@ public class SpeelBordView extends GridPane {
         }
     }
 
-
-
     public void layoutNodes() {
         layoutBlokkenBox();
         this.setGridLinesVisible(true);
@@ -85,8 +90,17 @@ public class SpeelBordView extends GridPane {
         this.setAlignment(Pos.CENTER);
     }
 
+    /*
+    * Willem: Bedoel je initialiseSpeelBord? Volgens mij moet hier de grijze cirkel worden aangemaakt.
+    * */
+
     public void inialiseBlokkkenBox() {
     }
+
+    /*
+    * Willem: Bedoel je layoutSpeelBord?
+    * Hier worden de grijze cirkels op het speelbord geplaatst.
+    * */
 
     public void layoutBlokkenBox() {
         for (int row = 0;row < 4 ; row++) {
@@ -98,8 +112,14 @@ public class SpeelBordView extends GridPane {
         }
     }
 
+    /*
+    * Willem: Moet dit mss in de presenter gedaan worden?
+    * Methode geeft een positie een blok van het model mee als parameters. De methode tekent de overeenkomende afbeelding
+    * van de blok en plaatst deze daarna op de juiste positie op het speelbord.
+    * */
+
     public void addPiece(int rowIndex, int colIndex, Blok gekozenBlok) {
-        this.removeNodeByRowColumnIndex(rowIndex, colIndex);
+        this.removeNodeByRowColumnIndex(rowIndex, colIndex); // Verwijdert eerst de grijze cirkel uit de gekozen positie.
         if (gekozenBlok.getVorm().equals(Blok.Vorm.ROND)){
             Circle circle = new Circle();
             if (gekozenBlok.getKleur().equals(Blok.Kleur.WIT)){
@@ -190,9 +210,6 @@ public class SpeelBordView extends GridPane {
             }
             this.add(rectangle, colIndex, rowIndex);
             GridPane.setConstraints(rectangle, colIndex, rowIndex, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
-
         }
-
-
     }
 }
