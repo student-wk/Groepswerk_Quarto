@@ -10,7 +10,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
-public class BlokkenBoxGridPane extends GridPane {
+// Willem: naam klasse veranderd naar BlokkenBoxView
+
+public class BlokkenBoxView extends GridPane {
     public final Color BlUE_COLOR = Color.BLUE;
     public final Color RED_COLOR = Color.RED;
     public final Color EMPTY_COLOR_RED = Color.BROWN;
@@ -29,7 +31,7 @@ public class BlokkenBoxGridPane extends GridPane {
     private Circle [][] circles;
     private Rectangle[][] rectangles;
 
-    public BlokkenBoxGridPane() {
+    public BlokkenBoxView() {
         circles = new Circle[ROW_SIZE][COL_SIZE];
         rectangles = new Rectangle[ROW_SIZE][COL_SIZE];
         initialiseNodes();
@@ -37,6 +39,10 @@ public class BlokkenBoxGridPane extends GridPane {
     }
 
     public void initialiseNodes() {
+
+        /*
+        * Maakt twee kolommen grijze cirkels en twee kolommen grijze vierkanten aan in de afgebeelde blokkenbox.
+        * */
 
         for (int i = 0; i < ROW_SIZE; i++) {
             for (int j = 0; j < COL_SIZE; j++) {
@@ -46,30 +52,35 @@ public class BlokkenBoxGridPane extends GridPane {
 
         }
 
+        /*
+        * In deze methodes worden de afbeeldingen van de cirkels en vierkanten aangemaakt en in de cirkel array of de
+        * vierkant array geplaatst.
+        * */
+
         for (Blok.Grootte grootte : Blok.Grootte.values()) {
             for (Blok.Kleur kleur : Blok.Kleur.values()) {
                 for (Blok.Vorm vorm : Blok.Vorm.values()) {
                     for (Blok.Vulling vulling : Blok.Vulling.values()) {
-                        Blok blok = new Blok(grootte,kleur,vorm,vulling);
+                        Blok blok = new Blok(grootte,kleur,vorm,vulling); //Er wordt voor iedere blok in het model hier een blok aangemaakt.
                         if (blok.getVorm().equals(Blok.Vorm.ROND)){
                             if (blok.getKleur().equals(Blok.Kleur.WIT)){
-                                int colIndex = 0;
+                                int colIndex = 0; // Dit deel van de methode gaat alleen over de eerste kolom.
                                 int rowIndex;
                                 if (blok.getVulling().equals(Blok.Vulling.VOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
-                                    rowIndex = 0;
+                                    rowIndex = 0; // De volle, grote, witte cirkelafbeeldingen komen in de eerste rij terecht.
                                     circles[rowIndex][colIndex].setFill(RED_COLOR);
                                 } else if (blok.getVulling().equals(Blok.Vulling.VOL) && blok.getGrootte().equals(Blok.Grootte.KLEIN)){
-                                    rowIndex = 1;
+                                    rowIndex = 1; // De volle, kleine, witte cirkelafbeeldingen komen in de tweede rij terecht.
                                     circles[rowIndex][colIndex].setRadius(SMALL_SIZE);
                                     circles[rowIndex][colIndex].setFill(RED_COLOR);
                                 } else if (blok.getVulling().equals(Blok.Vulling.HOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
-                                    rowIndex = 2;
+                                    rowIndex = 2; // De holle, grote, witte cirkelafbeeldingen komen in de derde rij terecht.
                                     circles[rowIndex][colIndex].setRadius(BIG_SIZE_EMPTY);
                                     circles[rowIndex][colIndex].setStroke(RED_COLOR);
                                     circles[rowIndex][colIndex].setFill(EMPTY_COLOR_RED);
                                     circles[rowIndex][colIndex].setStrokeWidth(STROKE_WIDTH_BIG);
                                 } else {
-                                    rowIndex = 3;
+                                    rowIndex = 3; // De holle, kleine, witte cirkelafbeeldingen komen in de vierde rij terecht.
                                     circles[rowIndex][colIndex].setRadius(SMALL_SIZE_EMPTY);
                                     circles[rowIndex][colIndex].setStroke(RED_COLOR);
                                     circles[rowIndex][colIndex].setFill(EMPTY_COLOR_RED);
@@ -160,6 +171,10 @@ public class BlokkenBoxGridPane extends GridPane {
             }
         }
     }
+
+    /*
+    * De afbeeldingen van de blokken worden op de juiste plaats van de gridpane geplaatst.
+    * */
 
     public void layoutNodes() {
         this.setGridLinesVisible(true);

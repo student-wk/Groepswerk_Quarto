@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 import javafx.stage.*;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
-import java.util.Iterator;
+
 
 public class Main extends Application {
 
