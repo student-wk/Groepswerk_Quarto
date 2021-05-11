@@ -32,7 +32,7 @@ public class SpeelBordView extends GridPane {
     }
 
     public void initialiseNodes() {
-        inialiseBlokkkenBox();
+        initialiseSpeelBord();
     }
 
     public Node getNodeByRowColumnIndex (final int row, final int column) {
@@ -60,19 +60,17 @@ public class SpeelBordView extends GridPane {
         }
     }
 
-
-
     public void layoutNodes() {
-        layoutBlokkenBox();
+        layoutSpeelBord();
         this.setGridLinesVisible(true);
         setHgap(10);
         this.setAlignment(Pos.CENTER);
     }
 
-    public void inialiseBlokkkenBox() {
+    public void initialiseSpeelBord() {
     }
 
-    public void layoutBlokkenBox() {
+    public void layoutSpeelBord() {
         for (int row = 0;row < 4 ; row++) {
             for (int col = 0; col < 4; col++) {
                 Circle greyCicle = new Circle(BIG_SIZE, Color.GRAY);
@@ -82,7 +80,7 @@ public class SpeelBordView extends GridPane {
         }
     }
 
-    public void addPiece(int rowIndex, int colIndex, Blok gekozenBlok) {
+    public void voegBlokToe(int rowIndex, int colIndex, Blok gekozenBlok) {
         this.removeNodeByRowColumnIndex(rowIndex, colIndex);
         if (gekozenBlok.getVorm().equals(Blok.Vorm.ROND)){
             Circle circle = new Circle();
@@ -174,9 +172,6 @@ public class SpeelBordView extends GridPane {
             }
             this.add(rectangle, colIndex, rowIndex);
             GridPane.setConstraints(rectangle, colIndex, rowIndex, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
-
         }
-
-
     }
 }
