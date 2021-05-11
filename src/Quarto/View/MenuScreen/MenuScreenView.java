@@ -33,7 +33,7 @@ public class MenuScreenView extends VBox {
     private Button terug;
     private Button afsluiten;
 
-    public MenuScreenView() {
+    public MenuScreenView(UISettings uiSettings) {
         this.uiSettings = uiSettings;
         this.initialiseNodes();
         this.layoutNodes();

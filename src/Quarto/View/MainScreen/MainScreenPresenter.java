@@ -441,7 +441,7 @@ public class MainScreenPresenter {
             public void handle(WindowEvent event) { handleCloseEvent(event); }});
     }
 
-    private void handleCloseEvent(Event event){
+    public void handleCloseEvent(Event event){
         final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
         stopWindow.setHeaderText("Je gaat de applicatie afsluiten.");
         stopWindow.setContentText("Ben je zeker? Onopgeslaagde data kan verloren gaan.");

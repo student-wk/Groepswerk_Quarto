@@ -12,6 +12,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.WindowEvent;
 
+import java.net.MalformedURLException;
+
 /**
  * @author Willem Kuijpers
  * @version 1.0 10-5-2021 15:46
@@ -36,6 +38,11 @@ public class MenuScreenPresenter {
     }
 
     private void EventHandlers() {
+        nieuwSpelHandler();
+        afsluitenHandler();
+    }
+
+    private void nieuwSpelHandler() {
         view.getNieuwSpel().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -43,13 +50,31 @@ public class MenuScreenPresenter {
                 MainScreenPresenter mainScreenPresenter = new MainScreenPresenter(model,mainScreenView,uiSettings);
                 view.getScene().setRoot(mainScreenView);
                 mainScreenView.getScene().getWindow().sizeToScene();
+                try {
+                    mainScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+                } catch (MalformedURLException ex) {
+                    // // do nothing, if toURL-conversion fails, program can continue
+                }
+                mainScreenView.getScene().getWindow().sizeToScene();
+                mainScreenView.getScene().getWindow().setX(uiSettings.getResX()/20);
+                mainScreenView.getScene().getWindow().setY(uiSettings.getResY()/20);
+                mainScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
+                mainScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
+                mainScreenPresenter.windowsHandler();
             }
         });
     }
 
-    //Weet nog niet of ik dit ga gebruiken:
+    private void afsluitenHandler() {
+        view.getAfsluiten().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                handleCloseEvent(actionEvent);
+            }
+        });
+    }
 
-/*    public void windowsHandler() {
+    public void windowsHandler() {
         view.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) { handleCloseEvent(event); }});
@@ -70,8 +95,6 @@ public class MenuScreenPresenter {
         } else {
             view.getScene().getWindow().hide();
         }
-    }*/
-
-
+    }
 }
 
