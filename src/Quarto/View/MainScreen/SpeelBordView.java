@@ -24,26 +24,6 @@ public class SpeelBordView extends GridPane {
     public static final int SMALL_SIZE_EMPTY = 16;
     public static final int STROKE_WIDTH_SMALL = 8;
 
-    //Moeten deze objecten nog worden gebruikt?
-
-    private Circle CircleRedFullBig;
-    private Circle CircleRedFullSmall;
-    private Circle CircleRedEmptyBig;
-    private Circle CircleRedEmptySmall;
-    private Circle CircleBlueFullBig;
-    private Circle CircleBlueFullSmall;
-    private Circle CircleBlueEmptyBig;
-    private Circle CircleBlueEmptySmall;
-
-    private Rectangle RectRedFullBig;
-    private Rectangle RectRedFullSmall;
-    private Rectangle RectRedEmptyBig;
-    private Rectangle RectRedEmptySmall;
-    private Rectangle RectBlueFullBig;
-    private Rectangle RectBlueFullSmall;
-    private Rectangle RectBlueEmptyBig;
-    private Rectangle RectBlueEmptySmall;
-
 
     public SpeelBordView() {
         initialiseNodes();
@@ -51,7 +31,7 @@ public class SpeelBordView extends GridPane {
     }
 
     public void initialiseNodes() {
-        inialiseBlokkkenBox();
+        initialiseSpeelBord();
     }
 
     public Node getNodeByRowColumnIndex (final int row, final int column) {
@@ -84,25 +64,16 @@ public class SpeelBordView extends GridPane {
     }
 
     public void layoutNodes() {
-        layoutBlokkenBox();
+        layoutSpeelBord();
         this.setGridLinesVisible(true);
         setHgap(10);
         this.setAlignment(Pos.CENTER);
     }
 
-    /*
-    * Willem: Bedoel je initialiseSpeelBord? Volgens mij moet hier de grijze cirkel worden aangemaakt.
-    * */
-
-    public void inialiseBlokkkenBox() {
+    public void initialiseSpeelBord() {
     }
 
-    /*
-    * Willem: Bedoel je layoutSpeelBord?
-    * Hier worden de grijze cirkels op het speelbord geplaatst.
-    * */
-
-    public void layoutBlokkenBox() {
+    public void layoutSpeelBord() {
         for (int row = 0;row < 4 ; row++) {
             for (int col = 0; col < 4; col++) {
                 Circle greyCicle = new Circle(BIG_SIZE, Color.GRAY);
@@ -118,7 +89,7 @@ public class SpeelBordView extends GridPane {
     * van de blok en plaatst deze daarna op de juiste positie op het speelbord.
     * */
 
-    public void addPiece(int rowIndex, int colIndex, Blok gekozenBlok) {
+    public void voegBlokToe(int rowIndex, int colIndex, Blok gekozenBlok) {
         this.removeNodeByRowColumnIndex(rowIndex, colIndex); // Verwijdert eerst de grijze cirkel uit de gekozen positie.
         if (gekozenBlok.getVorm().equals(Blok.Vorm.ROND)){
             Circle circle = new Circle();

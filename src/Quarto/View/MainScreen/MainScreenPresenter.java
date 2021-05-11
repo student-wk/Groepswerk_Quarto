@@ -40,15 +40,16 @@ public class MainScreenPresenter {
         EventHandlers();
     }
 
-    /*
-    * Willem: Als we nog meer elementen aan MainScreenView toevoegen, is het mss handig om de huidige code in
-    * updateView() af te schermen in een nieuwe methode updateBlokkenBoxView() ofzo?
-    *
-    * Deze methode zorgt ervoor dat de afgebeelde blokkenbox telkens geupdated wordt naar de huidige toestand van de
-    * BlokkenBox in het model.
-    * */
-
     private void updateView() {
+        updateBlokkenBoxView();
+    }
+
+    /*
+     * Deze methode zorgt ervoor dat de afgebeelde blokkenbox telkens geupdated wordt naar de huidige toestand van de
+     * BlokkenBox in het model.
+     * */
+
+    private void updateBlokkenBoxView() {
         for (Blok.Grootte grootte : Blok.Grootte.values()) {
             for (Blok.Kleur kleur : Blok.Kleur.values()) {
                 for (Blok.Vorm vorm : Blok.Vorm.values()) {
@@ -168,17 +169,16 @@ public class MainScreenPresenter {
 
     private void updateSpeelBordView(int rowIndex, int colIndex) {
 //        view.getSpeelBordView().removeNodeByRowColumnIndex(rowIndex, colIndex);
-        view.getSpeelBordView().addPiece(rowIndex, colIndex, model.getGekozenBlok());
+        view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getGekozenBlok());
     }
-
-    /*
-    * Willem: We kunnen misschien de eventhandlers voor de blokkenBox en het speelBord in elk een aparte methode zetten
-    * en dan toevoegen aan EventHandlers()?
-    * */
 
     private void EventHandlers() {
         addMenuEventHandlers();
-        //eventhandlers voor de blokkenBox
+        blokkenBoxEventHandlers();
+        speelBordEventHandlers();
+    }
+
+    private void blokkenBoxEventHandlers() {
         for (int i = 0; i < view.getBlokkenBoxView().ROW_SIZE; i++) {
             for (int j = 0; j < view.getBlokkenBoxView().COL_SIZE; j++) {
                 final int row = i;
@@ -223,7 +223,9 @@ public class MainScreenPresenter {
                 });
             }
         }
-        // eventhandlers voor het speelBord
+    }
+
+    private void speelBordEventHandlers() {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 view.getSpeelBordView().getNodeByRowColumnIndex(i,j).setOnMouseClicked(new EventHandler<MouseEvent>() {
