@@ -30,7 +30,6 @@ public class MenuScreenView extends VBox {
     private Button nieuwSpel;
     private Button ranking;
     private Button toonLaatsteSpel;
-    private Button terug;
     private Button afsluiten;
 
     public MenuScreenView(UISettings uiSettings) {
@@ -42,15 +41,14 @@ public class MenuScreenView extends VBox {
     private void initialiseNodes() {
         this.nieuwSpel = new Button("Nieuw Spel");
         this.ranking = new Button("Ranking");
-        this.toonLaatsteSpel = new Button("Toon Laatste Spel");
-        this.terug = new Button("Terug");
+        this.toonLaatsteSpel = new Button("Laatste Spel");
         this.afsluiten = new Button("Afsluiten");
     }
 
     private void layoutNodes() {
         this.setSpacing(20);
         this.setPadding(new Insets(20));
-        this.getChildren().addAll(nieuwSpel,ranking,toonLaatsteSpel,terug,afsluiten);
+        this.getChildren().addAll(nieuwSpel,ranking,toonLaatsteSpel,afsluiten);
         this.setAlignment(Pos.CENTER);
 
     }
@@ -69,10 +67,6 @@ public class MenuScreenView extends VBox {
 
     public Button getToonLaatsteSpel() {
         return toonLaatsteSpel;
-    }
-
-    public Button getTerug() {
-        return terug;
     }
 
     public Button getAfsluiten() {

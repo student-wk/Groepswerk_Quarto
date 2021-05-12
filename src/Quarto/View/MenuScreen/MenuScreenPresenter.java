@@ -1,9 +1,12 @@
 package Quarto.View.MenuScreen;
 
 import Quarto.Model.Quarto;
+import Quarto.View.LastGameView.LastGamePresenter;
+import Quarto.View.LastGameView.LastGameView;
 import Quarto.View.MainScreen.MainScreenPresenter;
 import Quarto.View.MainScreen.MainScreenView;
-import Quarto.View.StartScreen.StartScreenView;
+import Quarto.View.RankingScreen.RankingPresenter;
+import Quarto.View.RankingScreen.RankingView;
 import Quarto.View.UISettings;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -39,6 +42,8 @@ public class MenuScreenPresenter {
 
     private void EventHandlers() {
         nieuwSpelHandler();
+        rankingHandler();
+        lastGameHandler();
         afsluitenHandler();
     }
 
@@ -61,6 +66,52 @@ public class MenuScreenPresenter {
                 mainScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
                 mainScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
                 mainScreenPresenter.windowsHandler();
+            }
+        });
+    }
+
+    private void rankingHandler() {
+        view.getRanking().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                RankingView rankingView = new RankingView();
+                RankingPresenter rankingPresenter = new RankingPresenter(model,rankingView,uiSettings);
+                view.getScene().setRoot(rankingView);
+                rankingView.getScene().getWindow().sizeToScene();
+                try {
+                    rankingView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+                } catch (MalformedURLException ex) {
+                    // // do nothing, if toURL-conversion fails, program can continue
+                }
+                rankingView.getScene().getWindow().sizeToScene();
+                rankingView.getScene().getWindow().setX(uiSettings.getResX()/20);
+                rankingView.getScene().getWindow().setY(uiSettings.getResY()/20);
+                rankingView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
+                rankingView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
+                rankingPresenter.windowsHandler();
+            }
+        });
+    }
+
+    private void lastGameHandler() {
+        view.getToonLaatsteSpel().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                LastGameView lastGameView = new LastGameView();
+                LastGamePresenter lastGamePresenter = new LastGamePresenter(model,lastGameView,uiSettings);
+                view.getScene().setRoot(lastGameView);
+                lastGameView.getScene().getWindow().sizeToScene();
+                try {
+                    lastGameView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+                } catch (MalformedURLException ex) {
+                    // // do nothing, if toURL-conversion fails, program can continue
+                }
+                lastGameView.getScene().getWindow().sizeToScene();
+                lastGameView.getScene().getWindow().setX(uiSettings.getResX()/20);
+                lastGameView.getScene().getWindow().setY(uiSettings.getResY()/20);
+                lastGameView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
+                lastGameView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
+                lastGamePresenter.windowsHandler();
             }
         });
     }

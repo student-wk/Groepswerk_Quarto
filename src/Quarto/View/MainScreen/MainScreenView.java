@@ -10,6 +10,8 @@ public class MainScreenView extends BorderPane  {
     private MenuItem saveMI;
     private MenuItem loadMI;
     private MenuItem settingsMI;
+    private MenuItem rankingMI;
+    private MenuItem lastGameMI;
     private MenuItem aboutMI;
     private MenuItem infoMI;
     private UISettings uiSettings;
@@ -25,10 +27,12 @@ public class MainScreenView extends BorderPane  {
     }
 
     private void initialiseNodes() {
-        this.exitMI = new MenuItem("Exit");
-        this.saveMI = new MenuItem("Save");
-        this.loadMI = new MenuItem("Load");
-        this.settingsMI = new MenuItem("Settings");
+        this.exitMI = new MenuItem("Afsluiten");
+        this.saveMI = new MenuItem("Opslaan");
+        this.loadMI = new MenuItem("Laden");
+        this.settingsMI = new MenuItem("Hoofdmenu");
+        this.rankingMI = new MenuItem("Ranking");
+        this.lastGameMI = new MenuItem("Laatste Spel");
         this.aboutMI = new MenuItem("About");
         this.infoMI = new MenuItem("Info");
         this.speelBordView = new SpeelBordView();
@@ -36,7 +40,7 @@ public class MainScreenView extends BorderPane  {
     }
 
     private void layoutNodes() {
-        Menu menuFile = new Menu("File",null,loadMI, saveMI, new SeparatorMenuItem(), settingsMI, new SeparatorMenuItem(),exitMI);
+        Menu menuFile = new Menu("Bestand",null,loadMI, saveMI, settingsMI,rankingMI,lastGameMI, new SeparatorMenuItem(),exitMI);
         Menu menuHelp = new Menu("Help",null, aboutMI, infoMI);
         MenuBar menuBar = new MenuBar(menuFile,menuHelp);
         setTop(menuBar);
@@ -64,4 +68,11 @@ public class MainScreenView extends BorderPane  {
 
     MenuItem getInfoItem() {return infoMI;}
 
+    public MenuItem getRankingItem() {
+        return rankingMI;
+    }
+
+    public MenuItem getLastGameItem() {
+        return lastGameMI;
+    }
 }

@@ -1,16 +1,14 @@
-package Quarto.View.RankingScreen;
+package Quarto.View.LastGameView;
 
 import Quarto.View.UISettings;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 
 /**
  * @author Willem Kuijpers
- * @version 1.0 11-5-2021 11:56
+ * @version 1.0 12-5-2021 10:40
  */
-public class RankingView extends BorderPane {
+public class LastGameView extends BorderPane {
 
     private UISettings uiSettings;
 
@@ -25,7 +23,7 @@ public class RankingView extends BorderPane {
     private Button terug;
 
 
-    public RankingView() {
+    public LastGameView() {
         this.uiSettings = uiSettings;
         initialiseNodes();
         layoutNodes();
