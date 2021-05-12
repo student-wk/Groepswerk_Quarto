@@ -36,14 +36,8 @@ public class NamesPresenter {
         view.getStartButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                String speler1 = view.getPlayer1TextField().getAccessibleText();
-                String speler2 = view.getPlayer2TextField().getAccessibleText();
-                model.setSpeler1(new Speler(speler1, 0));
-                model.setSpeler2(new Speler(speler2 ,0));
+                model.setPlayers( view.getPlayer1TextField().getText(),  view.getPlayer2TextField().getText());
                 model.kieSpeler();
-                System.out.println("actieve speler: "+ model.getAlleSpelers().getActieveSpeler());
-
-
 
                 MainScreenView mainScreenView = new MainScreenView(uiSettings);
                 MainScreenPresenter mainScreenPresenter = new MainScreenPresenter(model,mainScreenView,uiSettings);

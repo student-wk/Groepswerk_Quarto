@@ -7,8 +7,8 @@ public class Quarto {
     private final Speelbord speelbord;
     private Blok gekozenBlok;
     private AlleSpelers alleSpelers;
-    private Speler speler1;
-    private Speler speler2;
+//    private Speler speler1;
+//    private Speler speler2;
 
 //    Speler speler1 = new Speler("Delawar", 0);
 //    Speler speler2 = new Speler("Willem", 0);
@@ -19,11 +19,15 @@ public class Quarto {
         this.blokkenBox = new BlokkenBox();
         this.speelbord = new Speelbord();
         this.gekozenBlok = null;
-        this.alleSpelers = new AlleSpelers(speler1, speler2);
+
 //        this.alleSpelers.kiesSpeler();
 //        System.out.println();
 //        System.out.println("actieve speler: "+ this.getAlleSpelers().getActieveSpeler());
 
+    }
+
+    public  void setPlayers(String speler1, String speler2) {
+        this.alleSpelers = new AlleSpelers(new Speler(speler1, 0), new Speler(speler2,0));
     }
 
 /*
@@ -37,6 +41,13 @@ public class Quarto {
             } else {
                 this.gekozenBlok = blok;
                 blokkenBox.neemBlok(blok);
+
+
+
+                alleSpelers.afwisselen(count++);
+
+                System.out.println("actieve speler: "+ this.getAlleSpelers().getActieveSpeler());
+
             }
 
         } catch (QuartoException ex) {
@@ -82,17 +93,16 @@ public class Quarto {
         }
     }
 
-    public void setSpeler1(Speler speler1) {
-        this.speler1 = speler1;
-    }
-
-    public void setSpeler2(Speler speler2) {
-        this.speler2 = speler2;
-    }
+//    public void setSpeler1(Speler speler1) {
+//        this.speler1 = speler1;
+//    }
+//
+//    public void setSpeler2(Speler speler2) {
+//        this.speler2 = speler2;
+//    }
 
     public void kieSpeler(){
-
-        alleSpelers.afwisselen(count++);
+        alleSpelers.kiesSpeler();
         System.out.println("actieve speler: "+ this.getAlleSpelers().getActieveSpeler());
 
     }

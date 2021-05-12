@@ -30,8 +30,8 @@ public class NamesView extends GridPane {
     }
 
     public void initialiseNodes() {
-        player1TextField = new TextField("Enter Name");
-        player2TextField = new TextField("Enter Name");
+        player1TextField = new TextField();
+        player2TextField = new TextField();
 
         player1Label = new Label("Name player 1");
         player2Label = new Label("Name player 2");

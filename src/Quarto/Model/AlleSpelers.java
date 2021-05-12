@@ -38,6 +38,7 @@ public class AlleSpelers {
 * */
 
     public Speler afwisselen(int i) {
+
         if (i % 2 == 0) {
             actieveSpeler = speler2;
         } else {
