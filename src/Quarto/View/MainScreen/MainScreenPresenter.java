@@ -252,6 +252,7 @@ public class MainScreenPresenter {
         }
     }
 
+
     public void addMenuEventHandlers(){
         view.getSettingsItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override

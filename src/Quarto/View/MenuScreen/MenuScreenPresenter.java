@@ -10,6 +10,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.WindowEvent;
 
 import java.net.MalformedURLException;
@@ -46,21 +47,23 @@ public class MenuScreenPresenter {
         view.getNieuwSpel().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                MainScreenView mainScreenView = new MainScreenView(uiSettings);
-                MainScreenPresenter mainScreenPresenter = new MainScreenPresenter(model,mainScreenView,uiSettings);
-                view.getScene().setRoot(mainScreenView);
-                mainScreenView.getScene().getWindow().sizeToScene();
+
+
+                NamesView namesView = new NamesView(uiSettings);
+                NamesPresenter namesPresenter = new NamesPresenter(model,namesView,uiSettings);
+                view.getScene().setRoot(namesView);
+                namesView.getScene().getWindow().sizeToScene();
                 try {
-                    mainScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+                    namesView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
                 } catch (MalformedURLException ex) {
                     // // do nothing, if toURL-conversion fails, program can continue
                 }
-                mainScreenView.getScene().getWindow().sizeToScene();
-                mainScreenView.getScene().getWindow().setX(uiSettings.getResX()/20);
-                mainScreenView.getScene().getWindow().setY(uiSettings.getResY()/20);
-                mainScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
-                mainScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
-                mainScreenPresenter.windowsHandler();
+                namesView.getScene().getWindow().sizeToScene();
+                namesView.getScene().getWindow().setX(uiSettings.getResX()/20);
+                namesView.getScene().getWindow().setY(uiSettings.getResY()/20);
+                namesView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
+                namesView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
+//                mainScreenPresenter.windowsHandler();
             }
         });
     }

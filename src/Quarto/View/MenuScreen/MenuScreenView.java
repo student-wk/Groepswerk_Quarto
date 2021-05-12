@@ -52,7 +52,6 @@ public class MenuScreenView extends VBox {
         this.setPadding(new Insets(20));
         this.getChildren().addAll(nieuwSpel,ranking,toonLaatsteSpel,terug,afsluiten);
         this.setAlignment(Pos.CENTER);
-
     }
 
     public UISettings getUiSettings() {
