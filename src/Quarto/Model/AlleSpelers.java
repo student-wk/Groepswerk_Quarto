@@ -37,11 +37,11 @@ public class AlleSpelers {
 * actieveSpeler = speler1, even is speler2.
 * */
 
-    public Speler afwisselen(int i) {
+    public Speler afwisselen() {
 
-        if (i % 2 == 0) {
+        if (actieveSpeler == speler1) {
             actieveSpeler = speler2;
-        } else {
+        } else if (actieveSpeler == speler2){
             actieveSpeler = speler1;
         }
         return actieveSpeler;

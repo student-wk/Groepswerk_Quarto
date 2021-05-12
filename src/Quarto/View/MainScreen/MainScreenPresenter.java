@@ -194,17 +194,37 @@ public class MainScreenPresenter {
                         Blok blok = new Blok();
                         Circle circle = view.getBlokkenBoxView().getCircles()[row][col];
                         blok.setVorm(Blok.Vorm.ROND);
-                        if (circle.toString().length()>70){
-                            blok.setVulling(Blok.Vulling.HOL);
-                            blok.setGrootte((circle.getRadius() == view.getBlokkenBoxView().BIG_SIZE_EMPTY? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                            blok.setKleur(circle.getFill() == view.getBlokkenBoxView().EMPTY_COLOR_BLUE? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                        if (circle.getFill() == view.getBlokkenBoxView().DEFAULT_COLOR) {
+//                            final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
+//                            noBlokChosen.setTitle("Je kan de applicatie nog niet afsluiten.");
+//                            noBlokChosen.setContentText("Choose aKies een niet gekozen blok");
+//                            noBlokChosen.showAndWait();
+                            mouseEvent.consume();
                         } else {
-                            blok.setVulling(Blok.Vulling.VOL);
-                            blok.setGrootte((circle.getRadius() == view.getBlokkenBoxView().BIG_SIZE? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                            blok.setKleur(circle.getFill() == view.getBlokkenBoxView().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                            if (circle.toString().length()>70){
+                                blok.setVulling(Blok.Vulling.HOL);
+                                blok.setGrootte((circle.getRadius() == view.getBlokkenBoxView().BIG_SIZE_EMPTY? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
+                                blok.setKleur(circle.getFill() == view.getBlokkenBoxView().EMPTY_COLOR_BLUE? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                            } else {
+                                blok.setVulling(Blok.Vulling.VOL);
+                                blok.setGrootte((circle.getRadius() == view.getBlokkenBoxView().BIG_SIZE? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
+                                blok.setKleur(circle.getFill() == view.getBlokkenBoxView().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                            }
+
+                            try {
+                                model.kiesBlok(blok);
+                                updateView();
+
+                            } catch (QuartoException exception){
+                                final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
+                                noBlokChosen.setTitle("Je kan de applicatie nog niet afsluiten.");
+                                noBlokChosen.setContentText(exception.getMessage());
+                                noBlokChosen.showAndWait();
+                                mouseEvent.consume();
+                            }
                         }
-                        model.kiesBlok(blok);
-                        updateView();
+
+
                     }
                 });
                 view.getBlokkenBoxView().getRectangles()[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -213,17 +233,40 @@ public class MainScreenPresenter {
                         Blok blok = new Blok();
                         Rectangle rectangle = view.getBlokkenBoxView().getRectangles()[row][col];
                         blok.setVorm(Blok.Vorm.VIERKANT);
-                        if (rectangle.toString().length()>70){
-                            blok.setVulling(Blok.Vulling.HOL);
-                            blok.setGrootte((rectangle.getWidth() == view.getBlokkenBoxView().BIG_SIZE_EMPTY*2? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                            blok.setKleur(rectangle.getFill() == view.getBlokkenBoxView().EMPTY_COLOR_BLUE? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                        if (rectangle.getFill() == view.getBlokkenBoxView().DEFAULT_COLOR) {
+//                            final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
+//                            noBlokChosen.setTitle("Je kan de applicatie nog niet afsluiten.");
+//                            noBlokChosen.setContentText("Kies aan ander blok");
+//                            noBlokChosen.showAndWait();
+                            mouseEvent.consume();
                         } else {
-                            blok.setVulling(Blok.Vulling.VOL);
-                            blok.setGrootte((rectangle.getWidth() == view.getBlokkenBoxView().BIG_SIZE*2? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                            blok.setKleur(rectangle.getFill() == view.getBlokkenBoxView().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                            if (rectangle.toString().length()>70){
+                                blok.setVulling(Blok.Vulling.HOL);
+                                blok.setGrootte((rectangle.getWidth() == view.getBlokkenBoxView().BIG_SIZE_EMPTY*2? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
+                                blok.setKleur(rectangle.getFill() == view.getBlokkenBoxView().EMPTY_COLOR_BLUE? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                            } else {
+                                blok.setVulling(Blok.Vulling.VOL);
+                                blok.setGrootte((rectangle.getWidth() == view.getBlokkenBoxView().BIG_SIZE*2? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
+                                blok.setKleur(rectangle.getFill() == view.getBlokkenBoxView().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                            }
+
+                            try {
+                                model.kiesBlok(blok);
+                                updateView();
+
+                            } catch (QuartoException exception){
+                                final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
+                                noBlokChosen.setTitle("Je kan de applicatie nog niet afsluiten.");
+                                noBlokChosen.setContentText(exception.getMessage());
+                                noBlokChosen.showAndWait();
+                                mouseEvent.consume();
+                            }
                         }
-                        model.kiesBlok(blok);
-                        updateView();
+
+
+
+
+
                     }
                 });
             }
@@ -239,9 +282,13 @@ public class MainScreenPresenter {
 
                         int rowIndex = GridPane.getRowIndex((Node) mouseEvent.getSource());
                         int colIndex = GridPane.getColumnIndex((Node) mouseEvent.getSource());
-                        updateSpeelBordView(rowIndex, colIndex);
                         try {
+
                             model.plaatsBlok(new Positie(rowIndex,colIndex));
+                            updateSpeelBordView(rowIndex, colIndex);
+
+                            model.setGekozenBlok(null);
+
 
                             if (model.getSpeelbord().heeftCombinatie()){
                                 System.out.println("Een speler heeft gewonnen");
@@ -249,8 +296,16 @@ public class MainScreenPresenter {
                                 System.out.println("speelbord is vol");
                             }
                         } catch (QuartoException e) {
-                            e.printStackTrace();
+                            final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
+                            noBlokChosen.setTitle("Je kan de applicatie nog niet afsluiten.");
+                            noBlokChosen.setContentText(e.getMessage());
+                            noBlokChosen.showAndWait();
+                            mouseEvent.consume();
+
                         }
+
+
+
                     }
                 });
             }

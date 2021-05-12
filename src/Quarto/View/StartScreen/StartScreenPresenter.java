@@ -77,7 +77,7 @@ public class StartScreenPresenter {
         view.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
              @Override
              public void handle(WindowEvent event) {
-                 final Alert stopWindow = new Alert(Alert.AlertType.ERROR);
+                 Alert stopWindow = new Alert(Alert.AlertType.ERROR);
                  stopWindow.setHeaderText("Je kan de applicatie nog niet afsluiten.");
                  stopWindow.setContentText("Probeer opnieuw als het programma is opgestart.");
                  stopWindow.showAndWait();

@@ -34,25 +34,18 @@ public class Quarto {
 * Geeft telkens een specifieke blok aan gekozenBlok.
 * */
 
-    public void kiesBlok(Blok blok) {
-        try {
-            if (gekozenBlok != null) {
-                throw new IllegalStateException("Er is al een blok als gekozenBlok geselecteerd.");
-            } else {
-                this.gekozenBlok = blok;
-                blokkenBox.neemBlok(blok);
+    public void kiesBlok(Blok blok) throws QuartoException{
 
-
-
-                alleSpelers.afwisselen(count++);
-
-                System.out.println("actieve speler: "+ this.getAlleSpelers().getActieveSpeler());
-
-            }
-
-        } catch (QuartoException ex) {
-            System.out.println("error: " + ex.getMessage());
+        if (gekozenBlok != null) {
+            throw new QuartoException("Er is al een blok als gekozenBlok geselecteerd.");
+        } else {
+            this.gekozenBlok = blok;
+            blokkenBox.neemBlok(blok);
+            alleSpelers.afwisselen();
+            System.out.println("actieve speler: "+ this.getAlleSpelers().getActieveSpeler());
         }
+
+
     }
 
 /*
@@ -61,10 +54,10 @@ public class Quarto {
 
     public void plaatsBlok(Positie positie) throws QuartoException {
         if (this.gekozenBlok == null) {
-            throw new IllegalStateException("Er is geen gekozenBlok geselecteerd.");
+            throw new QuartoException("Er is geen gekozenBlok geselecteerd.");
         } else {
             speelbord.voegBlokToe(gekozenBlok, positie);
-            this.gekozenBlok = null;
+//            this.gekozenBlok = null;
         }
     }
 
@@ -105,5 +98,9 @@ public class Quarto {
         alleSpelers.kiesSpeler();
         System.out.println("actieve speler: "+ this.getAlleSpelers().getActieveSpeler());
 
+    }
+
+    public void setGekozenBlok(Blok gekozenBlok) {
+        this.gekozenBlok = gekozenBlok;
     }
 }
