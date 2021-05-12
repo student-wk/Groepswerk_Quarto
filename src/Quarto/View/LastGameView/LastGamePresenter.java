@@ -1,14 +1,14 @@
-package Quarto.View.RankingScreen;
+package Quarto.View.LastGameView;
 
 import Quarto.Model.Quarto;
 import Quarto.View.AboutScreen.AboutScreenPresenter;
 import Quarto.View.AboutScreen.AboutScreenView;
 import Quarto.View.InfoScreen.InfoScreenPresenter;
 import Quarto.View.InfoScreen.InfoScreenView;
-import Quarto.View.LastGameView.LastGamePresenter;
-import Quarto.View.LastGameView.LastGameView;
 import Quarto.View.MenuScreen.MenuScreenPresenter;
 import Quarto.View.MenuScreen.MenuScreenView;
+import Quarto.View.RankingScreen.RankingPresenter;
+import Quarto.View.RankingScreen.RankingView;
 import Quarto.View.UISettings;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -32,22 +32,21 @@ import java.util.List;
 
 /**
  * @author Willem Kuijpers
- * @version 1.0 11-5-2021 11:56
+ * @version 1.0 12-5-2021 10:40
  */
-public class RankingPresenter {
+public class LastGamePresenter {
 
     private Quarto model;
-    private RankingView rankingView;
+    private LastGameView lastGameView;
     private UISettings uiSettings;
 
-    public RankingPresenter(Quarto model,RankingView rankingView, UISettings uiSettings) {
+    public LastGamePresenter(Quarto model,LastGameView lastGameView, UISettings uiSettings) {
         this.model = model;
-        this.rankingView = rankingView;
+        this.lastGameView = lastGameView;
         this.uiSettings = uiSettings;
         updateView();
         eventHandlers();
     }
-
 
     private void updateView() {
 
@@ -59,12 +58,12 @@ public class RankingPresenter {
     }
 
     private void terugHandler() {
-        rankingView.getTerug().setOnAction(new EventHandler<ActionEvent>() {
+        lastGameView.getTerug().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 MenuScreenView menuScreenView = new MenuScreenView(uiSettings);
                 MenuScreenPresenter menuScreenPresenter = new MenuScreenPresenter(model, menuScreenView, uiSettings);
-                rankingView.getScene().setRoot(menuScreenView);
+                lastGameView.getScene().setRoot(menuScreenView);
                 try {
                     menuScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
                 } catch (MalformedURLException ex) {
@@ -81,12 +80,12 @@ public class RankingPresenter {
     }
 
     public void addMenuEventHandlers(){
-        rankingView.getSettingsItem().setOnAction(new EventHandler<ActionEvent>() {
+        lastGameView.getSettingsItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 MenuScreenView menuScreenView = new MenuScreenView(uiSettings);
                 MenuScreenPresenter menuScreenPresenter = new MenuScreenPresenter(model, menuScreenView, uiSettings);
-                rankingView.getScene().setRoot(menuScreenView);
+                lastGameView.getScene().setRoot(menuScreenView);
                 try {
                     menuScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
                 } catch (MalformedURLException ex) {
@@ -100,7 +99,7 @@ public class RankingPresenter {
                 menuScreenPresenter.windowsHandler();
             }
         });
-        rankingView.getLoadItem().setOnAction(new EventHandler<ActionEvent>() {
+        lastGameView.getLoadItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 FileChooser fileChooser = new FileChooser();
@@ -108,7 +107,7 @@ public class RankingPresenter {
                 fileChooser.getExtensionFilters().addAll(
                         new FileChooser.ExtensionFilter("Textfiles", "*.txt"),
                         new FileChooser.ExtensionFilter("All Files", "*.*"));
-                File selectedFile = fileChooser.showOpenDialog(rankingView.getScene().getWindow());
+                File selectedFile = fileChooser.showOpenDialog(lastGameView.getScene().getWindow());
                 if ((selectedFile != null) ){ //^ (Files.isReadable(Paths.get(selectedFile.toURI())))) {
                     try {
                         List<String> input = Files.readAllLines(Paths.get(selectedFile.toURI()));
@@ -129,7 +128,7 @@ public class RankingPresenter {
                 }
             }
         });
-        rankingView.getSaveItem().setOnAction(new EventHandler<ActionEvent>() {
+        lastGameView.getSaveItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 FileChooser fileChooser = new FileChooser();
@@ -137,7 +136,7 @@ public class RankingPresenter {
                 fileChooser.getExtensionFilters().addAll(
                         new FileChooser.ExtensionFilter("Textfiles", "*.txt"),
                         new FileChooser.ExtensionFilter("All Files", "*.*"));
-                File selectedFile = fileChooser.showSaveDialog(rankingView.getScene().getWindow());
+                File selectedFile = fileChooser.showSaveDialog(lastGameView.getScene().getWindow());
                 if ((selectedFile != null) ^ (Files.isWritable(Paths.get(selectedFile.toURI())))) {
                     try {
                         Files.deleteIfExists(Paths.get(selectedFile.toURI()));
@@ -162,12 +161,12 @@ public class RankingPresenter {
                 }
             }
         });
-        rankingView.getRankingItem().setOnAction(new EventHandler<ActionEvent>() {
+        lastGameView.getRankingItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 RankingView rankingView = new RankingView();
                 RankingPresenter rankingPresenter = new RankingPresenter(model,rankingView,uiSettings);
-                rankingView.getScene().setRoot(rankingView);
+                lastGameView.getScene().setRoot(rankingView);
                 rankingView.getScene().getWindow().sizeToScene();
                 try {
                     rankingView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
@@ -182,12 +181,12 @@ public class RankingPresenter {
                 rankingPresenter.windowsHandler();
             }
         });
-        rankingView.getLastGameItem().setOnAction(new EventHandler<ActionEvent>() {
+        lastGameView.getLastGameItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 LastGameView lastGameView = new LastGameView();
                 LastGamePresenter lastGamePresenter = new LastGamePresenter(model,lastGameView,uiSettings);
-                rankingView.getScene().setRoot(lastGameView);
+                lastGameView.getScene().setRoot(lastGameView);
                 lastGameView.getScene().getWindow().sizeToScene();
                 try {
                     lastGameView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
@@ -202,25 +201,25 @@ public class RankingPresenter {
                 lastGamePresenter.windowsHandler();
             }
         });
-        rankingView.getExitItem().setOnAction(new EventHandler<ActionEvent>() {
+        lastGameView.getExitItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 handleCloseEvent(event);
             }
         });
-        rankingView.getAboutItem().setOnAction(new EventHandler<ActionEvent>() {
+        lastGameView.getAboutItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 AboutScreenView aboutScreenView = new AboutScreenView(uiSettings);
                 AboutScreenPresenter aboutScreenPresenter = new AboutScreenPresenter(model, aboutScreenView, uiSettings);
                 Stage aboutScreenStage = new Stage();
-                aboutScreenStage.initOwner(rankingView.getScene().getWindow());
+                aboutScreenStage.initOwner(lastGameView.getScene().getWindow());
                 aboutScreenStage.initModality(Modality.APPLICATION_MODAL);
                 Scene scene = new Scene(aboutScreenView);
                 aboutScreenStage.setScene(scene);
                 aboutScreenStage.setTitle(uiSettings.getApplicationName() + " - About");
-                aboutScreenStage.setX(rankingView.getScene().getWindow().getX() + uiSettings.getResX() / 10);
-                aboutScreenStage.setY(rankingView.getScene().getWindow().getY() + uiSettings.getResY() / 10);
+                aboutScreenStage.setX(lastGameView.getScene().getWindow().getX() + uiSettings.getResX() / 10);
+                aboutScreenStage.setY(lastGameView.getScene().getWindow().getY() + uiSettings.getResY() / 10);
                 if (Files.exists(uiSettings.getApplicationIconPath())) {
                     try {
                         aboutScreenStage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
@@ -241,19 +240,19 @@ public class RankingPresenter {
                 }
                 aboutScreenStage.showAndWait();
             }});
-        rankingView.getInfoItem().setOnAction(new EventHandler<ActionEvent>() {
+        lastGameView.getInfoItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 InfoScreenView infoScreenView = new InfoScreenView(uiSettings);
                 InfoScreenPresenter infoScreenPresenter = new InfoScreenPresenter(model, infoScreenView, uiSettings);
                 Stage infoScreenStage = new Stage();
-                infoScreenStage.initOwner(rankingView.getScene().getWindow());
+                infoScreenStage.initOwner(lastGameView.getScene().getWindow());
                 infoScreenStage.initModality(Modality.APPLICATION_MODAL);
                 Scene scene = new Scene(infoScreenView);
                 infoScreenStage.setScene(scene);
                 infoScreenStage.setTitle(uiSettings.getApplicationName()+ " - Info");
-                infoScreenStage.setX(rankingView.getScene().getWindow().getX() + uiSettings.getResX() / 10);
-                infoScreenStage.setY(rankingView.getScene().getWindow().getY() + uiSettings.getResY() / 10);
+                infoScreenStage.setX(lastGameView.getScene().getWindow().getX() + uiSettings.getResX() / 10);
+                infoScreenStage.setY(lastGameView.getScene().getWindow().getY() + uiSettings.getResY() / 10);
                 if (Files.exists(uiSettings.getApplicationIconPath())) {
                     try {
                         infoScreenStage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
@@ -279,7 +278,7 @@ public class RankingPresenter {
     }
 
     public void windowsHandler() {
-        rankingView.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
+        lastGameView.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) { handleCloseEvent(event); }});
     }
@@ -297,7 +296,7 @@ public class RankingPresenter {
         if (stopWindow.getResult() == null || stopWindow.getResult().equals(noButton)) {
             event.consume();
         } else {
-            rankingView.getScene().getWindow().hide();
+            lastGameView.getScene().getWindow().hide();
         }
     }
 }

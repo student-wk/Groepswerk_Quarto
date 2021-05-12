@@ -3,7 +3,12 @@ package Quarto.View.MainScreen;
 import Quarto.Model.*;
 import Quarto.View.AboutScreen.*;
 import Quarto.View.InfoScreen.*;
-import Quarto.View.SettingsScreen.*;
+import Quarto.View.LastGameView.LastGamePresenter;
+import Quarto.View.LastGameView.LastGameView;
+import Quarto.View.MenuScreen.MenuScreenPresenter;
+import Quarto.View.MenuScreen.MenuScreenView;
+import Quarto.View.RankingScreen.RankingPresenter;
+import Quarto.View.RankingScreen.RankingView;
 import Quarto.View.UISettings;
 import javafx.event.*;
 import javafx.scene.*;
@@ -257,51 +262,28 @@ public class MainScreenPresenter {
         view.getSettingsItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                SettingsView settingsView = new SettingsView(uiSettings);
-                SettingsPresenter presenter = new SettingsPresenter(model, settingsView, uiSettings);
-                Stage settingsStage = new Stage();
-                settingsStage.setTitle("Settings");
-                settingsStage.initOwner(view.getScene().getWindow());
-                settingsStage.initModality(Modality.APPLICATION_MODAL);
-                Scene scene = new Scene(settingsView);
-                settingsStage.setScene(scene);
-                settingsStage.setTitle(uiSettings.getApplicationName() + " - Settings");
-                settingsStage.setX(view.getScene().getWindow().getX() + uiSettings.getResX() / 10);
-                settingsStage.setY(view.getScene().getWindow().getY() + uiSettings.getResY() / 10);
-                if (Files.exists(uiSettings.getApplicationIconPath())) {
-                    try {
-                        settingsStage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
-                    } catch (MalformedURLException ex) {
-                        // do nothing, if toURL-conversion fails, program can continue
-                    }
-                } else { // do nothing, if ApplicationIconImage is not available, program can continue
+                MenuScreenView menuScreenView = new MenuScreenView(uiSettings);
+                MenuScreenPresenter menuScreenPresenter = new MenuScreenPresenter(model, menuScreenView, uiSettings);
+                view.getScene().setRoot(menuScreenView);
+                try {
+                    menuScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+                } catch (MalformedURLException ex) {
+                    // // do nothing, if toURL-conversion fails, program can continue
                 }
-                settingsView.getScene().getWindow().setHeight(7 * uiSettings.getResY() / 10);
-                settingsView.getScene().getWindow().setWidth(7 * uiSettings.getResX() / 10);
-                if (uiSettings.styleSheetAvailable()) {
-                    settingsStage.getScene().getStylesheets().removeAll();
-                    try {
-                        settingsStage.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-                    } catch (MalformedURLException ex) {
-                        // do nothing, if toURL-conversion fails, program can continue
-                    }
-                }
-                settingsStage.showAndWait();
-                if (uiSettings.styleSheetAvailable()) {
-                    view.getScene().getStylesheets().removeAll();
-                    try {
-                        view.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-                    } catch (MalformedURLException ex) {
-                        // do nothing, if toURL-conversion fails, program can continue
-                    }
-                }
+                menuScreenView.getScene().getWindow().sizeToScene();
+                menuScreenView.getScene().getWindow().setX(uiSettings.getResX() / 20);
+                menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
+                menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
+                menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
+                menuScreenPresenter.windowsHandler();
             }
         });
+
         view.getLoadItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Load Data File");
+                fileChooser.setTitle("Laad data bestand");
                 fileChooser.getExtensionFilters().addAll(
                         new FileChooser.ExtensionFilter("Textfiles", "*.txt"),
                         new FileChooser.ExtensionFilter("All Files", "*.*"));
@@ -320,8 +302,8 @@ public class MainScreenPresenter {
                     }
                 } else {
                     Alert errorWindow = new Alert(Alert.AlertType.ERROR);
-                    errorWindow.setHeaderText("Problem with the selected input file:");
-                    errorWindow.setContentText("File is not readable");
+                    errorWindow.setHeaderText("Probleem met het geselecteerde input bestand:");
+                    errorWindow.setContentText("Bestand is niet leesbaar");
                     errorWindow.showAndWait();
                 }
             }
@@ -330,7 +312,7 @@ public class MainScreenPresenter {
             @Override
             public void handle(ActionEvent event) {
                 FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Save Data File");
+                fileChooser.setTitle("Sla data bestand op");
                 fileChooser.getExtensionFilters().addAll(
                         new FileChooser.ExtensionFilter("Textfiles", "*.txt"),
                         new FileChooser.ExtensionFilter("All Files", "*.*"));
@@ -343,10 +325,10 @@ public class MainScreenPresenter {
                     }
                     try (Formatter output = new Formatter(selectedFile)) {
                         // Begin implementeren wegschrijven model-gegevens
-                        output.format("%s%n", "Here comes the data!");
-                        output.format("%s%n", "First record");
+                        output.format("%s%n", "Hier komt de data!");
+                        output.format("%s%n", "Eerste opslag");
                         output.format("%s%n", "...");
-                        output.format("%s%n", "Last record");
+                        output.format("%s%n", "Laatste opslag");
                         // Einde implementeren wegschrijven model-gegevens
                     } catch (IOException e) {
                         //
@@ -357,6 +339,46 @@ public class MainScreenPresenter {
                     errorWindow.setContentText("File is not writable");
                     errorWindow.showAndWait();
                 }
+            }
+        });
+        view.getRankingItem().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                RankingView rankingView = new RankingView();
+                RankingPresenter rankingPresenter = new RankingPresenter(model,rankingView,uiSettings);
+                view.getScene().setRoot(rankingView);
+                rankingView.getScene().getWindow().sizeToScene();
+                try {
+                    rankingView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+                } catch (MalformedURLException ex) {
+                    // // do nothing, if toURL-conversion fails, program can continue
+                }
+                rankingView.getScene().getWindow().sizeToScene();
+                rankingView.getScene().getWindow().setX(uiSettings.getResX()/20);
+                rankingView.getScene().getWindow().setY(uiSettings.getResY()/20);
+                rankingView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
+                rankingView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
+                rankingPresenter.windowsHandler();
+            }
+        });
+        view.getLastGameItem().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                LastGameView lastGameView = new LastGameView();
+                LastGamePresenter lastGamePresenter = new LastGamePresenter(model,lastGameView,uiSettings);
+                view.getScene().setRoot(lastGameView);
+                lastGameView.getScene().getWindow().sizeToScene();
+                try {
+                    lastGameView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+                } catch (MalformedURLException ex) {
+                    // // do nothing, if toURL-conversion fails, program can continue
+                }
+                lastGameView.getScene().getWindow().sizeToScene();
+                lastGameView.getScene().getWindow().setX(uiSettings.getResX()/20);
+                lastGameView.getScene().getWindow().setY(uiSettings.getResY()/20);
+                lastGameView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
+                lastGameView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
+                lastGamePresenter.windowsHandler();
             }
         });
         view.getExitItem().setOnAction(new EventHandler<ActionEvent>() {
@@ -434,7 +456,6 @@ public class MainScreenPresenter {
                 infoScreenStage.showAndWait();
             }});
     }
-
 
     public void windowsHandler() {
         view.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
