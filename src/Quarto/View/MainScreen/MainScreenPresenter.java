@@ -195,10 +195,7 @@ public class MainScreenPresenter {
                         Circle circle = view.getBlokkenBoxView().getCircles()[row][col];
                         blok.setVorm(Blok.Vorm.ROND);
                         if (circle.getFill() == view.getBlokkenBoxView().DEFAULT_COLOR) {
-//                            final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
-//                            noBlokChosen.setTitle("Je kan de applicatie nog niet afsluiten.");
-//                            noBlokChosen.setContentText("Choose aKies een niet gekozen blok");
-//                            noBlokChosen.showAndWait();
+                            // consume event when clicked on preselected pieces
                             mouseEvent.consume();
                         } else {
                             if (circle.toString().length()>70){
@@ -216,8 +213,8 @@ public class MainScreenPresenter {
                                 updateView();
 
                             } catch (QuartoException exception){
-                                final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
-                                noBlokChosen.setTitle("Je kan de applicatie nog niet afsluiten.");
+                                final Alert noBlokChosen = new Alert(Alert.AlertType.INFORMATION);
+                                noBlokChosen.setTitle("Place a piece on the playbord.");
                                 noBlokChosen.setContentText(exception.getMessage());
                                 noBlokChosen.showAndWait();
                                 mouseEvent.consume();
@@ -234,10 +231,7 @@ public class MainScreenPresenter {
                         Rectangle rectangle = view.getBlokkenBoxView().getRectangles()[row][col];
                         blok.setVorm(Blok.Vorm.VIERKANT);
                         if (rectangle.getFill() == view.getBlokkenBoxView().DEFAULT_COLOR) {
-//                            final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
-//                            noBlokChosen.setTitle("Je kan de applicatie nog niet afsluiten.");
-//                            noBlokChosen.setContentText("Kies aan ander blok");
-//                            noBlokChosen.showAndWait();
+                            // consume event when clicked on preselected pieces
                             mouseEvent.consume();
                         } else {
                             if (rectangle.toString().length()>70){
@@ -255,8 +249,8 @@ public class MainScreenPresenter {
                                 updateView();
 
                             } catch (QuartoException exception){
-                                final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
-                                noBlokChosen.setTitle("Je kan de applicatie nog niet afsluiten.");
+                                final Alert noBlokChosen = new Alert(Alert.AlertType.INFORMATION);
+                                noBlokChosen.setTitle("Place a piece on the playbord.");
                                 noBlokChosen.setContentText(exception.getMessage());
                                 noBlokChosen.showAndWait();
                                 mouseEvent.consume();
@@ -291,13 +285,24 @@ public class MainScreenPresenter {
 
 
                             if (model.getSpeelbord().heeftCombinatie()){
-                                System.out.println("Een speler heeft gewonnen");
+                                System.out.println("A player has won");
                             } else if (model.getSpeelbord().isVol()){
                                 System.out.println("speelbord is vol");
+                                final Alert playBordFull = new Alert(Alert.AlertType.ERROR);
+                                playBordFull.setTitle("Playbord full!");
+                                playBordFull.setContentText("Playbord is full, do you want to play again?");
+                                playBordFull.getButtonTypes().clear();
+                                ButtonType noButton = new ButtonType("NO");
+                                ButtonType yesButton = new ButtonType("YES");
+                                playBordFull.getButtonTypes().addAll(yesButton, noButton);
+                                playBordFull.showAndWait();
+                                if (playBordFull.getResult() == null || playBordFull.getResult().equals(noButton)) {
+                                    playBordFull.close();
+                                }
                             }
                         } catch (QuartoException e) {
                             final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
-                            noBlokChosen.setTitle("Je kan de applicatie nog niet afsluiten.");
+                            noBlokChosen.setTitle("You cannot close the application yet.");
                             noBlokChosen.setContentText(e.getMessage());
                             noBlokChosen.showAndWait();
                             mouseEvent.consume();
@@ -338,7 +343,7 @@ public class MainScreenPresenter {
             @Override
             public void handle(ActionEvent event) {
                 FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Laad data bestand");
+                fileChooser.setTitle("Load data file");
                 fileChooser.getExtensionFilters().addAll(
                         new FileChooser.ExtensionFilter("Textfiles", "*.txt"),
                         new FileChooser.ExtensionFilter("All Files", "*.*"));
@@ -357,8 +362,8 @@ public class MainScreenPresenter {
                     }
                 } else {
                     Alert errorWindow = new Alert(Alert.AlertType.ERROR);
-                    errorWindow.setHeaderText("Probleem met het geselecteerde input bestand:");
-                    errorWindow.setContentText("Bestand is niet leesbaar");
+                    errorWindow.setHeaderText("Problem with selected file");
+                    errorWindow.setContentText("File not readable");
                     errorWindow.showAndWait();
                 }
             }
@@ -367,7 +372,7 @@ public class MainScreenPresenter {
             @Override
             public void handle(ActionEvent event) {
                 FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Sla data bestand op");
+                fileChooser.setTitle("Save file");
                 fileChooser.getExtensionFilters().addAll(
                         new FileChooser.ExtensionFilter("Textfiles", "*.txt"),
                         new FileChooser.ExtensionFilter("All Files", "*.*"));
@@ -380,10 +385,10 @@ public class MainScreenPresenter {
                     }
                     try (Formatter output = new Formatter(selectedFile)) {
                         // Begin implementeren wegschrijven model-gegevens
-                        output.format("%s%n", "Hier komt de data!");
-                        output.format("%s%n", "Eerste opslag");
+                        output.format("%s%n", "Data will be saved here");
+                        output.format("%s%n", "First save");
                         output.format("%s%n", "...");
-                        output.format("%s%n", "Laatste opslag");
+                        output.format("%s%n", "Last save");
                         // Einde implementeren wegschrijven model-gegevens
                     } catch (IOException e) {
                         //
@@ -520,18 +525,19 @@ public class MainScreenPresenter {
 
     public void handleCloseEvent(Event event){
         final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
-        stopWindow.setHeaderText("Je gaat de applicatie afsluiten.");
-        stopWindow.setContentText("Ben je zeker? Onopgeslaagde data kan verloren gaan.");
+        stopWindow.setHeaderText("You are about to close the application");
+        stopWindow.setContentText("Are you sure, unsaved prgress will be lost");
         stopWindow.setTitle("WAARSCHUWING!");
         stopWindow.getButtonTypes().clear();
-        ButtonType noButton = new ButtonType("Nee");
-        ButtonType yesButton = new ButtonType("Ja");
+        ButtonType noButton = new ButtonType("NO");
+        ButtonType yesButton = new ButtonType("YES");
         stopWindow.getButtonTypes().addAll(yesButton, noButton);
         stopWindow.showAndWait();
         if (stopWindow.getResult() == null || stopWindow.getResult().equals(noButton)) {
             event.consume();
-        } else {
-            view.getScene().getWindow().hide();
         }
+//        else {
+//            view.getScene().getWindow().hide();
+//        }
     }
 }

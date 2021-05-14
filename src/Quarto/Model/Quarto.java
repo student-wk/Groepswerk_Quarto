@@ -37,7 +37,7 @@ public class Quarto {
     public void kiesBlok(Blok blok) throws QuartoException{
 
         if (gekozenBlok != null) {
-            throw new QuartoException("Er is al een blok als gekozenBlok geselecteerd.");
+            throw new QuartoException("Er is al een blok gekozen.");
         } else {
             this.gekozenBlok = blok;
             blokkenBox.neemBlok(blok);
@@ -54,7 +54,7 @@ public class Quarto {
 
     public void plaatsBlok(Positie positie) throws QuartoException {
         if (this.gekozenBlok == null) {
-            throw new QuartoException("Er is geen gekozenBlok geselecteerd.");
+            throw new QuartoException("Er is geen blok geselecteerd.");
         } else {
             speelbord.voegBlokToe(gekozenBlok, positie);
 //            this.gekozenBlok = null;
@@ -80,7 +80,7 @@ public class Quarto {
 
     public Blok getGekozenBlok() {
         if (gekozenBlok == null) {
-            throw new IllegalStateException("Er is geen gekozenBlok geselecteerd.");
+            throw new IllegalStateException("Er is geen blok geselecteerd.");
         } else {
             return gekozenBlok;
         }

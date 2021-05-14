@@ -60,9 +60,9 @@ public class NamesPresenter {
         // Vult de view met data uit model
     }
 
-    public void addWindowEventHandlers() {
-        //Window event handlers (non.innerklassen)
-    }
+//    public void addWindowEventHandlers() {
+//        //Window event handlers (non.innerklassen)
+//    }
 
 
 }
