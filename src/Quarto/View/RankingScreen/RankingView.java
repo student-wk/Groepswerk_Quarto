@@ -15,10 +15,7 @@ public class RankingView extends BorderPane {
     private UISettings uiSettings;
 
     private MenuItem exitMI;
-    private MenuItem saveMI;
-    private MenuItem loadMI;
     private MenuItem settingsMI;
-    private MenuItem rankingMI;
     private MenuItem lastGameMI;
     private MenuItem aboutMI;
     private MenuItem infoMI;
@@ -33,10 +30,7 @@ public class RankingView extends BorderPane {
 
     private void initialiseNodes() {
         this.exitMI = new MenuItem("Afsluiten");
-        this.saveMI = new MenuItem("Opslaan");
-        this.loadMI = new MenuItem("Laden");
         this.settingsMI = new MenuItem("Hoofdmenu");
-        this.rankingMI = new MenuItem("Ranking");
         this.lastGameMI = new MenuItem("Laatste Spel");
         this.aboutMI = new MenuItem("About");
         this.infoMI = new MenuItem("Info");
@@ -45,7 +39,8 @@ public class RankingView extends BorderPane {
     }
 
     private void layoutNodes() {
-        Menu menuFile = new Menu("Bestand",null,loadMI, saveMI, settingsMI,rankingMI,lastGameMI, new SeparatorMenuItem(),exitMI);        Menu menuHelp = new Menu("Help",null, aboutMI, infoMI);
+        Menu menuFile = new Menu("Bestand",null, settingsMI,lastGameMI,new SeparatorMenuItem(),exitMI);
+        Menu menuHelp = new Menu("Help",null, aboutMI, infoMI);
         MenuBar menuBar = new MenuBar(menuFile,menuHelp);
         setTop(menuBar);
 
@@ -53,10 +48,6 @@ public class RankingView extends BorderPane {
     }
 
     MenuItem getExitItem() {return exitMI;}
-
-    MenuItem getSaveItem() {return saveMI;}
-
-    MenuItem getLoadItem() {return loadMI;}
 
     MenuItem getSettingsItem() {return settingsMI;}
 
@@ -66,10 +57,6 @@ public class RankingView extends BorderPane {
 
     public Button getTerug() {
         return terug;
-    }
-
-    public MenuItem getRankingItem() {
-        return rankingMI;
     }
 
     public MenuItem getLastGameItem() {

@@ -1,5 +1,7 @@
 package Quarto.Model;
 
+import java.util.ArrayList;
+
 /**
  * @author Willem Kuijpers
  * @version 1.0 24-4-2021 14:43
@@ -8,7 +10,7 @@ public class TestKlasse {
 
     public static void main(String[] args) {
 
-        Quarto testQuarto = new Quarto();
+/*        Quarto testQuarto = new Quarto();
         Speler speler1 = new Speler("Jos", 0);
         Speler speler2 = new Speler("Freya", 0);
         AlleSpelers testSpelers = new AlleSpelers(speler1, speler2);
@@ -34,6 +36,22 @@ public class TestKlasse {
 
         boolean exist = testQuarto.getBlokkenBox().getBlokkenSet().contains(new Blok(Blok.Grootte.KLEIN, Blok.Kleur.WIT, Blok.Vorm.VIERKANT, Blok.Vulling.VOL));
 
-        System.out.println(exist);
+        System.out.println(exist);*/
+        HighScoreManager hm = new HighScoreManager();
+
+        hm.clearList();
+
+        Speler bart = new Speler("Bart");
+        Speler jos = new Speler("Jos");
+
+        hm.addNewPlayer(bart);
+        hm.addNewPlayer(jos);
+
+        System.out.print(hm.getHighscoreString());
+
+        hm.addScoreWinningPlayer(bart);
+        hm.addScoreLosingPlayer(jos);
+
+        System.out.print(hm.getHighscoreString());
     }
 }

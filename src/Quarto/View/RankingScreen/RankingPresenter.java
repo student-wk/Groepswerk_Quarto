@@ -48,7 +48,6 @@ public class RankingPresenter {
         eventHandlers();
     }
 
-
     private void updateView() {
 
     }
@@ -98,88 +97,6 @@ public class RankingPresenter {
                 menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
                 menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
                 menuScreenPresenter.windowsHandler();
-            }
-        });
-        rankingView.getLoadItem().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Laad data bestand");
-                fileChooser.getExtensionFilters().addAll(
-                        new FileChooser.ExtensionFilter("Textfiles", "*.txt"),
-                        new FileChooser.ExtensionFilter("All Files", "*.*"));
-                File selectedFile = fileChooser.showOpenDialog(rankingView.getScene().getWindow());
-                if ((selectedFile != null) ){ //^ (Files.isReadable(Paths.get(selectedFile.toURI())))) {
-                    try {
-                        List<String> input = Files.readAllLines(Paths.get(selectedFile.toURI()));
-                        // begin implementeren ingelezen gegevens doorgeven aan model
-                        for (int i = 0; i < input.size(); i++) {
-                            String inputline = input.get(i);
-                            String[] elementen = inputline.split(" ");
-                        }
-                        // einde implementeren ingelezen gegevens doorgeven aan model
-                    } catch (IOException e) {
-                        //
-                    }
-                } else {
-                    Alert errorWindow = new Alert(Alert.AlertType.ERROR);
-                    errorWindow.setHeaderText("Probleem met het geselecteerde input bestand:");
-                    errorWindow.setContentText("Bestand is niet leesbaar");
-                    errorWindow.showAndWait();
-                }
-            }
-        });
-        rankingView.getSaveItem().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Sla data bestand op");
-                fileChooser.getExtensionFilters().addAll(
-                        new FileChooser.ExtensionFilter("Textfiles", "*.txt"),
-                        new FileChooser.ExtensionFilter("All Files", "*.*"));
-                File selectedFile = fileChooser.showSaveDialog(rankingView.getScene().getWindow());
-                if ((selectedFile != null) ^ (Files.isWritable(Paths.get(selectedFile.toURI())))) {
-                    try {
-                        Files.deleteIfExists(Paths.get(selectedFile.toURI()));
-                    } catch (IOException e) {
-                        //
-                    }
-                    try (Formatter output = new Formatter(selectedFile)) {
-                        // Begin implementeren wegschrijven model-gegevens
-                        output.format("%s%n", "Hier komt de data!");
-                        output.format("%s%n", "Eerste opslag");
-                        output.format("%s%n", "...");
-                        output.format("%s%n", "Laatste opslag");
-                        // Einde implementeren wegschrijven model-gegevens
-                    } catch (IOException e) {
-                        //
-                    }
-                } else {
-                    Alert errorWindow = new Alert(Alert.AlertType.ERROR);
-                    errorWindow.setHeaderText("Problem with the selected output file:");
-                    errorWindow.setContentText("File is not writable");
-                    errorWindow.showAndWait();
-                }
-            }
-        });
-        rankingView.getRankingItem().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                RankingView rankingView = new RankingView();
-                RankingPresenter rankingPresenter = new RankingPresenter(model,rankingView,uiSettings);
-                rankingView.getScene().setRoot(rankingView);
-                rankingView.getScene().getWindow().sizeToScene();
-                try {
-                    rankingView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-                } catch (MalformedURLException ex) {
-                    // // do nothing, if toURL-conversion fails, program can continue
-                }
-                rankingView.getScene().getWindow().sizeToScene();
-                rankingView.getScene().getWindow().setX(uiSettings.getResX()/20);
-                rankingView.getScene().getWindow().setY(uiSettings.getResY()/20);
-                rankingView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
-                rankingView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
-                rankingPresenter.windowsHandler();
             }
         });
         rankingView.getLastGameItem().setOnAction(new EventHandler<ActionEvent>() {

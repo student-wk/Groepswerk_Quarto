@@ -317,7 +317,6 @@ public class MainScreenPresenter {
         }
     }
 
-
     public void addMenuEventHandlers(){
         view.getSettingsItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -336,69 +335,6 @@ public class MainScreenPresenter {
                 menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
                 menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
                 menuScreenPresenter.windowsHandler();
-            }
-        });
-
-        view.getLoadItem().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Load data file");
-                fileChooser.getExtensionFilters().addAll(
-                        new FileChooser.ExtensionFilter("Textfiles", "*.txt"),
-                        new FileChooser.ExtensionFilter("All Files", "*.*"));
-                File selectedFile = fileChooser.showOpenDialog(view.getScene().getWindow());
-                if ((selectedFile != null) ){ //^ (Files.isReadable(Paths.get(selectedFile.toURI())))) {
-                    try {
-                        List<String> input = Files.readAllLines(Paths.get(selectedFile.toURI()));
-                        // begin implementeren ingelezen gegevens doorgeven aan model
-                        for (int i = 0; i < input.size(); i++) {
-                            String inputline = input.get(i);
-                            String[] elementen = inputline.split(" ");
-                        }
-                        // einde implementeren ingelezen gegevens doorgeven aan model
-                    } catch (IOException e) {
-                        //
-                    }
-                } else {
-                    Alert errorWindow = new Alert(Alert.AlertType.ERROR);
-                    errorWindow.setHeaderText("Problem with selected file");
-                    errorWindow.setContentText("File not readable");
-                    errorWindow.showAndWait();
-                }
-            }
-        });
-        view.getSaveItem().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Save file");
-                fileChooser.getExtensionFilters().addAll(
-                        new FileChooser.ExtensionFilter("Textfiles", "*.txt"),
-                        new FileChooser.ExtensionFilter("All Files", "*.*"));
-                File selectedFile = fileChooser.showSaveDialog(view.getScene().getWindow());
-                if ((selectedFile != null) ^ (Files.isWritable(Paths.get(selectedFile.toURI())))) {
-                    try {
-                        Files.deleteIfExists(Paths.get(selectedFile.toURI()));
-                    } catch (IOException e) {
-                        //
-                    }
-                    try (Formatter output = new Formatter(selectedFile)) {
-                        // Begin implementeren wegschrijven model-gegevens
-                        output.format("%s%n", "Data will be saved here");
-                        output.format("%s%n", "First save");
-                        output.format("%s%n", "...");
-                        output.format("%s%n", "Last save");
-                        // Einde implementeren wegschrijven model-gegevens
-                    } catch (IOException e) {
-                        //
-                    }
-                } else {
-                    Alert errorWindow = new Alert(Alert.AlertType.ERROR);
-                    errorWindow.setHeaderText("Problem with the selected output file:");
-                    errorWindow.setContentText("File is not writable");
-                    errorWindow.showAndWait();
-                }
             }
         });
         view.getRankingItem().setOnAction(new EventHandler<ActionEvent>() {
