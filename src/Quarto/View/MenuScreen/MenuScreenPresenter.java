@@ -53,7 +53,7 @@ public class MenuScreenPresenter {
             @Override
             public void handle(ActionEvent actionEvent) {
                 NamesView namesView = new NamesView(uiSettings);
-                NamesPresenter namesPresenter = new NamesPresenter(model,namesView,uiSettings);;
+                NamesPresenter namesPresenter = new NamesPresenter(model,namesView,uiSettings);
                 view.getScene().setRoot(namesView);
                 namesView.getScene().getWindow().sizeToScene();
                 try {
@@ -66,7 +66,7 @@ public class MenuScreenPresenter {
 //                namesView.getScene().getWindow().setY(uiSettings.getResY()/20);
                 namesView.getScene().getWindow().setHeight(view.getHeight());
                 namesView.getScene().getWindow().setWidth(view.getWidth());
-//                mainScreenPresenter.windowsHandler();
+                namesPresenter.windowsHandler();
             }
         });
     }
@@ -89,7 +89,7 @@ public class MenuScreenPresenter {
                 rankingView.getScene().getWindow().setY(uiSettings.getResY()/20);
                 rankingView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
                 rankingView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
-                rankingPresenter.windowsHandler();
+//                rankingPresenter.windowsHandler();
             }
         });
     }

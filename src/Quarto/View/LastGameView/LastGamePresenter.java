@@ -74,7 +74,7 @@ public class LastGamePresenter {
                 menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
                 menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
                 menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
-                menuScreenPresenter.windowsHandler();
+//                menuScreenPresenter.windowsHandler();
             }
         });
     }
@@ -96,7 +96,7 @@ public class LastGamePresenter {
                 menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
                 menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
                 menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
-                menuScreenPresenter.windowsHandler();
+//                menuScreenPresenter.windowsHandler();
             }
         });
         lastGameView.getRankingItem().setOnAction(new EventHandler<ActionEvent>() {
@@ -116,7 +116,7 @@ public class LastGamePresenter {
                 rankingView.getScene().getWindow().setY(uiSettings.getResY()/20);
                 rankingView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
                 rankingView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
-                rankingPresenter.windowsHandler();
+//                rankingPresenter.windowsHandler();
             }
         });
         lastGameView.getExitItem().setOnAction(new EventHandler<ActionEvent>() {

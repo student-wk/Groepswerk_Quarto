@@ -4,6 +4,7 @@ import Quarto.Model.Blok;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
@@ -13,10 +14,10 @@ import javafx.scene.shape.Rectangle;
 // Willem: naam klasse veranderd naar BlokkenBoxView
 
 public class BlokkenBoxView extends GridPane {
-    public final Color BlUE_COLOR = Color.BLUE;
-    public final Color RED_COLOR = Color.RED;
-    public final Color EMPTY_COLOR_RED = Color.BROWN;
-    public final Color EMPTY_COLOR_BLUE = Color.BLUEVIOLET;
+    public final Color BlUE_COLOR = Color.DODGERBLUE;
+    public final Color RED_COLOR = Color.ORANGERED;
+    public final Color EMPTY_COLOR_RED = Color.TRANSPARENT;
+    public final Color EMPTY_COLOR_BLUE = Color.TRANSPARENT;
     public final Color DEFAULT_COLOR = Color.GRAY;
     public final int BIG_SIZE = 30;
     public final int BIG_SIZE_EMPTY = 25;
@@ -24,6 +25,7 @@ public class BlokkenBoxView extends GridPane {
     public final int SMALL_SIZE = 20;
     public final int SMALL_SIZE_EMPTY = 16;
     public final int STROKE_WIDTH_SMALL = 8;
+    private DropShadow ds;
 
     public final int ROW_SIZE =4;
     public final int COL_SIZE =2;
@@ -36,6 +38,10 @@ public class BlokkenBoxView extends GridPane {
         rectangles = new Rectangle[ROW_SIZE][COL_SIZE];
         initialiseNodes();
         layoutNodes();
+//        ds = new DropShadow();
+//        ds.setOffsetY(4.0f);
+//        ds.setOffsetX(4.0f);
+//        ds.setColor(Color.BLACK);
     }
 
     public void initialiseNodes() {
@@ -47,6 +53,8 @@ public class BlokkenBoxView extends GridPane {
         for (int i = 0; i < ROW_SIZE; i++) {
             for (int j = 0; j < COL_SIZE; j++) {
                 circles[i][j] = new Circle(BIG_SIZE, Color.GRAY);
+//                circles[i][j].setEffect(ds);
+
                 rectangles[i][j] = new Rectangle(2*BIG_SIZE, 2*BIG_SIZE,Color.GRAY);
             }
 
@@ -69,6 +77,7 @@ public class BlokkenBoxView extends GridPane {
                                 if (blok.getVulling().equals(Blok.Vulling.VOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
                                     rowIndex = 0; // De volle, grote, witte cirkelafbeeldingen komen in de eerste rij terecht.
                                     circles[rowIndex][colIndex].setFill(RED_COLOR);
+
                                 } else if (blok.getVulling().equals(Blok.Vulling.VOL) && blok.getGrootte().equals(Blok.Grootte.KLEIN)){
                                     rowIndex = 1; // De volle, kleine, witte cirkelafbeeldingen komen in de tweede rij terecht.
                                     circles[rowIndex][colIndex].setRadius(SMALL_SIZE);
@@ -178,7 +187,8 @@ public class BlokkenBoxView extends GridPane {
 
     public void layoutNodes() {
         this.setGridLinesVisible(true);
-        setHgap(10);
+        setHgap(20);
+        setVgap(20);
         this.setAlignment(Pos.CENTER);
 
         for (int i = 0; i < ROW_SIZE; i++) {
@@ -192,6 +202,8 @@ public class BlokkenBoxView extends GridPane {
                 this.add(rectangles[i][j], j+2, i);
             }
         }
+
+
 
     }
 

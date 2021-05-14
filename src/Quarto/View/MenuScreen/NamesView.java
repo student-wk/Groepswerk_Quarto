@@ -5,10 +5,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 public class NamesView extends BorderPane {
     private GridPane gridPane;
@@ -46,8 +44,17 @@ public class NamesView extends BorderPane {
     }
 
     public void layoutNodes() {
+//        player1Label.setPadding(new Insets(0));
+//        player2Label.setPadding(new Insets(0));
+        player2Label.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        player1Label.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        player1Label.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(2))));
+        player2Label.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(2))));
+
         this.setPadding(new Insets(20));
         this.startButton.setPrefSize(100,20);
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
 
 
 //        this.add(oneVoneButton, 0, 0);

@@ -81,6 +81,8 @@ public class StartScreenPresenter {
                  stopWindow.setHeaderText("Je kan de applicatie nog niet afsluiten.");
                  stopWindow.setContentText("Probeer opnieuw als het programma is opgestart.");
                  stopWindow.showAndWait();
-                 event.consume(); } });
+                 event.consume();
+             }
+        });
     }
 }
