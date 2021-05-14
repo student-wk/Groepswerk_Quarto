@@ -42,18 +42,17 @@ public class NamesPresenter {
                 MainScreenView mainScreenView = new MainScreenView(uiSettings);
                 MainScreenPresenter mainScreenPresenter = new MainScreenPresenter(model,mainScreenView,uiSettings);
                 view.getScene().setRoot(mainScreenView);
-                mainScreenView.getScene().getWindow().sizeToScene();
 //                try {
 //                    mainScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
 //                } catch (MalformedURLException ex) {
 //                    // // do nothing, if toURL-conversion fails, program can continue
 //                }
-//                mainScreenView.getScene().getWindow().sizeToScene();
+                mainScreenView.getScene().getWindow().sizeToScene();
 //                mainScreenView.getScene().getWindow().setX(uiSettings.getResX()/20);
 //                mainScreenView.getScene().getWindow().setY(uiSettings.getResY()/20);
-//                mainScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
-//                mainScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
-//                mainScreenPresenter.windowsHandler();
+                mainScreenView.getScene().getWindow().setHeight(view.getHeight()*2);
+                mainScreenView.getScene().getWindow().setWidth(view.getWidth()*4);
+                mainScreenPresenter.windowsHandler();
 
             }
         });

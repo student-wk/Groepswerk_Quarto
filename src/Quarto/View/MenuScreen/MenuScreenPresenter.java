@@ -52,10 +52,8 @@ public class MenuScreenPresenter {
         view.getNieuwSpel().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-
-
                 NamesView namesView = new NamesView(uiSettings);
-                NamesPresenter namesPresenter = new NamesPresenter(model,namesView,uiSettings);
+                NamesPresenter namesPresenter = new NamesPresenter(model,namesView,uiSettings);;
                 view.getScene().setRoot(namesView);
                 namesView.getScene().getWindow().sizeToScene();
                 try {
@@ -64,10 +62,10 @@ public class MenuScreenPresenter {
                     // // do nothing, if toURL-conversion fails, program can continue
                 }
                 namesView.getScene().getWindow().sizeToScene();
-                namesView.getScene().getWindow().setX(uiSettings.getResX()/20);
-                namesView.getScene().getWindow().setY(uiSettings.getResY()/20);
-                namesView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
-                namesView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
+//                namesView.getScene().getWindow().setX(uiSettings.getResX()/20);
+//                namesView.getScene().getWindow().setY(uiSettings.getResY()/20);
+                namesView.getScene().getWindow().setHeight(view.getHeight());
+                namesView.getScene().getWindow().setWidth(view.getWidth());
 //                mainScreenPresenter.windowsHandler();
             }
         });

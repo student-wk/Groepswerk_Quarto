@@ -47,9 +47,14 @@ public class MenuScreenView extends VBox {
 
     private void layoutNodes() {
         this.setSpacing(20);
-        this.setPadding(new Insets(20));
+        this.setPadding(new Insets(100));
         this.getChildren().addAll(nieuwSpel,ranking,toonLaatsteSpel,afsluiten);
         this.setAlignment(Pos.CENTER);
+        this.nieuwSpel.setPrefSize(150, 20);
+        this.ranking.setPrefSize(150, 20);
+        this.toonLaatsteSpel.setPrefSize(150, 20);
+        this.afsluiten.setPrefSize(150, 20);
+
     }
 
     public UISettings getUiSettings() {
