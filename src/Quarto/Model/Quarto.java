@@ -26,8 +26,11 @@ public class Quarto {
 
     }
 
-    public  void setPlayers(String speler1, String speler2) {
-        this.alleSpelers = new AlleSpelers(new Speler(speler1, 0), new Speler(speler2,0));
+    public  void setPlayers(String speler1, String speler2)  throws QuartoException {
+        if (speler1.isEmpty() || speler2.isEmpty()) {
+            throw new QuartoException("Enter name for both players");
+        } else {
+        this.alleSpelers = new AlleSpelers(new Speler(speler1, 0), new Speler(speler2,0));}
     }
 
 /*

@@ -16,15 +16,16 @@ import javafx.scene.shape.Rectangle;
 public class BlokkenBoxView extends GridPane {
     public final Color BlUE_COLOR = Color.DODGERBLUE;
     public final Color RED_COLOR = Color.ORANGERED;
-    public final Color EMPTY_COLOR_RED = Color.TRANSPARENT;
-    public final Color EMPTY_COLOR_BLUE = Color.TRANSPARENT;
-    public final Color DEFAULT_COLOR = Color.GRAY;
+//    public final Color EMPTY_COLOR_RED = Color.TRANSPARENT;
+//    public final Color EMPTY_COLOR_BLUE = Color.TRANSPARENT;
+    public final Color DEFAULT_COLOR = Color.TRANSPARENT;
     public final int BIG_SIZE = 30;
     public final int BIG_SIZE_EMPTY = 25;
     public final int STROKE_WIDTH_BIG = 10;
     public final int SMALL_SIZE = 20;
     public final int SMALL_SIZE_EMPTY = 16;
     public final int STROKE_WIDTH_SMALL = 8;
+    DropShadow ds;
     
 
     public final int ROW_SIZE =4;
@@ -38,10 +39,10 @@ public class BlokkenBoxView extends GridPane {
         rectangles = new Rectangle[ROW_SIZE][COL_SIZE];
         initialiseNodes();
         layoutNodes();
-//        ds = new DropShadow();
-//        ds.setOffsetY(4.0f);
-//        ds.setOffsetX(4.0f);
-//        ds.setColor(Color.BLACK);
+        ds = new DropShadow();
+        ds.setOffsetY(9.0f);
+        ds.setOffsetX(9.0f);
+        ds.setColor(Color.BLACK);
     }
 
     public void initialiseNodes() {
@@ -53,7 +54,7 @@ public class BlokkenBoxView extends GridPane {
         for (int i = 0; i < ROW_SIZE; i++) {
             for (int j = 0; j < COL_SIZE; j++) {
                 circles[i][j] = new Circle(BIG_SIZE, Color.GRAY);
-//                circles[i][j].setEffect(ds);
+                circles[i][j].setEffect(ds);
 
                 rectangles[i][j] = new Rectangle(2*BIG_SIZE, 2*BIG_SIZE,Color.GRAY);
             }
@@ -86,13 +87,13 @@ public class BlokkenBoxView extends GridPane {
                                     rowIndex = 2; // De holle, grote, witte cirkelafbeeldingen komen in de derde rij terecht.
                                     circles[rowIndex][colIndex].setRadius(BIG_SIZE_EMPTY);
                                     circles[rowIndex][colIndex].setStroke(RED_COLOR);
-                                    circles[rowIndex][colIndex].setFill(EMPTY_COLOR_RED);
+                                    circles[rowIndex][colIndex].setFill(DEFAULT_COLOR);
                                     circles[rowIndex][colIndex].setStrokeWidth(STROKE_WIDTH_BIG);
                                 } else {
                                     rowIndex = 3; // De holle, kleine, witte cirkelafbeeldingen komen in de vierde rij terecht.
                                     circles[rowIndex][colIndex].setRadius(SMALL_SIZE_EMPTY);
                                     circles[rowIndex][colIndex].setStroke(RED_COLOR);
-                                    circles[rowIndex][colIndex].setFill(EMPTY_COLOR_RED);
+                                    circles[rowIndex][colIndex].setFill(DEFAULT_COLOR);
                                     circles[rowIndex][colIndex].setStrokeWidth(STROKE_WIDTH_SMALL);
                                 }
                             } else {
@@ -110,13 +111,13 @@ public class BlokkenBoxView extends GridPane {
                                     rowIndex = 2;
                                     circles[rowIndex][colIndex].setRadius(BIG_SIZE_EMPTY);
                                     circles[rowIndex][colIndex].setStroke(BlUE_COLOR);
-                                    circles[rowIndex][colIndex].setFill(EMPTY_COLOR_BLUE);
+                                    circles[rowIndex][colIndex].setFill(DEFAULT_COLOR);
                                     circles[rowIndex][colIndex].setStrokeWidth(STROKE_WIDTH_BIG);
                                 } else {
                                     rowIndex = 3;
                                     circles[rowIndex][colIndex].setRadius(SMALL_SIZE_EMPTY);
                                     circles[rowIndex][colIndex].setStroke(BlUE_COLOR);
-                                    circles[rowIndex][colIndex].setFill(EMPTY_COLOR_BLUE);
+                                    circles[rowIndex][colIndex].setFill(DEFAULT_COLOR);
                                     circles[rowIndex][colIndex].setStrokeWidth(STROKE_WIDTH_SMALL);
                                 }
                             }
@@ -137,14 +138,14 @@ public class BlokkenBoxView extends GridPane {
                                     rectangles[rowIndex][colIndex].setWidth(BIG_SIZE_EMPTY*2);
                                     rectangles[rowIndex][colIndex].setHeight(BIG_SIZE_EMPTY*2);
                                     rectangles[rowIndex][colIndex].setStroke(RED_COLOR);
-                                    rectangles[rowIndex][colIndex].setFill(EMPTY_COLOR_RED);
+                                    rectangles[rowIndex][colIndex].setFill(DEFAULT_COLOR);
                                     rectangles[rowIndex][colIndex].setStrokeWidth(STROKE_WIDTH_BIG);
                                 } else {
                                     rowIndex = 3;
                                     rectangles[rowIndex][colIndex].setHeight(SMALL_SIZE_EMPTY*2);
                                     rectangles[rowIndex][colIndex].setWidth(SMALL_SIZE_EMPTY*2);
                                     rectangles[rowIndex][colIndex].setStroke(RED_COLOR);
-                                    rectangles[rowIndex][colIndex].setFill(EMPTY_COLOR_RED);
+                                    rectangles[rowIndex][colIndex].setFill(DEFAULT_COLOR);
                                     rectangles[rowIndex][colIndex].setStrokeWidth(STROKE_WIDTH_SMALL);
                                 }
                             } else {
@@ -163,14 +164,14 @@ public class BlokkenBoxView extends GridPane {
                                     rectangles[rowIndex][colIndex].setWidth(BIG_SIZE_EMPTY*2);
                                     rectangles[rowIndex][colIndex].setHeight(BIG_SIZE_EMPTY*2);
                                     rectangles[rowIndex][colIndex].setStroke(BlUE_COLOR);
-                                    rectangles[rowIndex][colIndex].setFill(EMPTY_COLOR_BLUE);
+                                    rectangles[rowIndex][colIndex].setFill(DEFAULT_COLOR);
                                     rectangles[rowIndex][colIndex].setStrokeWidth(STROKE_WIDTH_BIG);
                                 } else {
                                     rowIndex = 3;
                                     rectangles[rowIndex][colIndex].setHeight(SMALL_SIZE_EMPTY*2);
                                     rectangles[rowIndex][colIndex].setWidth(SMALL_SIZE_EMPTY*2);
                                     rectangles[rowIndex][colIndex].setStroke(BlUE_COLOR);
-                                    rectangles[rowIndex][colIndex].setFill(EMPTY_COLOR_BLUE);
+                                    rectangles[rowIndex][colIndex].setFill(DEFAULT_COLOR);
                                     rectangles[rowIndex][colIndex].setStrokeWidth(STROKE_WIDTH_SMALL);
                                 }
                             }
@@ -186,7 +187,7 @@ public class BlokkenBoxView extends GridPane {
     * */
 
     public void layoutNodes() {
-        this.setGridLinesVisible(true);
+        this.setGridLinesVisible(false);
         setHgap(20);
         setVgap(20);
         this.setAlignment(Pos.CENTER);
@@ -194,12 +195,15 @@ public class BlokkenBoxView extends GridPane {
         for (int i = 0; i < ROW_SIZE; i++) {
             for (int j = 0; j < COL_SIZE; j++) {
                 this.add(circles[i][j], j, i);
+                GridPane.setConstraints(circles[i][j], j, i, 1, 1, HPos.CENTER, VPos.CENTER, Priority.NEVER, Priority.NEVER);
+
             }
         }
 
         for (int i = 0; i < ROW_SIZE; i++) {
             for (int j = 0; j < COL_SIZE; j++) {
                 this.add(rectangles[i][j], j+2, i);
+                GridPane.setConstraints(rectangles[i][j], j+2, i, 1, 1, HPos.CENTER, VPos.CENTER, Priority.NEVER, Priority.NEVER);
             }
         }
 

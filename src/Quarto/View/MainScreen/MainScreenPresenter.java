@@ -194,14 +194,14 @@ public class MainScreenPresenter {
                         Blok blok = new Blok();
                         Circle circle = view.getBlokkenBoxView().getCircles()[row][col];
                         blok.setVorm(Blok.Vorm.ROND);
-                        if (circle.getFill() == view.getBlokkenBoxView().DEFAULT_COLOR) {
+                        if (circle.getFill() == view.getBlokkenBoxView().DEFAULT_COLOR  && circle.toString().length() < 70) {
                             // consume event when clicked on preselected pieces
                             mouseEvent.consume();
-                        } else {
+                        } else if (circle.getStroke() == view.getBlokkenBoxView().DEFAULT_COLOR  && circle.toString().length() > 70) {mouseEvent.consume(); }else {
                             if (circle.toString().length()>70){
                                 blok.setVulling(Blok.Vulling.HOL);
                                 blok.setGrootte((circle.getRadius() == view.getBlokkenBoxView().BIG_SIZE_EMPTY? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                                blok.setKleur(circle.getFill() == view.getBlokkenBoxView().EMPTY_COLOR_BLUE? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                                blok.setKleur(circle.getStroke() == view.getBlokkenBoxView().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
                             } else {
                                 blok.setVulling(Blok.Vulling.VOL);
                                 blok.setGrootte((circle.getRadius() == view.getBlokkenBoxView().BIG_SIZE? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
@@ -230,14 +230,18 @@ public class MainScreenPresenter {
                         Blok blok = new Blok();
                         Rectangle rectangle = view.getBlokkenBoxView().getRectangles()[row][col];
                         blok.setVorm(Blok.Vorm.VIERKANT);
-                        if (rectangle.getFill() == view.getBlokkenBoxView().DEFAULT_COLOR) {
+                        if (rectangle.getFill() == view.getBlokkenBoxView().DEFAULT_COLOR && rectangle.toString().length() < 70 ) {
                             // consume event when clicked on preselected pieces
                             mouseEvent.consume();
+                        } else if (rectangle.getStroke() == view.getBlokkenBoxView().DEFAULT_COLOR && rectangle.toString().length() > 70 ) {
+                            // consume event when clicked on preselected pieces
+                            mouseEvent.consume();
+
                         } else {
                             if (rectangle.toString().length()>70){
                                 blok.setVulling(Blok.Vulling.HOL);
                                 blok.setGrootte((rectangle.getWidth() == view.getBlokkenBoxView().BIG_SIZE_EMPTY*2? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                                blok.setKleur(rectangle.getFill() == view.getBlokkenBoxView().EMPTY_COLOR_BLUE? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                                blok.setKleur(rectangle.getStroke() == view.getBlokkenBoxView().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
                             } else {
                                 blok.setVulling(Blok.Vulling.VOL);
                                 blok.setGrootte((rectangle.getWidth() == view.getBlokkenBoxView().BIG_SIZE*2? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));

@@ -1,6 +1,7 @@
 package Quarto.View.MainScreen;
 
 import Quarto.View.UISettings;
+import javafx.geometry.Insets;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 
@@ -42,6 +43,7 @@ public class MainScreenView extends BorderPane  {
         setTop(menuBar);
         setCenter(speelBordView);
         setLeft(blokkenBoxView);
+        this.setMargin(blokkenBoxView, new Insets(30));
     }
 
     public BlokkenBoxView getBlokkenBoxView() {

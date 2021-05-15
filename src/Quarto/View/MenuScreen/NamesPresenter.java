@@ -1,6 +1,7 @@
 package Quarto.View.MenuScreen;
 
 import Quarto.Model.Quarto;
+import Quarto.Model.QuartoException;
 import Quarto.Model.Speler;
 import Quarto.View.MainScreen.MainScreenPresenter;
 import Quarto.View.MainScreen.MainScreenView;
@@ -40,23 +41,32 @@ public class NamesPresenter {
         view.getStartButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                model.setPlayers( view.getPlayer1TextField().getText(),  view.getPlayer2TextField().getText());
-                model.kieSpeler();
+                try {
+                    model.setPlayers( view.getPlayer1TextField().getText(),  view.getPlayer2TextField().getText());
+                    model.kieSpeler();
 
-                MainScreenView mainScreenView = new MainScreenView(uiSettings);
-                MainScreenPresenter mainScreenPresenter = new MainScreenPresenter(model,mainScreenView,uiSettings);
-                view.getScene().setRoot(mainScreenView);
+                    MainScreenView mainScreenView = new MainScreenView(uiSettings);
+                    MainScreenPresenter mainScreenPresenter = new MainScreenPresenter(model,mainScreenView,uiSettings);
+                    view.getScene().setRoot(mainScreenView);
 //                try {
 //                    mainScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
 //                } catch (MalformedURLException ex) {
 //                    // // do nothing, if toURL-conversion fails, program can continue
 //                }
-                mainScreenView.getScene().getWindow().sizeToScene();
+                    mainScreenView.getScene().getWindow().sizeToScene();
 //                mainScreenView.getScene().getWindow().setX(uiSettings.getResX()/20);
 //                mainScreenView.getScene().getWindow().setY(uiSettings.getResY()/20);
-                mainScreenView.getScene().getWindow().setHeight(view.getHeight()*2);
-                mainScreenView.getScene().getWindow().setWidth(view.getWidth()*4);
-                mainScreenPresenter.windowsHandler();
+                    mainScreenView.getScene().getWindow().setHeight(view.getHeight()*2);
+                    mainScreenView.getScene().getWindow().setWidth(view.getWidth()*3);
+                    mainScreenPresenter.windowsHandler();
+                } catch (QuartoException exception) {
+                    final Alert enterPlayerNames = new Alert(Alert.AlertType.ERROR);
+                    enterPlayerNames.setTitle("Enter names");
+                    enterPlayerNames.setContentText(exception.getMessage());
+                    enterPlayerNames.showAndWait();
+                    actionEvent.consume();
+                }
+
 
             }
         });
