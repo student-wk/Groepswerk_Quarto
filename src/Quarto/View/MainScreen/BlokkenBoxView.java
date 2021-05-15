@@ -25,7 +25,7 @@ public class BlokkenBoxView extends GridPane {
     public final int SMALL_SIZE = 20;
     public final int SMALL_SIZE_EMPTY = 16;
     public final int STROKE_WIDTH_SMALL = 8;
-    private DropShadow ds;
+    
 
     public final int ROW_SIZE =4;
     public final int COL_SIZE =2;
