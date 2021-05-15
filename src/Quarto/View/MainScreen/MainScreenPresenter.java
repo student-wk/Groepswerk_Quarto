@@ -10,19 +10,20 @@ import Quarto.View.MenuScreen.MenuScreenView;
 import Quarto.View.RankingScreen.RankingPresenter;
 import Quarto.View.RankingScreen.RankingView;
 import Quarto.View.UISettings;
+import javafx.application.Platform;
 import javafx.event.*;
 import javafx.scene.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.FileChooser;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import javafx.stage.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -42,7 +43,9 @@ public class MainScreenPresenter {
         this.view = view;
         this.uiSettings = uiSettings;
         updateView();
-        EventHandlers();
+        addMenuEventHandlers();
+        blokkenBoxEventHandlers();
+        speelBordEventHandlers();
     }
 
     private void updateView() {
@@ -172,16 +175,63 @@ public class MainScreenPresenter {
         }
     }
 
-    private void updateSpeelBordView(int rowIndex, int colIndex) {
+    private void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException {
 //        view.getSpeelBordView().removeNodeByRowColumnIndex(rowIndex, colIndex);
         view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getGekozenBlok());
+
+        if (model.isGameFinished()){showFinishedDialog();
+//            String result;
+//            if (model.getSpeelbord().heeftCombinatie()) {
+//                result = "A player has won";
+//            } else {result = "Playbord full!"; }
+//
+//            final Alert playBordFull = new Alert(Alert.AlertType.ERROR);
+//            playBordFull.setTitle(result);
+//            playBordFull.setContentText(result +" Do you want to play again?");
+//            playBordFull.getButtonTypes().clear();
+//            ButtonType noButton = new ButtonType("NO");
+//            ButtonType yesButton = new ButtonType("YES");
+//            playBordFull.getButtonTypes().addAll(yesButton, noButton);
+//            playBordFull.showAndWait();
+//            if (playBordFull.getResult() == null || playBordFull.getResult().equals(noButton)) {
+//                Platform.exit();
+//                newGame();
+//            }
+        }
     }
 
-    private void EventHandlers() {
-        addMenuEventHandlers();
-        blokkenBoxEventHandlers();
-        speelBordEventHandlers();
+    private void showFinishedDialog() throws QuartoException {
+//        Log.debug("showing finished");
+        if (!model.isGameFinished()) return;
+        ChoiceDialog<String> again = new ChoiceDialog<String>("Ok", "Ok", "Nope");
+        if (model.getSpeelbord().heeftCombinatie()) {
+            again.setTitle("A player has won!");
+            again.setHeaderText(" Player " + "has won");
+//            CombinationView combinationView = new CombinationView();
+//            new CombinationPresenter(model.getRiddle(), combinationView);
+//            again.setGraphic(combinationView);
+        } else {
+            again.setTitle("Playbord is full!");
+            again.setHeaderText("Playbord is full!");
+//            again.setGraphic(new ImageView("images/duim.png"));
+//            again.setHeaderText("You found it in " + model.getNumberOfGuessesDone() + " moves...");
+        }
+        again.setContentText("You wanna play again?");
+        again.showAndWait();
+        String result = again.getResult();
+        if (result == null || result.equals("Nope")) {
+            Platform.exit();
+        } else {
+            this.model = new Quarto(model.getAlleSpelers().getSpeler1(), model.getAlleSpelers().getSpeler2());
+            model.kieSpeler();
+
+            MainScreenView newView = new MainScreenView(uiSettings);
+            view.getScene().setRoot(newView);
+            new MainScreenPresenter(model, newView, uiSettings);
+        }
     }
+
+
 
     private void blokkenBoxEventHandlers() {
         for (int i = 0; i < view.getBlokkenBoxView().ROW_SIZE; i++) {
@@ -284,26 +334,8 @@ public class MainScreenPresenter {
 
                             model.plaatsBlok(new Positie(rowIndex,colIndex));
                             updateSpeelBordView(rowIndex, colIndex);
-
                             model.setGekozenBlok(null);
 
-
-                            if (model.getSpeelbord().heeftCombinatie()){
-                                System.out.println("A player has won");
-                            } else if (model.getSpeelbord().isVol()){
-                                System.out.println("speelbord is vol");
-                                final Alert playBordFull = new Alert(Alert.AlertType.ERROR);
-                                playBordFull.setTitle("Playbord full!");
-                                playBordFull.setContentText("Playbord is full, do you want to play again?");
-                                playBordFull.getButtonTypes().clear();
-                                ButtonType noButton = new ButtonType("NO");
-                                ButtonType yesButton = new ButtonType("YES");
-                                playBordFull.getButtonTypes().addAll(yesButton, noButton);
-                                playBordFull.showAndWait();
-                                if (playBordFull.getResult() == null || playBordFull.getResult().equals(noButton)) {
-                                    playBordFull.close();
-                                }
-                            }
                         } catch (QuartoException e) {
                             final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
                             noBlokChosen.setTitle("You cannot close the application yet.");
@@ -312,14 +344,38 @@ public class MainScreenPresenter {
                             mouseEvent.consume();
 
                         }
-
-
-
                     }
                 });
             }
         }
     }
+
+//    private void newGame() {
+//
+//        this.model = new Quarto();
+//        updateView();
+//        updateSpeelBordView();
+//
+//        Window window = this.view.getScene().getWindow();
+//        double originalWidth = window.getWidth();
+//        double originalHeight = window.getHeight();
+//
+//        window.sizeToScene();
+//
+//        double updatedX = window.getX() + originalWidth / 2 - window.getWidth() / 2;
+//        if (updatedX < 0.0) {
+//            updatedX = 0.0;
+//        }
+//        double updatedY = window.getY() + originalHeight / 2 - window.getHeight() / 2;
+//        if (updatedY < 0.0) {
+//            updatedY = 0.0;
+//        }
+//
+//        window.setX(updatedX);
+//        window.setY(updatedY);
+//    }
+
+
 
     public void addMenuEventHandlers(){
         view.getSettingsItem().setOnAction(new EventHandler<ActionEvent>() {
