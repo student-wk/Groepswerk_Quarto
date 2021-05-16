@@ -10,16 +10,18 @@ import java.util.logging.FileHandler;
  * @author Willem Kuijpers
  * @version 1.0 14-5-2021 12:10
  */
-public class SpelerRanking {
-
-    public SpelerRanking() {
-        this.highScoresRanking = highScoresRanking;
-    }
+public class SpelerRanking extends ArrayList {
 
     private ArrayList<Speler> highScoresRanking;
+
     public static final char FILE_SEPARATOR = System.getProperties().getProperty("file.separator").charAt(0);
     private Path Highscore_File = Paths.get("resources"+FILE_SEPARATOR+"ranking"+FILE_SEPARATOR+"ranking.bin");
     private String HIGHSCORE_FILE = pathToString();
+
+
+    public SpelerRanking() throws IOException {
+        this.highScoresRanking = SpelerFileHandler.binFile2List(HIGHSCORE_FILE);
+    }
 
 
     public void addScoreWinningPlayer(Speler speler) throws IOException { //EXCEPTION NOG OPVANGEN!
@@ -56,9 +58,19 @@ public class SpelerRanking {
         return Highscore_File.toString();
     }
 
-    public void showRanking () throws IOException {
+/*    public void showRanking () throws IOException {
         highScoresRanking = SpelerFileHandler.binFile2List(HIGHSCORE_FILE);
+    }*/
 
+ /*   public ArrayList<Speler> getHighScoresRanking() throws IOException {
+        highScoresRanking = SpelerFileHandler.binFile2List(HIGHSCORE_FILE);
+        return highScoresRanking;
+    }*/
 
+    public ArrayList<Speler> getHighScoresRanking() throws IOException {
+        highScoresRanking = SpelerFileHandler.binFile2List(HIGHSCORE_FILE);
+        return highScoresRanking;
     }
+
+
 }

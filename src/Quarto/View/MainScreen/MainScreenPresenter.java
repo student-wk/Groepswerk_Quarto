@@ -181,18 +181,23 @@ public class MainScreenPresenter {
         }
     }
 
-    private void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException {
+    private void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException, IOException {
         view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getGekozenBlok());
         if (model.isGameFinished()){showFinishedDialog(); }
     }
 
-    private void showFinishedDialog() throws QuartoException {
+    private void showFinishedDialog() throws QuartoException, IOException {
 //        Log.debug("showing finished");
         if (!model.isGameFinished()) return;
         ChoiceDialog<String> again = new ChoiceDialog<String>("Ok", "Ok", "Nope");
         if (model.getSpeelbord().heeftCombinatie()) {
+            //geeft een score aan de winnende speler:
+            model.getSpelerRanking().addScoreWinningPlayer(model.getAlleSpelers().getActieveSpeler());
+            //geeft een score aan de verliezende speler:
+            model.getSpelerRanking().addScoreLosingPlayer(model.getAlleSpelers().getNietActieveSpeler());
+
             again.setTitle(model.getAlleSpelers().getActieveSpeler().getNaam() + " has won!");
-            again.setHeaderText(" Player " + "has won");
+            again.setHeaderText(model.getAlleSpelers().getActieveSpeler().getNaam() + " has won!");
 //            CombinationView combinationView = new CombinationView();
 //            new CombinationPresenter(model.getRiddle(), combinationView);
 //            again.setGraphic(combinationView);
@@ -323,7 +328,7 @@ public class MainScreenPresenter {
                             updateTurnView();
                             model.setGekozenBlok(null);
 
-                        } catch (QuartoException e) {
+                        } catch (QuartoException | IOException e) {
                             final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
                             noBlokChosen.setTitle("You cannot close the application yet.");
                             noBlokChosen.setContentText(e.getMessage());
@@ -487,7 +492,7 @@ public class MainScreenPresenter {
         final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
         stopWindow.setHeaderText("You are about to close the application");
         stopWindow.setContentText("Are you sure, unsaved prgress will be lost");
-        stopWindow.setTitle("WAARSCHUWING!");
+        stopWindow.setTitle("WARNING!");
         stopWindow.getButtonTypes().clear();
         ButtonType noButton = new ButtonType("NO");
         ButtonType yesButton = new ButtonType("YES");

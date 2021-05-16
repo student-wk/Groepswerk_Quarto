@@ -1,8 +1,14 @@
 package Quarto.View.RankingScreen;
 
 import Quarto.View.UISettings;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 
@@ -21,6 +27,8 @@ public class RankingView extends BorderPane {
     private MenuItem infoMI;
     private Button terug;
 
+    private BarChart<String,Number> barChart;
+
 
     public RankingView() {
         this.uiSettings = uiSettings;
@@ -35,6 +43,12 @@ public class RankingView extends BorderPane {
         this.aboutMI = new MenuItem("About");
         this.infoMI = new MenuItem("Info");
 
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        this.barChart = new BarChart<>(xAxis,yAxis);
+        xAxis.setLabel("Name");
+        yAxis.setLabel("Score");
+
         this.terug = new Button("Terug");
     }
 
@@ -44,6 +58,8 @@ public class RankingView extends BorderPane {
         MenuBar menuBar = new MenuBar(menuFile,menuHelp);
         setTop(menuBar);
 
+        this.barChart.setTitle("Top 10 Ranking");
+        this.setCenter(this.barChart);
         this.setBottom(terug);
     }
 
@@ -61,5 +77,9 @@ public class RankingView extends BorderPane {
 
     public MenuItem getLastGameItem() {
         return lastGameMI;
+    }
+
+BarChart<String, Number> getBarChart() {
+        return barChart;
     }
 }

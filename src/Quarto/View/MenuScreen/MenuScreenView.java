@@ -39,10 +39,10 @@ public class MenuScreenView extends VBox {
     }
 
     private void initialiseNodes() {
-        this.nieuwSpel = new Button("Nieuw Spel");
+        this.nieuwSpel = new Button("New Game");
         this.ranking = new Button("Ranking");
-        this.toonLaatsteSpel = new Button("Laatste Spel");
-        this.afsluiten = new Button("Afsluiten");
+        this.toonLaatsteSpel = new Button("Last Game");
+        this.afsluiten = new Button("Exit");
     }
 
     private void layoutNodes() {

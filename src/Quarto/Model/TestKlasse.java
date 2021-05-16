@@ -8,7 +8,7 @@ import java.io.IOException;
  */
 public class TestKlasse {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
 /*        Quarto testQuarto = new Quarto();
         Speler speler1 = new Speler("Jos", 0);

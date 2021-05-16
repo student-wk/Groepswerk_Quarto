@@ -1,6 +1,7 @@
 package Quarto.View.RankingScreen;
 
 import Quarto.Model.Quarto;
+import Quarto.Model.Speler;
 import Quarto.View.AboutScreen.AboutScreenPresenter;
 import Quarto.View.AboutScreen.AboutScreenView;
 import Quarto.View.InfoScreen.InfoScreenPresenter;
@@ -14,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
@@ -27,6 +29,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
 
@@ -39,6 +42,8 @@ public class RankingPresenter {
     private Quarto model;
     private RankingView rankingView;
     private UISettings uiSettings;
+    private ArrayList<Speler> rankingList;
+    private Speler speler;
 
     public RankingPresenter(Quarto model,RankingView rankingView, UISettings uiSettings) {
         this.model = model;
@@ -48,8 +53,19 @@ public class RankingPresenter {
         eventHandlers();
     }
 
-    private void updateView() {
 
+
+    private void updateView() {
+        // de gegevens uit het bestand halen en in een arraylist plaatsen
+        // de gegevens aan barchart toevoegen
+//        this.rankingList = model.getSpelerRanking().getHighScoresRanking();
+
+        XYChart.Series <String, Number> series1 = new XYChart.Series();
+
+        for (int i = 0; i < 10; i++) {
+            Speler speler = rankingList.get(i);
+            series1.getData().add(new XYChart.Data(speler.getNaam(),speler.getScore()));
+        }
     }
 
     private void eventHandlers() {
