@@ -1,8 +1,10 @@
 package Quarto.View.MainScreen;
 
 import Quarto.View.UISettings;
+import javafx.geometry.Insets;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 
 public class MainScreenView extends BorderPane  {
 
@@ -16,6 +18,7 @@ public class MainScreenView extends BorderPane  {
 
     private SpeelBordView speelBordView;
     private BlokkenBoxView blokkenBoxView;
+    private Label turnLabel;
 
 
     public MainScreenView(UISettings uiSettings) {
@@ -33,6 +36,9 @@ public class MainScreenView extends BorderPane  {
         this.infoMI = new MenuItem("Info");
         this.speelBordView = new SpeelBordView();
         this.blokkenBoxView = new BlokkenBoxView();
+        this.turnLabel = new Label();
+        this.turnLabel.setStyle("-fx-background-color: orange");
+        this.turnLabel.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT) ));
     }
 
     private void layoutNodes() {
@@ -42,6 +48,14 @@ public class MainScreenView extends BorderPane  {
         setTop(menuBar);
         setCenter(speelBordView);
         setLeft(blokkenBoxView);
+        setBottom(turnLabel);
+
+
+        this.setMargin(blokkenBoxView, new Insets(30));
+    }
+
+    public Label getTurnLabel() {
+        return turnLabel;
     }
 
     public BlokkenBoxView getBlokkenBoxView() {

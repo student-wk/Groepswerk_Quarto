@@ -3,26 +3,28 @@ package Quarto.View.MainScreen;
 import Quarto.Model.Blok;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 public class SpeelBordView extends GridPane {
-    public static final Color BlUE_COLOR = Color.BLUE;
-    public static final Color RED_COLOR = Color.RED;
-    public static final Color EMPTY_COLOR_RED = Color.BROWN;
-    public static final Color EMPTY_COLOR_BLUE = Color.BLUEVIOLET;
-    public static final int BIG_SIZE = 30;
-    public static final int BIG_SIZE_EMPTY = 25;
-    public static final int STROKE_WIDTH_BIG = 10;
-    public static final int SMALL_SIZE = 20;
-    public static final int SMALL_SIZE_EMPTY = 16;
-    public static final int STROKE_WIDTH_SMALL = 8;
+    public final Color BlUE_COLOR = Color.DODGERBLUE;
+    public final Color RED_COLOR = Color.ORANGERED;
+//    public final Color EMPTY_COLOR_RED = Color.TRANSPARENT;
+//    public final Color EMPTY_COLOR_BLUE = Color.TRANSPARENT;
+    public final Color DEFAULT_COLOR = Color.TRANSPARENT;
+    public final int BIG_SIZE = 30;
+    public final int BIG_SIZE_EMPTY = 25;
+    public final int STROKE_WIDTH_BIG = 10;
+    public final int SMALL_SIZE = 20;
+    public final int SMALL_SIZE_EMPTY = 16;
+    public final int STROKE_WIDTH_SMALL = 8;
 
 
 
@@ -32,20 +34,17 @@ public class SpeelBordView extends GridPane {
     }
 
     public void initialiseNodes() {
-        initialiseSpeelBord();
     }
 
     public Node getNodeByRowColumnIndex (final int row, final int column) {
         Node result = null;
         ObservableList<Node> childrens = this.getChildren();
-
         for (Node node : childrens) {
             if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
                 result = node;
                 break;
             }
         }
-
         return result;
     }
 
@@ -62,20 +61,23 @@ public class SpeelBordView extends GridPane {
 
     public void layoutNodes() {
         layoutSpeelBord();
+
+
         this.setGridLinesVisible(true);
-        setHgap(10);
+        setVgap(20);
+        setHgap(20);
         this.setAlignment(Pos.CENTER);
+        this.setBorder(new Border(new BorderImage(new Image("/images/Melamine-wood-005.png"),BorderWidths.DEFAULT,new Insets(2),BorderWidths.DEFAULT, true,BorderRepeat.REPEAT, BorderRepeat.REPEAT)));
+
     }
 
-    public void initialiseSpeelBord() {
-    }
 
     public void layoutSpeelBord() {
         for (int row = 0;row < 4 ; row++) {
             for (int col = 0; col < 4; col++) {
-                Circle greyCicle = new Circle(BIG_SIZE, Color.GRAY);
+                Circle greyCicle = new Circle(BIG_SIZE, DEFAULT_COLOR);
                 this.add(greyCicle, col,row);
-                GridPane.setConstraints(greyCicle, col, row, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
+                GridPane.setConstraints(greyCicle, col, row, 1, 1, HPos.CENTER, VPos.CENTER, Priority.NEVER, Priority.NEVER);
             }
         }
     }
@@ -94,12 +96,12 @@ public class SpeelBordView extends GridPane {
                 } else if (gekozenBlok.getVulling().equals(Blok.Vulling.HOL)&& gekozenBlok.getGrootte().equals(Blok.Grootte.GROOT)){
                     circle.setRadius(BIG_SIZE_EMPTY);
                     circle.setStroke(RED_COLOR);
-                    circle.setFill(EMPTY_COLOR_RED);
+                    circle.setFill(DEFAULT_COLOR);
                     circle.setStrokeWidth(STROKE_WIDTH_BIG);
                 } else {
                     circle.setRadius(SMALL_SIZE_EMPTY);
                     circle.setStroke(RED_COLOR);
-                    circle.setFill(EMPTY_COLOR_RED);
+                    circle.setFill(DEFAULT_COLOR);
                     circle.setStrokeWidth(STROKE_WIDTH_SMALL);
                 }
             } else {
@@ -112,17 +114,17 @@ public class SpeelBordView extends GridPane {
                 } else if (gekozenBlok.getVulling().equals(Blok.Vulling.HOL)&& gekozenBlok.getGrootte().equals(Blok.Grootte.GROOT)){
                     circle.setRadius(BIG_SIZE_EMPTY);
                     circle.setStroke(BlUE_COLOR);
-                    circle.setFill(EMPTY_COLOR_BLUE);
+                    circle.setFill(DEFAULT_COLOR);
                     circle.setStrokeWidth(STROKE_WIDTH_BIG);
                 } else {
                     circle.setRadius(SMALL_SIZE_EMPTY);
                     circle.setStroke(BlUE_COLOR);
-                    circle.setFill(EMPTY_COLOR_BLUE);
+                    circle.setFill(DEFAULT_COLOR);
                     circle.setStrokeWidth(STROKE_WIDTH_SMALL);
                 }
             }
             this.add(circle,colIndex,rowIndex);
-            GridPane.setConstraints(circle, colIndex, rowIndex, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
+            GridPane.setConstraints(circle, colIndex, rowIndex, 1, 1, HPos.CENTER, VPos.CENTER, Priority.NEVER, Priority.NEVER);
         } else if (gekozenBlok.getVorm().equals(Blok.Vorm.VIERKANT)){
             Rectangle rectangle = new Rectangle();
             if (gekozenBlok.getKleur().equals(Blok.Kleur.WIT)){
@@ -138,13 +140,13 @@ public class SpeelBordView extends GridPane {
                     rectangle.setWidth(BIG_SIZE_EMPTY*2);
                     rectangle.setHeight(BIG_SIZE_EMPTY*2);
                     rectangle.setStroke(RED_COLOR);
-                    rectangle.setFill(EMPTY_COLOR_RED);
+                    rectangle.setFill(DEFAULT_COLOR);
                     rectangle.setStrokeWidth(STROKE_WIDTH_BIG);
                 } else {
                     rectangle.setWidth(SMALL_SIZE_EMPTY*2);
                     rectangle.setHeight(SMALL_SIZE_EMPTY*2);
                     rectangle.setStroke(RED_COLOR);
-                    rectangle.setFill(EMPTY_COLOR_RED);
+                    rectangle.setFill(DEFAULT_COLOR);
                     rectangle.setStrokeWidth(STROKE_WIDTH_SMALL);
                 }
             } else {
@@ -160,18 +162,18 @@ public class SpeelBordView extends GridPane {
                     rectangle.setWidth(BIG_SIZE_EMPTY*2);
                     rectangle.setHeight(BIG_SIZE_EMPTY*2);
                     rectangle.setStroke(BlUE_COLOR);
-                    rectangle.setFill(EMPTY_COLOR_BLUE);
+                    rectangle.setFill(DEFAULT_COLOR);
                     rectangle.setStrokeWidth(STROKE_WIDTH_BIG);
                 } else {
                     rectangle.setWidth(SMALL_SIZE_EMPTY*2);
                     rectangle.setHeight(SMALL_SIZE_EMPTY*2);
                     rectangle.setStroke(BlUE_COLOR);
-                    rectangle.setFill(EMPTY_COLOR_BLUE);
+                    rectangle.setFill(DEFAULT_COLOR);
                     rectangle.setStrokeWidth(STROKE_WIDTH_SMALL);
                 }
             }
             this.add(rectangle, colIndex, rowIndex);
-            GridPane.setConstraints(rectangle, colIndex, rowIndex, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
+            GridPane.setConstraints(rectangle, colIndex, rowIndex, 1, 1, HPos.CENTER, VPos.CENTER, Priority.NEVER, Priority.NEVER);
         }
     }
 }

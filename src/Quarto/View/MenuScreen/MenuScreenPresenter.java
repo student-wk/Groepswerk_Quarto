@@ -52,8 +52,6 @@ public class MenuScreenPresenter {
         view.getNieuwSpel().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-
-
                 NamesView namesView = new NamesView(uiSettings);
                 NamesPresenter namesPresenter = new NamesPresenter(model,namesView,uiSettings);
                 view.getScene().setRoot(namesView);
@@ -64,11 +62,11 @@ public class MenuScreenPresenter {
                     // // do nothing, if toURL-conversion fails, program can continue
                 }
                 namesView.getScene().getWindow().sizeToScene();
-                namesView.getScene().getWindow().setX(uiSettings.getResX()/20);
-                namesView.getScene().getWindow().setY(uiSettings.getResY()/20);
-                namesView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
-                namesView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
-//                mainScreenPresenter.windowsHandler();
+//                namesView.getScene().getWindow().setX(uiSettings.getResX()/20);
+//                namesView.getScene().getWindow().setY(uiSettings.getResY()/20);
+                namesView.getScene().getWindow().setHeight(view.getHeight());
+                namesView.getScene().getWindow().setWidth(view.getWidth());
+                namesPresenter.windowsHandler();
             }
         });
     }
@@ -91,7 +89,7 @@ public class MenuScreenPresenter {
                 rankingView.getScene().getWindow().setY(uiSettings.getResY()/20);
                 rankingView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
                 rankingView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
-                rankingPresenter.windowsHandler();
+//                rankingPresenter.windowsHandler();
             }
         });
     }

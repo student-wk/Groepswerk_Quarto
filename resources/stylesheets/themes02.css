@@ -20,8 +20,8 @@
     -fx-border-width: 2px;
     -fx-border-insets: 5px;
     -fx-border-radius: 5px;
-    -fx-background-color: lightgrey;
-
+    -fx-background-image: url('../images/Melamine-wood-001.png');
+    -fx-background-size: cover;
 }
 
 .radio-button {
@@ -29,5 +29,6 @@
 }
 
 .button-clicked {
-    -fx-text-fill: red;
+    -fx-text-fill: #ff0000;
 }
+.body

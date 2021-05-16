@@ -10,19 +10,20 @@ import Quarto.View.MenuScreen.MenuScreenView;
 import Quarto.View.RankingScreen.RankingPresenter;
 import Quarto.View.RankingScreen.RankingView;
 import Quarto.View.UISettings;
+import javafx.application.Platform;
 import javafx.event.*;
 import javafx.scene.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.FileChooser;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import javafx.stage.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -41,12 +42,20 @@ public class MainScreenPresenter {
         this.model = model;
         this.view = view;
         this.uiSettings = uiSettings;
-        updateView();
-        EventHandlers();
+        updateBlokkenBoxView();
+        addMenuEventHandlers();
+        blokkenBoxEventHandlers();
+        speelBordEventHandlers();
+        updateTurnView();
     }
 
-    private void updateView() {
-        updateBlokkenBoxView();
+//    private void updateView() {
+//        updateBlokkenBoxView();
+//    }
+
+    private void updateTurnView(){
+        String action = (model.isFlipAction()?"Place a piece!":"Pick a piece!");
+        view.getTurnLabel().setText(model.getAlleSpelers().getActieveSpeler().getNaam() + ": " + action );
     }
 
     /*
@@ -172,15 +181,40 @@ public class MainScreenPresenter {
         }
     }
 
-    private void updateSpeelBordView(int rowIndex, int colIndex) {
-//        view.getSpeelBordView().removeNodeByRowColumnIndex(rowIndex, colIndex);
+    private void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException {
         view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getGekozenBlok());
+        if (model.isGameFinished()){showFinishedDialog(); }
     }
 
-    private void EventHandlers() {
-        addMenuEventHandlers();
-        blokkenBoxEventHandlers();
-        speelBordEventHandlers();
+    private void showFinishedDialog() throws QuartoException {
+//        Log.debug("showing finished");
+        if (!model.isGameFinished()) return;
+        ChoiceDialog<String> again = new ChoiceDialog<String>("Ok", "Ok", "Nope");
+        if (model.getSpeelbord().heeftCombinatie()) {
+            again.setTitle(model.getAlleSpelers().getActieveSpeler().getNaam() + " has won!");
+            again.setHeaderText(" Player " + "has won");
+//            CombinationView combinationView = new CombinationView();
+//            new CombinationPresenter(model.getRiddle(), combinationView);
+//            again.setGraphic(combinationView);
+        } else {
+            again.setTitle("Playbord is full!");
+            again.setHeaderText("Playbord is full!");
+//            again.setGraphic(new ImageView("images/duim.png"));
+//            again.setHeaderText("You found it in " + model.getNumberOfGuessesDone() + " moves...");
+        }
+        again.setContentText("You wanna play again?");
+        again.showAndWait();
+        String result = again.getResult();
+        if (result == null || result.equals("Nope")) {
+            Platform.exit();
+        } else {
+            this.model = new Quarto(model.getAlleSpelers().getSpeler1(), model.getAlleSpelers().getSpeler2());
+            model.kieSpeler();
+
+            MainScreenView newView = new MainScreenView(uiSettings);
+            view.getScene().setRoot(newView);
+            new MainScreenPresenter(model, newView, uiSettings);
+        }
     }
 
     private void blokkenBoxEventHandlers() {
@@ -194,14 +228,14 @@ public class MainScreenPresenter {
                         Blok blok = new Blok();
                         Circle circle = view.getBlokkenBoxView().getCircles()[row][col];
                         blok.setVorm(Blok.Vorm.ROND);
-                        if (circle.getFill() == view.getBlokkenBoxView().DEFAULT_COLOR) {
+                        if (circle.getFill() == view.getBlokkenBoxView().DEFAULT_COLOR  && circle.toString().length() < 70) {
                             // consume event when clicked on preselected pieces
                             mouseEvent.consume();
-                        } else {
+                        } else if (circle.getStroke() == view.getBlokkenBoxView().DEFAULT_COLOR  && circle.toString().length() > 70) {mouseEvent.consume(); }else {
                             if (circle.toString().length()>70){
                                 blok.setVulling(Blok.Vulling.HOL);
                                 blok.setGrootte((circle.getRadius() == view.getBlokkenBoxView().BIG_SIZE_EMPTY? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                                blok.setKleur(circle.getFill() == view.getBlokkenBoxView().EMPTY_COLOR_BLUE? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                                blok.setKleur(circle.getStroke() == view.getBlokkenBoxView().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
                             } else {
                                 blok.setVulling(Blok.Vulling.VOL);
                                 blok.setGrootte((circle.getRadius() == view.getBlokkenBoxView().BIG_SIZE? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
@@ -210,7 +244,8 @@ public class MainScreenPresenter {
 
                             try {
                                 model.kiesBlok(blok);
-                                updateView();
+                                updateBlokkenBoxView();
+                                updateTurnView();
 
                             } catch (QuartoException exception){
                                 final Alert noBlokChosen = new Alert(Alert.AlertType.INFORMATION);
@@ -230,14 +265,18 @@ public class MainScreenPresenter {
                         Blok blok = new Blok();
                         Rectangle rectangle = view.getBlokkenBoxView().getRectangles()[row][col];
                         blok.setVorm(Blok.Vorm.VIERKANT);
-                        if (rectangle.getFill() == view.getBlokkenBoxView().DEFAULT_COLOR) {
+                        if (rectangle.getFill() == view.getBlokkenBoxView().DEFAULT_COLOR && rectangle.toString().length() < 70 ) {
                             // consume event when clicked on preselected pieces
                             mouseEvent.consume();
+                        } else if (rectangle.getStroke() == view.getBlokkenBoxView().DEFAULT_COLOR && rectangle.toString().length() > 70 ) {
+                            // consume event when clicked on preselected pieces
+                            mouseEvent.consume();
+
                         } else {
                             if (rectangle.toString().length()>70){
                                 blok.setVulling(Blok.Vulling.HOL);
                                 blok.setGrootte((rectangle.getWidth() == view.getBlokkenBoxView().BIG_SIZE_EMPTY*2? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                                blok.setKleur(rectangle.getFill() == view.getBlokkenBoxView().EMPTY_COLOR_BLUE? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                                blok.setKleur(rectangle.getStroke() == view.getBlokkenBoxView().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
                             } else {
                                 blok.setVulling(Blok.Vulling.VOL);
                                 blok.setGrootte((rectangle.getWidth() == view.getBlokkenBoxView().BIG_SIZE*2? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
@@ -246,7 +285,8 @@ public class MainScreenPresenter {
 
                             try {
                                 model.kiesBlok(blok);
-                                updateView();
+                                updateBlokkenBoxView();
+                                updateTurnView();
 
                             } catch (QuartoException exception){
                                 final Alert noBlokChosen = new Alert(Alert.AlertType.INFORMATION);
@@ -280,26 +320,9 @@ public class MainScreenPresenter {
 
                             model.plaatsBlok(new Positie(rowIndex,colIndex));
                             updateSpeelBordView(rowIndex, colIndex);
-
+                            updateTurnView();
                             model.setGekozenBlok(null);
 
-
-                            if (model.getSpeelbord().heeftCombinatie()){
-                                System.out.println("A player has won");
-                            } else if (model.getSpeelbord().isVol()){
-                                System.out.println("speelbord is vol");
-                                final Alert playBordFull = new Alert(Alert.AlertType.ERROR);
-                                playBordFull.setTitle("Playbord full!");
-                                playBordFull.setContentText("Playbord is full, do you want to play again?");
-                                playBordFull.getButtonTypes().clear();
-                                ButtonType noButton = new ButtonType("NO");
-                                ButtonType yesButton = new ButtonType("YES");
-                                playBordFull.getButtonTypes().addAll(yesButton, noButton);
-                                playBordFull.showAndWait();
-                                if (playBordFull.getResult() == null || playBordFull.getResult().equals(noButton)) {
-                                    playBordFull.close();
-                                }
-                            }
                         } catch (QuartoException e) {
                             final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
                             noBlokChosen.setTitle("You cannot close the application yet.");
@@ -308,14 +331,15 @@ public class MainScreenPresenter {
                             mouseEvent.consume();
 
                         }
-
-
-
                     }
                 });
             }
         }
     }
+
+
+
+
 
     public void addMenuEventHandlers(){
         view.getSettingsItem().setOnAction(new EventHandler<ActionEvent>() {
@@ -334,7 +358,7 @@ public class MainScreenPresenter {
                 menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
                 menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
                 menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
-                menuScreenPresenter.windowsHandler();
+//                menuScreenPresenter.windowsHandler();
             }
         });
         view.getRankingItem().setOnAction(new EventHandler<ActionEvent>() {
@@ -354,7 +378,7 @@ public class MainScreenPresenter {
                 rankingView.getScene().getWindow().setY(uiSettings.getResY()/20);
                 rankingView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
                 rankingView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
-                rankingPresenter.windowsHandler();
+//                rankingPresenter.windowsHandler();
             }
         });
         view.getLastGameItem().setOnAction(new EventHandler<ActionEvent>() {
@@ -472,8 +496,8 @@ public class MainScreenPresenter {
         if (stopWindow.getResult() == null || stopWindow.getResult().equals(noButton)) {
             event.consume();
         }
-//        else {
-//            view.getScene().getWindow().hide();
-//        }
+        else {
+            view.getScene().getWindow().hide();
+        }
     }
 }

@@ -41,10 +41,10 @@ public class StartScreenPresenter {
                     // // do nothing, if toURL-conversion fails, program can continue
                 }
                 menuScreenView.getScene().getWindow().sizeToScene();
-//                menuScreenView.getScene().getWindow().setX(uiSettings.getResX() / 20);
-//                menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
-//                menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
-//                menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
+//                menuScreenView.getScene().getWindow().setX(view.getLayoutX());
+//                menuScreenView.getScene().getWindow().setY(view.getLayoutY());
+                menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 25);
+                menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 50);
                 menuScreenPresenter.windowsHandler();
             }
         });
@@ -81,6 +81,8 @@ public class StartScreenPresenter {
                  stopWindow.setHeaderText("Je kan de applicatie nog niet afsluiten.");
                  stopWindow.setContentText("Probeer opnieuw als het programma is opgestart.");
                  stopWindow.showAndWait();
-                 event.consume(); } });
+                 event.consume();
+             }
+        });
     }
 }

@@ -74,7 +74,7 @@ public class RankingPresenter {
                 menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
                 menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
                 menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
-                menuScreenPresenter.windowsHandler();
+//                menuScreenPresenter.a();
             }
         });
     }
@@ -96,7 +96,7 @@ public class RankingPresenter {
                 menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
                 menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
                 menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
-                menuScreenPresenter.windowsHandler();
+//                menuScreenPresenter.windowsHandler();
             }
         });
         rankingView.getLastGameItem().setOnAction(new EventHandler<ActionEvent>() {
@@ -119,12 +119,12 @@ public class RankingPresenter {
                 lastGamePresenter.windowsHandler();
             }
         });
-        rankingView.getExitItem().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                handleCloseEvent(event);
-            }
-        });
+//        rankingView.getExitItem().setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                handleCloseEvent(event);
+//            }
+//        });
         rankingView.getAboutItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -195,26 +195,48 @@ public class RankingPresenter {
             }});
     }
 
-    public void windowsHandler() {
-        rankingView.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
+    private void afsluitenHandler() {
+        rankingView.getExitItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(WindowEvent event) { handleCloseEvent(event); }});
+            public void handle(ActionEvent actionEvent) {
+                rankingView.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
+                    @Override
+                    public void handle(WindowEvent event) {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setHeaderText("Hierdoor stopt het spel!");
+                        alert.setContentText("Ben je zeker?");
+                        alert.setTitle("Opgelet!");
+                        alert.getButtonTypes().clear();
+                        ButtonType neen = new ButtonType("Neen");
+                        ButtonType ja = new ButtonType("Ja");
+                        alert.getButtonTypes().addAll(neen, ja);
+                        alert.showAndWait();
+                        if (alert.getResult() == null || alert.getResult().equals(neen)) {
+                            event.consume();
+                        }
+                    }
+                });
+            }
+        });
     }
 
-    public void handleCloseEvent(Event event){
-        final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
-        stopWindow.setHeaderText("Je gaat de applicatie afsluiten.");
-        stopWindow.setContentText("Ben je zeker? Onopgeslaagde data kan verloren gaan.");
-        stopWindow.setTitle("WAARSCHUWING!");
-        stopWindow.getButtonTypes().clear();
-        ButtonType noButton = new ButtonType("Nee");
-        ButtonType yesButton = new ButtonType("Ja");
-        stopWindow.getButtonTypes().addAll(yesButton, noButton);
-        stopWindow.showAndWait();
-        if (stopWindow.getResult() == null || stopWindow.getResult().equals(noButton)) {
-            event.consume();
-        } else {
-            rankingView.getScene().getWindow().hide();
-        }
+    public void addWindowEventHandlers() {
+        rankingView.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Hierdoor stopt het spel!");
+                alert.setContentText("Ben je zeker?");
+                alert.setTitle("Opgelet!");
+                alert.getButtonTypes().clear();
+                ButtonType neen = new ButtonType("Neen");
+                ButtonType ja = new ButtonType("Ja");
+                alert.getButtonTypes().addAll(neen, ja);
+                alert.showAndWait();
+                if (alert.getResult() == null || alert.getResult().equals(neen)) {
+                    event.consume();
+                }
+            }
+        });
     }
 }
