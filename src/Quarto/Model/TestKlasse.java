@@ -1,6 +1,6 @@
 package Quarto.Model;
 
-import java.util.ArrayList;
+import java.io.IOException;
 
 /**
  * @author Willem Kuijpers
@@ -37,21 +37,47 @@ public class TestKlasse {
         boolean exist = testQuarto.getBlokkenBox().getBlokkenSet().contains(new Blok(Blok.Grootte.KLEIN, Blok.Kleur.WIT, Blok.Vorm.VIERKANT, Blok.Vulling.VOL));
 
         System.out.println(exist);*/
-        HighScoreManager hm = new HighScoreManager();
 
-        hm.clearList();
+        Speler joske = new Speler("Joske");
+        Speler jefke = new Speler("Jefke",5);
 
-        Speler bart = new Speler("Bart");
-        Speler jos = new Speler("Jos");
+        SpelerRanking ranking = new SpelerRanking();
 
-        hm.addNewPlayer(bart);
-        hm.addNewPlayer(jos);
+        try {
+            ranking.addScoreWinningPlayer(joske);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        System.out.print(hm.getHighscoreString());
+        try {
+            ranking.addScoreLosingPlayer(jefke);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        hm.addScoreWinningPlayer(bart);
-        hm.addScoreLosingPlayer(jos);
+        System.out.println(ranking);
 
-        System.out.print(hm.getHighscoreString());
+        Speler jo = new Speler("Joske",8);
+        Speler je = new Speler("Jefke",5);
+
+        SpelerRanking ranking2 = new SpelerRanking();
+
+        try {
+            ranking2.addScoreWinningPlayer(joske);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            ranking2.addScoreLosingPlayer(jefke);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+        System.out.println(ranking);
+
+
     }
 }
