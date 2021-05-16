@@ -7,8 +7,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -67,6 +67,7 @@ public class SpeelBordView extends GridPane {
         setVgap(20);
         setHgap(20);
         this.setAlignment(Pos.CENTER);
+        this.setBorder(new Border(new BorderImage(new Image("/images/Melamine-wood-005.png"),BorderWidths.DEFAULT,new Insets(2),BorderWidths.DEFAULT, true,BorderRepeat.REPEAT, BorderRepeat.REPEAT)));
 
     }
 

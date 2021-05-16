@@ -8,6 +8,7 @@ public class Quarto {
     private Blok gekozenBlok;
     private AlleSpelers alleSpelers;
     private boolean gameFinished;
+    private boolean flipAction;
 
     public boolean isGameFinished() {
         return gameFinished;
@@ -46,6 +47,7 @@ public class Quarto {
             blokkenBox.neemBlok(blok);
             alleSpelers.afwisselen();
             System.out.println("actieve speler: "+ this.getAlleSpelers().getActieveSpeler());
+            flipAction = true;
         }
     }
 
@@ -58,11 +60,16 @@ public class Quarto {
             throw new QuartoException("Er is geen blok geselecteerd.");
         } else {
             speelbord.voegBlokToe(gekozenBlok, positie);
+            flipAction = false;
              if (spelGedaan()) {
                  gameFinished = true;
              }
 //            this.gekozenBlok = null;
         }
+    }
+
+    public boolean isFlipAction() {
+        return flipAction;
     }
 
     public boolean spelGedaan() {
