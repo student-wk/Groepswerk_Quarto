@@ -420,14 +420,14 @@ public class MainScreenPresenter {
                 aboutScreenStage.setTitle(uiSettings.getApplicationName() + " - About");
                 aboutScreenStage.setX(view.getScene().getWindow().getX() + uiSettings.getResX() / 10);
                 aboutScreenStage.setY(view.getScene().getWindow().getY() + uiSettings.getResY() / 10);
-                if (Files.exists(uiSettings.getApplicationIconPath())) {
-                    try {
-                        aboutScreenStage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
-                    } catch (MalformedURLException ex) {
-                        // do nothing, if toURL-conversion fails, program can continue
-                    }
-                } else { // do nothing, if ApplicationIconImage is not available, program can continue
-                }
+//                if (Files.exists(uiSettings.getApplicationIconPath())) {
+//                    try {
+//                        aboutScreenStage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
+//                    } catch (MalformedURLException ex) {
+//                        // do nothing, if toURL-conversion fails, program can continue
+//                    }
+//                } else { // do nothing, if ApplicationIconImage is not available, program can continue
+//                }
                 aboutScreenView.getScene().getWindow().setHeight(uiSettings.getResY() / 2);
                 aboutScreenView.getScene().getWindow().setWidth(uiSettings.getResX() / 2);
                 if (uiSettings.styleSheetAvailable()) {

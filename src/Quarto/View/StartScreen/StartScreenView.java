@@ -34,8 +34,8 @@ public class StartScreenView extends BorderPane  {
         BorderPane progressPane = new BorderPane();
         progressPane.setRight(this.timeProgress);
         progressPane.setLeft(this.timeDisplay);
-        BorderPane.setMargin(this.timeDisplay, new Insets(uiSettings.getInsetsMargin()));
-        BorderPane.setMargin(this.timeProgress, new Insets(uiSettings.getInsetsMargin()));
+        BorderPane.setMargin(this.timeDisplay, new Insets(uiSettings.getInsetsMargin()+20));
+        BorderPane.setMargin(this.timeProgress, new Insets(uiSettings.getInsetsMargin()+20));
         ImageView centralImage;
         if (Files.exists(uiSettings.getStartScreenImagePath())) {
            try {
