@@ -192,7 +192,7 @@ public class MainScreenPresenter {
         ChoiceDialog<String> again = new ChoiceDialog<String>("Ok", "Ok", "Nope");
         if (model.getSpeelbord().heeftCombinatie()) {
             again.setTitle(model.getAlleSpelers().getActieveSpeler().getNaam() + " has won!");
-            again.setHeaderText(" Player " + "has won");
+            again.setHeaderText(model.getAlleSpelers().getActieveSpeler().getNaam() + " has won");
 //            CombinationView combinationView = new CombinationView();
 //            new CombinationPresenter(model.getRiddle(), combinationView);
 //            again.setGraphic(combinationView);
