@@ -28,10 +28,10 @@ public class MainScreenView extends BorderPane  {
     }
 
     private void initialiseNodes() {
-        this.exitMI = new MenuItem("Afsluiten");
-        this.settingsMI = new MenuItem("Hoofdmenu");
+        this.exitMI = new MenuItem("Exit");
+        this.settingsMI = new MenuItem("Main Menu");
         this.rankingMI = new MenuItem("Ranking");
-        this.lastGameMI = new MenuItem("Laatste Spel");
+        this.lastGameMI = new MenuItem("Last Game");
         this.aboutMI = new MenuItem("About");
         this.infoMI = new MenuItem("Info");
         this.speelBordView = new SpeelBordView();
@@ -42,7 +42,7 @@ public class MainScreenView extends BorderPane  {
     }
 
     private void layoutNodes() {
-        Menu menuFile = new Menu("Bestand",null, settingsMI,rankingMI,lastGameMI, new SeparatorMenuItem(),exitMI);
+        Menu menuFile = new Menu("File",null, settingsMI,rankingMI,lastGameMI, new SeparatorMenuItem(),exitMI);
         Menu menuHelp = new Menu("Help",null, aboutMI, infoMI);
         MenuBar menuBar = new MenuBar(menuFile,menuHelp);
         setTop(menuBar);

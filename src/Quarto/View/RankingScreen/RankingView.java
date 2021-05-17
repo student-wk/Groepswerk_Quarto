@@ -29,17 +29,17 @@ public class RankingView extends BorderPane {
     }
 
     private void initialiseNodes() {
-        this.exitMI = new MenuItem("Afsluiten");
-        this.settingsMI = new MenuItem("Hoofdmenu");
-        this.lastGameMI = new MenuItem("Laatste Spel");
+        this.exitMI = new MenuItem("Exit");
+        this.settingsMI = new MenuItem("Main Menu");
+        this.lastGameMI = new MenuItem("Last Game");
         this.aboutMI = new MenuItem("About");
         this.infoMI = new MenuItem("Info");
 
-        this.terug = new Button("Terug");
+        this.terug = new Button("Back");
     }
 
     private void layoutNodes() {
-        Menu menuFile = new Menu("Bestand",null, settingsMI,lastGameMI,new SeparatorMenuItem(),exitMI);
+        Menu menuFile = new Menu("File",null, settingsMI,lastGameMI,new SeparatorMenuItem(),exitMI);
         Menu menuHelp = new Menu("Help",null, aboutMI, infoMI);
         MenuBar menuBar = new MenuBar(menuFile,menuHelp);
         setTop(menuBar);
