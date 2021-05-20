@@ -59,6 +59,12 @@ public class AlleSpelers {
         return actieveSpeler;
     }
 
+    public Speler getNietActieveSpeler(){
+        if(actieveSpeler == speler1) {
+            return speler2;
+        } else return speler1;
+    }
+
     public int getRandom() {
         return random;
     }

@@ -1,5 +1,6 @@
 package Quarto.Model;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Quarto {
@@ -10,14 +11,14 @@ public class Quarto {
     private boolean gameFinished;
     private boolean flipAction;
 
-    public boolean isGameFinished() {
-        return gameFinished;
-    }
+    private SpelerRanking spelerRanking;
 
     public Quarto() {
         this.blokkenBox = new BlokkenBox();
         this.speelbord = new Speelbord();
         this.gekozenBlok = null;
+
+        this.spelerRanking = new SpelerRanking();
     }
 
     public Quarto(Speler player1, Speler player2) throws QuartoException {
@@ -25,6 +26,12 @@ public class Quarto {
         this.blokkenBox = new BlokkenBox();
         this.speelbord = new Speelbord();
         this.gekozenBlok = null;
+
+        this.spelerRanking = new SpelerRanking();
+    }
+
+    public boolean isGameFinished() {
+        return gameFinished;
     }
 
     public  void setPlayers(String speler1, String speler2)  throws QuartoException {
@@ -34,10 +41,10 @@ public class Quarto {
         this.alleSpelers = new AlleSpelers(new Speler(speler1, 0), new Speler(speler2,0));}
     }
 
-/*
+
+    /*
 * Geeft telkens een specifieke blok aan gekozenBlok.
 * */
-
     public void kiesBlok(Blok blok) throws QuartoException{
 
         if (gekozenBlok != null) {
@@ -51,10 +58,10 @@ public class Quarto {
         }
     }
 
-/*
+
+    /*
 * Plaatst blok op speelBord.
 * */
-
     public void plaatsBlok(Positie positie) throws QuartoException {
         if (this.gekozenBlok == null) {
             throw new QuartoException("Er is geen blok geselecteerd.");
@@ -63,6 +70,7 @@ public class Quarto {
             flipAction = false;
              if (spelGedaan()) {
                  gameFinished = true;
+                 updateRanking();
              }
 //            this.gekozenBlok = null;
         }
@@ -74,6 +82,13 @@ public class Quarto {
 
     public boolean spelGedaan() {
         return (speelbord.isVol() || speelbord.heeftCombinatie());
+    }
+
+    public void updateRanking() throws QuartoException {
+        if (this.speelbord.heeftCombinatie()) {
+            this.spelerRanking.addScoreWinningPlayer(this.alleSpelers.getActieveSpeler());
+            this.spelerRanking.addScoreLosingPlayer(this.alleSpelers.getNietActieveSpeler());
+        }
     }
 
     public AlleSpelers getAlleSpelers() {
@@ -95,6 +110,10 @@ public class Quarto {
 //            return gekozenBlok;
 //        }
         return gekozenBlok;
+    }
+
+    public SpelerRanking getSpelerRanking() {
+        return spelerRanking;
     }
 
     public void kieSpeler(){
