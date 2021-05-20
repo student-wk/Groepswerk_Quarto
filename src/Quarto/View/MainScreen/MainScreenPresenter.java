@@ -64,6 +64,13 @@ public class MainScreenPresenter {
      * */
 
     private void updateBlokkenBoxView() {
+//        try {
+//            view.setNode(model.getGekozenBlok());
+//        } catch (IllegalStateException e) {
+//            return;
+//        }
+        view.setNode(model.getGekozenBlok());
+
         for (Blok.Grootte grootte : Blok.Grootte.values()) {
             for (Blok.Kleur kleur : Blok.Kleur.values()) {
                 for (Blok.Vorm vorm : Blok.Vorm.values()) {
@@ -246,7 +253,6 @@ public class MainScreenPresenter {
                                 model.kiesBlok(blok);
                                 updateBlokkenBoxView();
                                 updateTurnView();
-
                             } catch (QuartoException exception){
                                 final Alert noBlokChosen = new Alert(Alert.AlertType.INFORMATION);
                                 noBlokChosen.setTitle("Place a piece on the playbord.");
@@ -255,7 +261,6 @@ public class MainScreenPresenter {
                                 mouseEvent.consume();
                             }
                         }
-
 
                     }
                 });
@@ -317,11 +322,12 @@ public class MainScreenPresenter {
                         int rowIndex = GridPane.getRowIndex((Node) mouseEvent.getSource());
                         int colIndex = GridPane.getColumnIndex((Node) mouseEvent.getSource());
                         try {
-
                             model.plaatsBlok(new Positie(rowIndex,colIndex));
                             updateSpeelBordView(rowIndex, colIndex);
+
                             updateTurnView();
                             model.setGekozenBlok(null);
+                            view.setNode(model.getGekozenBlok());
 
                         } catch (QuartoException e) {
                             final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
@@ -336,9 +342,6 @@ public class MainScreenPresenter {
             }
         }
     }
-
-
-
 
 
     public void addMenuEventHandlers(){

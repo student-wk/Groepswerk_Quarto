@@ -14,6 +14,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 public class SpeelBordView extends GridPane {
+
+
     public final Color BlUE_COLOR = Color.DODGERBLUE;
     public final Color RED_COLOR = Color.ORANGERED;
 //    public final Color EMPTY_COLOR_RED = Color.TRANSPARENT;
@@ -25,6 +27,8 @@ public class SpeelBordView extends GridPane {
     public final int SMALL_SIZE = 20;
     public final int SMALL_SIZE_EMPTY = 16;
     public final int STROKE_WIDTH_SMALL = 8;
+    private final RowConstraints rowConstraints = new RowConstraints(60);
+    private final ColumnConstraints columnConstraints = new ColumnConstraints(60);
 
 
 
@@ -68,6 +72,9 @@ public class SpeelBordView extends GridPane {
         setHgap(20);
         this.setAlignment(Pos.CENTER);
         this.setBorder(new Border(new BorderImage(new Image("/images/Melamine-wood-005.png"),BorderWidths.DEFAULT,new Insets(2),BorderWidths.DEFAULT, true,BorderRepeat.REPEAT, BorderRepeat.REPEAT)));
+        this.getRowConstraints().addAll(rowConstraints,rowConstraints,rowConstraints,rowConstraints);
+        this.getColumnConstraints().addAll(columnConstraints,columnConstraints,columnConstraints,columnConstraints);
+
 
     }
 

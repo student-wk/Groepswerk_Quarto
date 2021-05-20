@@ -89,11 +89,12 @@ public class Quarto {
     }
 
     public Blok getGekozenBlok() {
-        if (gekozenBlok == null) {
-            throw new IllegalStateException("Er is geen blok geselecteerd.");
-        } else {
-            return gekozenBlok;
-        }
+//        if (gekozenBlok == null) {
+//            throw new IllegalStateException("Er is geen blok geselecteerd.");
+//        } else {
+//            return gekozenBlok;
+//        }
+        return gekozenBlok;
     }
 
     public void kieSpeler(){

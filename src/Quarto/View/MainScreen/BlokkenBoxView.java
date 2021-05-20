@@ -5,8 +5,10 @@ import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -25,6 +27,8 @@ public class BlokkenBoxView extends GridPane {
     public final int SMALL_SIZE = 20;
     public final int SMALL_SIZE_EMPTY = 16;
     public final int STROKE_WIDTH_SMALL = 8;
+    private final RowConstraints rowConstraints = new RowConstraints(60);
+    private final ColumnConstraints columnConstraints = new ColumnConstraints(60);
     DropShadow ds;
     
 
@@ -206,6 +210,10 @@ public class BlokkenBoxView extends GridPane {
                 GridPane.setConstraints(rectangles[i][j], j+2, i, 1, 1, HPos.CENTER, VPos.CENTER, Priority.NEVER, Priority.NEVER);
             }
         }
+
+        this.getRowConstraints().addAll(rowConstraints,rowConstraints,rowConstraints,rowConstraints);
+        this.getColumnConstraints().addAll(columnConstraints,columnConstraints,columnConstraints,columnConstraints);
+
 
 
 
