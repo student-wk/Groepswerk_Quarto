@@ -38,10 +38,6 @@ public class Speler implements Comparable<Speler> {
 
     @Override
     public String toString() {
-        return this.naam.toString();
-    }
-
-    public String stringNaamScore() {
         return this.naam + '\t' + score;
     }
 

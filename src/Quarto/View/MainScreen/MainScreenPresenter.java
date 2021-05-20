@@ -192,13 +192,13 @@ public class MainScreenPresenter {
         ChoiceDialog<String> again = new ChoiceDialog<String>("Ok", "Ok", "Nope");
         if (model.getSpeelbord().heeftCombinatie()) {
             again.setTitle(model.getAlleSpelers().getActieveSpeler().getNaam() + " has won!");
-            again.setHeaderText(model.getAlleSpelers().getActieveSpeler().getNaam() + " has won");
+            again.setHeaderText(model.getAlleSpelers().getActieveSpeler().getNaam() + " has won!");
 //            CombinationView combinationView = new CombinationView();
 //            new CombinationPresenter(model.getRiddle(), combinationView);
 //            again.setGraphic(combinationView);
         } else {
-            again.setTitle("Playbord is full!");
-            again.setHeaderText("Playbord is full!");
+            again.setTitle("Playboard is full!");
+            again.setHeaderText("Playboard is full!");
 //            again.setGraphic(new ImageView("images/duim.png"));
 //            again.setHeaderText("You found it in " + model.getNumberOfGuessesDone() + " moves...");
         }
@@ -336,10 +336,6 @@ public class MainScreenPresenter {
             }
         }
     }
-
-
-
-
 
     public void addMenuEventHandlers(){
         view.getSettingsItem().setOnAction(new EventHandler<ActionEvent>() {
