@@ -57,13 +57,13 @@ public class MainScreenPresenter {
         String action = (model.isFlipAction()?"Place a piece!":"Pick a piece!");
         view.getTurnLabel().setText(model.getAlleSpelers().getActieveSpeler().getNaam() + ": " + action );
     }
-
     /*
      * Deze methode zorgt ervoor dat de afgebeelde blokkenbox telkens geupdated wordt naar de huidige toestand van de
      * BlokkenBox in het model.
      * */
 
     private void updateBlokkenBoxView() {
+        view.setNode(model.getGekozenBlok());
         for (Blok.Grootte grootte : Blok.Grootte.values()) {
             for (Blok.Kleur kleur : Blok.Kleur.values()) {
                 for (Blok.Vorm vorm : Blok.Vorm.values()) {
@@ -322,6 +322,7 @@ public class MainScreenPresenter {
                             updateSpeelBordView(rowIndex, colIndex);
                             updateTurnView();
                             model.setGekozenBlok(null);
+                            view.setNode(model.getGekozenBlok());
 
                         } catch (QuartoException e) {
                             final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);

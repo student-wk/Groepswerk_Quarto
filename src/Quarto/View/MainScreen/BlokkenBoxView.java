@@ -50,11 +50,9 @@ public class BlokkenBoxView extends GridPane {
     }
 
     public void initialiseNodes() {
-
         /*
         * Maakt twee kolommen grijze cirkels en twee kolommen grijze vierkanten aan in de afgebeelde blokkenbox.
         * */
-
         for (int i = 0; i < ROW_SIZE; i++) {
             for (int j = 0; j < COL_SIZE; j++) {
                 circles[i][j] = new Circle(BIG_SIZE, Color.GRAY);
@@ -62,14 +60,11 @@ public class BlokkenBoxView extends GridPane {
 
                 rectangles[i][j] = new Rectangle(2*BIG_SIZE, 2*BIG_SIZE,Color.GRAY);
             }
-
         }
-
         /*
         * In deze methodes worden de afbeeldingen van de cirkels en vierkanten aangemaakt en in de cirkel array of de
         * vierkant array geplaatst.
         * */
-
         for (Blok.Grootte grootte : Blok.Grootte.values()) {
             for (Blok.Kleur kleur : Blok.Kleur.values()) {
                 for (Blok.Vorm vorm : Blok.Vorm.values()) {
@@ -185,11 +180,9 @@ public class BlokkenBoxView extends GridPane {
             }
         }
     }
-
     /*
     * De afbeeldingen van de blokken worden op de juiste plaats van de gridpane geplaatst.
     * */
-
     public void layoutNodes() {
         this.setGridLinesVisible(false);
         setHgap(20);
@@ -213,6 +206,7 @@ public class BlokkenBoxView extends GridPane {
 
         this.getRowConstraints().addAll(rowConstraints,rowConstraints,rowConstraints,rowConstraints);
         this.getColumnConstraints().addAll(columnConstraints,columnConstraints,columnConstraints,columnConstraints);
+        this.setGridLinesVisible(true);
 
 
 

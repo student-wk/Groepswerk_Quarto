@@ -196,7 +196,6 @@ public class MainScreenView extends BorderPane  {
         infoGridpane.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, BorderWidths.DEFAULT)));
     }
 
-
     public Label getTurnLabel() {
         return turnLabel;
     }
