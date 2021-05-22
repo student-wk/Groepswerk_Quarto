@@ -3,6 +3,10 @@ package Quarto.View.RankingScreen;
 import Quarto.View.UISettings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 
@@ -19,7 +23,13 @@ public class RankingView extends BorderPane {
     private MenuItem lastGameMI;
     private MenuItem aboutMI;
     private MenuItem infoMI;
+
     private Button terug;
+    private Button resetRanking;
+    private BarChart<String,Number> barChart;
+
+    private XYChart.Series <String, Number> series;
+
 
 
     public RankingView() {
@@ -36,6 +46,17 @@ public class RankingView extends BorderPane {
         this.infoMI = new MenuItem("Info");
 
         this.terug = new Button("Back");
+        this.resetRanking = new Button("Reset Ranking");
+
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        this.barChart = new BarChart<>(xAxis,yAxis);
+        xAxis.setLabel("Name");
+        yAxis.setLabel("Score");
+
+        this.series = new XYChart.Series();
+        this.barChart.getData().addAll(series);
+
     }
 
     private void layoutNodes() {
@@ -45,6 +66,10 @@ public class RankingView extends BorderPane {
         setTop(menuBar);
 
         this.setBottom(terug);
+        this.setRight(resetRanking);
+        RankingView.setMargin(this.resetRanking, new Insets(10));
+        this.barChart.setTitle("Top 10 Ranking");
+        this.setCenter(this.barChart);
     }
 
     MenuItem getExitItem() {return exitMI;}
@@ -57,6 +82,18 @@ public class RankingView extends BorderPane {
 
     public Button getTerug() {
         return terug;
+    }
+
+    public Button getResetRanking() {
+        return resetRanking;
+    }
+
+    public BarChart<String, Number> getBarChart() {
+        return barChart;
+    }
+
+    public XYChart.Series<String, Number> getSeries() {
+        return series;
     }
 
     public MenuItem getLastGameItem() {

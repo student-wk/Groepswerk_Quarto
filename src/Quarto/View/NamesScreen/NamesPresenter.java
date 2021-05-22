@@ -1,8 +1,7 @@
-package Quarto.View.MenuScreen;
+package Quarto.View.NamesScreen;
 
 import Quarto.Model.Quarto;
 import Quarto.Model.QuartoException;
-import Quarto.Model.Speler;
 import Quarto.View.MainScreen.MainScreenPresenter;
 import Quarto.View.MainScreen.MainScreenView;
 import Quarto.View.UISettings;
@@ -12,8 +11,6 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.WindowEvent;
-
-import java.net.MalformedURLException;
 
 public class NamesPresenter {
     private Quarto model;

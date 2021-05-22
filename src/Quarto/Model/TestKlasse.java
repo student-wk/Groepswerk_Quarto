@@ -35,7 +35,7 @@ public class TestKlasse {
             }*/
     public static void main(String[] args) {
 
-
+/*
         Speler joske = new Speler("Joske");
         Speler jefke = new Speler("Jefke");
 
@@ -176,7 +176,16 @@ public class TestKlasse {
             ranking.scoreFile2List();
         } catch (QuartoException e) {
             e.printStackTrace();
+        }*/
+
+        SpelerRanking ranking = new SpelerRanking();
+
+        try {
+            ranking.scoreFile2List();
+        } catch (QuartoException e) {
+            e.printStackTrace();
         }
+
 
         System.out.println(ranking.getHighScoresRanking());//niks
 

@@ -1,10 +1,11 @@
 package Quarto.View.MenuScreen;
 
 import Quarto.Model.Quarto;
+import Quarto.Model.SpelerRanking;
 import Quarto.View.LastGameView.LastGamePresenter;
 import Quarto.View.LastGameView.LastGameView;
-import Quarto.View.MainScreen.MainScreenPresenter;
-import Quarto.View.MainScreen.MainScreenView;
+import Quarto.View.NamesScreen.NamesPresenter;
+import Quarto.View.NamesScreen.NamesView;
 import Quarto.View.RankingScreen.RankingPresenter;
 import Quarto.View.RankingScreen.RankingView;
 import Quarto.View.UISettings;
@@ -13,7 +14,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextInputDialog;
 import javafx.stage.WindowEvent;
 
 import java.net.MalformedURLException;
@@ -76,7 +76,8 @@ public class MenuScreenPresenter {
             @Override
             public void handle(ActionEvent actionEvent) {
                 RankingView rankingView = new RankingView();
-                RankingPresenter rankingPresenter = new RankingPresenter(model,rankingView,uiSettings);
+                SpelerRanking spelerRanking = new SpelerRanking();
+                RankingPresenter rankingPresenter = new RankingPresenter(model,rankingView,uiSettings, spelerRanking);
                 view.getScene().setRoot(rankingView);
                 rankingView.getScene().getWindow().sizeToScene();
                 try {

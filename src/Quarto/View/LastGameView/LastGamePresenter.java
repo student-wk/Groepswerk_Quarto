@@ -1,6 +1,7 @@
 package Quarto.View.LastGameView;
 
 import Quarto.Model.Quarto;
+import Quarto.Model.SpelerRanking;
 import Quarto.View.AboutScreen.AboutScreenPresenter;
 import Quarto.View.AboutScreen.AboutScreenView;
 import Quarto.View.InfoScreen.InfoScreenPresenter;
@@ -103,7 +104,8 @@ public class LastGamePresenter {
             @Override
             public void handle(ActionEvent actionEvent) {
                 RankingView rankingView = new RankingView();
-                RankingPresenter rankingPresenter = new RankingPresenter(model,rankingView,uiSettings);
+                SpelerRanking spelerRanking = new SpelerRanking();
+                RankingPresenter rankingPresenter = new RankingPresenter(model,rankingView,uiSettings,spelerRanking);
                 lastGameView.getScene().setRoot(rankingView);
                 rankingView.getScene().getWindow().sizeToScene();
                 try {

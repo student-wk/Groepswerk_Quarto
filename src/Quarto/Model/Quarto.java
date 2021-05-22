@@ -17,7 +17,6 @@ public class Quarto {
         this.blokkenBox = new BlokkenBox();
         this.speelbord = new Speelbord();
         this.gekozenBlok = null;
-
         this.spelerRanking = new SpelerRanking();
     }
 
@@ -26,7 +25,6 @@ public class Quarto {
         this.blokkenBox = new BlokkenBox();
         this.speelbord = new Speelbord();
         this.gekozenBlok = null;
-
         this.spelerRanking = new SpelerRanking();
     }
 
@@ -45,6 +43,7 @@ public class Quarto {
     /*
 * Geeft telkens een specifieke blok aan gekozenBlok.
 * */
+
     public void kiesBlok(Blok blok) throws QuartoException{
 
         if (gekozenBlok != null) {
@@ -58,10 +57,10 @@ public class Quarto {
         }
     }
 
-
     /*
 * Plaatst blok op speelBord.
 * */
+
     public void plaatsBlok(Positie positie) throws QuartoException {
         if (this.gekozenBlok == null) {
             throw new QuartoException("Er is geen blok geselecteerd.");
@@ -75,6 +74,13 @@ public class Quarto {
 //            this.gekozenBlok = null;
         }
     }
+    public void updateRanking() throws QuartoException {
+        if (this.speelbord.heeftCombinatie()) {
+
+            this.spelerRanking.addScoreWinningPlayer(this.alleSpelers.getActieveSpeler());
+            this.spelerRanking.addScoreLosingPlayer(this.alleSpelers.getNietActieveSpeler());
+        }
+    }
 
     public boolean isFlipAction() {
         return flipAction;
@@ -82,13 +88,6 @@ public class Quarto {
 
     public boolean spelGedaan() {
         return (speelbord.isVol() || speelbord.heeftCombinatie());
-    }
-
-    public void updateRanking() throws QuartoException {
-        if (this.speelbord.heeftCombinatie()) {
-            this.spelerRanking.addScoreWinningPlayer(this.alleSpelers.getActieveSpeler());
-            this.spelerRanking.addScoreLosingPlayer(this.alleSpelers.getNietActieveSpeler());
-        }
     }
 
     public AlleSpelers getAlleSpelers() {
@@ -124,5 +123,9 @@ public class Quarto {
 
     public void setGekozenBlok(Blok gekozenBlok) {
         this.gekozenBlok = gekozenBlok;
+    }
+
+    public void setSpelerRanking(SpelerRanking spelerRanking) {
+        this.spelerRanking = spelerRanking;
     }
 }

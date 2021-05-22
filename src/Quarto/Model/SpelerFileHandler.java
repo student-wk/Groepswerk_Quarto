@@ -22,12 +22,12 @@ public class SpelerFileHandler {
             } catch (EOFException e1) {
                 //Alles OK; bestand ten einde
             } catch (IOException e2) {
-                throw new QuartoException("Fout bij het lezen van het bronbestand " + bestand, e2);
+                throw new QuartoException("Error while reading source file " + bestand, e2);
             }
             Collections.sort(list);
             return list;
         } catch (IOException e3) {
-            throw new QuartoException("Het bronbestand " + bestand + " kan niet geopend worden",e3);
+            throw new QuartoException("The source file " + bestand + " can't be opened",e3);
         }
     }
 
