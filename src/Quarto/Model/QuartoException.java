@@ -1,7 +1,5 @@
 package Quarto.Model;
 
-import java.io.IOException;
-
 /**
  * @author Willem Kuijpers
  * @version 1.0 23-4-2021 09:11

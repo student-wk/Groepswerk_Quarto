@@ -1,4 +1,4 @@
-package Quarto.View.MenuScreen;
+package Quarto.View.NamesScreen;
 
 import Quarto.View.UISettings;
 import javafx.geometry.Insets;

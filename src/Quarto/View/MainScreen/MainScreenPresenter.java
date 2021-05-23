@@ -366,7 +366,8 @@ public class MainScreenPresenter {
             @Override
             public void handle(ActionEvent actionEvent) {
                 RankingView rankingView = new RankingView();
-                RankingPresenter rankingPresenter = new RankingPresenter(model,rankingView,uiSettings);
+                SpelerRanking spelerRanking = new SpelerRanking();
+                RankingPresenter rankingPresenter = new RankingPresenter(model,rankingView,uiSettings,spelerRanking);
                 view.getScene().setRoot(rankingView);
                 rankingView.getScene().getWindow().sizeToScene();
                 try {

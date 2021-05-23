@@ -1,6 +1,9 @@
 package Quarto.View.RankingScreen;
 
 import Quarto.Model.Quarto;
+import Quarto.Model.QuartoException;
+import Quarto.Model.Speler;
+import Quarto.Model.SpelerRanking;
 import Quarto.View.AboutScreen.AboutScreenPresenter;
 import Quarto.View.AboutScreen.AboutScreenView;
 import Quarto.View.InfoScreen.InfoScreenPresenter;
@@ -14,6 +17,8 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
@@ -40,21 +45,54 @@ public class RankingPresenter {
     private RankingView rankingView;
     private UISettings uiSettings;
 
-    public RankingPresenter(Quarto model,RankingView rankingView, UISettings uiSettings) {
+    private SpelerRanking spelerRanking;
+
+    public RankingPresenter(Quarto model,RankingView rankingView, UISettings uiSettings, SpelerRanking spelerRanking) {
         this.model = model;
         this.rankingView = rankingView;
         this.uiSettings = uiSettings;
+        this.spelerRanking = spelerRanking;
         updateView();
         eventHandlers();
     }
 
-    private void updateView() {
+    /*
+    * Update de grafiek met de gegevens uit het bestand.
+    * */
 
+    private void updateView() {
+        try {
+            this.spelerRanking.scoreFile2List();
+        } catch (QuartoException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Unable to show ranking");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();        }
+        try {
+            int lengte = spelerRanking.getHighScoresRanking().size();
+            if (lengte>10) {
+                lengte = 10;
+            }
+            for (int i = 0; i < lengte; i++) {
+                Speler speler = spelerRanking.getHighScoresRanking().get(i);
+                this.rankingView.getSeries().getData().add(new XYChart.Data(speler.getNaam(), speler.getScore()));
+            }
+        } catch (IndexOutOfBoundsException e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Unable to show ranking");
+        alert.setContentText("There are no rankings logged yet, please play a game first");
+        alert.showAndWait();
+
+
+        // nog zorgen dat hij in dit geval trg naar het menu gaat. DEZE EXCEPTION GAAT OOK AF WNR DE RANKING WEL WERKT
+
+        }
     }
 
     private void eventHandlers() {
         addMenuEventHandlers();
         terugHandler();
+        resetRankingHandler();
     }
 
     private void terugHandler() {
@@ -75,6 +113,29 @@ public class RankingPresenter {
                 menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
                 menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
 //                menuScreenPresenter.a();
+            }
+        });
+    }
+
+    private void resetRankingHandler() {
+        rankingView.getResetRanking().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    model.getSpelerRanking().clearRankingFile();
+                    updateView();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Reset Ranking");
+                    alert.setContentText("Open ranking again to view the updated ranking.");
+                    alert.showAndWait();
+                    //TOEVOEGEN DAT HIJ TRG NAAR MENU GAAT ALS JE OP OK DUWT
+
+                } catch (QuartoException e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Unable to clear ranking in source file");
+                    alert.setContentText(e.getMessage()); //nog checken welke message hij trggeeft
+                    alert.showAndWait();
+                }
             }
         });
     }
