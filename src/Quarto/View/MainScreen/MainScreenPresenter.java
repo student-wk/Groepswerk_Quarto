@@ -181,12 +181,12 @@ public class MainScreenPresenter {
         }
     }
 
-    private void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException {
+    private void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException, IOException {
         view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getGekozenBlok());
         if (model.isGameFinished()){showFinishedDialog(); }
     }
 
-    private void showFinishedDialog() throws QuartoException {
+    private void showFinishedDialog() throws QuartoException, IOException {
 //        Log.debug("showing finished");
         if (!model.isGameFinished()) return;
         ChoiceDialog<String> again = new ChoiceDialog<String>("Ok", "Ok", "Nope");
@@ -247,7 +247,7 @@ public class MainScreenPresenter {
                                 updateBlokkenBoxView();
                                 updateTurnView();
 
-                            } catch (QuartoException exception){
+                            } catch (QuartoException | IOException exception){
                                 final Alert noBlokChosen = new Alert(Alert.AlertType.INFORMATION);
                                 noBlokChosen.setTitle("Place a piece on the playbord.");
                                 noBlokChosen.setContentText(exception.getMessage());
@@ -288,7 +288,7 @@ public class MainScreenPresenter {
                                 updateBlokkenBoxView();
                                 updateTurnView();
 
-                            } catch (QuartoException exception){
+                            } catch (QuartoException | IOException exception){
                                 final Alert noBlokChosen = new Alert(Alert.AlertType.INFORMATION);
                                 noBlokChosen.setTitle("Place a piece on the playbord.");
                                 noBlokChosen.setContentText(exception.getMessage());
@@ -324,7 +324,7 @@ public class MainScreenPresenter {
                             model.setGekozenBlok(null);
                             view.setNode(model.getGekozenBlok());
 
-                        } catch (QuartoException e) {
+                        } catch (QuartoException | IOException e) {
                             final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
                             noBlokChosen.setTitle("You cannot close the application yet.");
                             noBlokChosen.setContentText(e.getMessage());
@@ -338,9 +338,9 @@ public class MainScreenPresenter {
         }
     }
 
-
-
-
+    public MainScreenView getView() {
+        return view;
+    }
 
     public void addMenuEventHandlers(){
         view.getSettingsItem().setOnAction(new EventHandler<ActionEvent>() {

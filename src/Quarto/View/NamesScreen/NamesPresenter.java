@@ -12,6 +12,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.WindowEvent;
 
+import java.io.IOException;
+
 public class NamesPresenter {
     private Quarto model;
     private NamesView view;
@@ -56,7 +58,7 @@ public class NamesPresenter {
                     mainScreenView.getScene().getWindow().setHeight(view.getHeight()*2);
                     mainScreenView.getScene().getWindow().setWidth(view.getWidth()*3);
                     mainScreenPresenter.windowsHandler();
-                } catch (QuartoException exception) {
+                } catch (QuartoException | IOException exception) {
                     final Alert enterPlayerNames = new Alert(Alert.AlertType.ERROR);
                     enterPlayerNames.setTitle("Enter names");
                     enterPlayerNames.setContentText(exception.getMessage());

@@ -23,13 +23,16 @@ public class AlleSpelers {
 * Kiest in het begin van het spel een random speler die mag beginnen.
 * */
 
-    public Speler kiesSpeler() {
+    public int kiesSpeler() {
+        int index;
         if (random == 1) {
             actieveSpeler = speler1;
+            index = 1;
         } else {
             actieveSpeler = speler2;
+            index =2;
         }
-        return actieveSpeler;
+        return index;
     }
 
 /*
@@ -75,5 +78,13 @@ public class AlleSpelers {
 
     public void setSpeler2(Speler speler2) {
         this.speler2 = speler2;
+    }
+
+    public void setActieveSpeler(int actieveSpeler) {
+        if (actieveSpeler == 1) {
+            this.actieveSpeler = speler1;
+        } else  {
+            this.actieveSpeler = speler2;
+        }
     }
 }

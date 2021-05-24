@@ -1,6 +1,9 @@
 package Quarto.Model;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @author Willem Kuijpers
@@ -8,34 +11,43 @@ import java.io.IOException;
  */
 public class TestKlasse {
 
-    /*    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
 
-            Quarto testQuarto = new Quarto();
-            Speler speler1 = new Speler("Jos", 0);
-            Speler speler2 = new Speler("Freya", 0);
-            AlleSpelers testSpelers = new AlleSpelers(speler1, speler2);
-            testQuarto.kiesBlok(8);
+        Path animationFile = Paths.get("resources"+File.separator+"animation"+ File.separator+"animation.bin");
+        if (Files.exists(animationFile)){
+            try (DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(String.valueOf(animationFile),false)))){
+                dataOutputStream.writeUTF("sfdsadsa");
+                dataOutputStream.writeUTF("sdsa");
+                dataOutputStream.writeUTF("ik enbenn");
+                dataOutputStream.writeUTF("ikben de beste");
+            } catch (IOException ioException){
+                ioException.printStackTrace();
+            }
+        } else {
+            System.out.println("does not exitst");
+            Files.createFile(animationFile);
+            try (DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(String.valueOf(animationFile),false)))){
+                dataOutputStream.writeUTF("sfdsadsa");
+                dataOutputStream.writeUTF("sdsa");
+                dataOutputStream.writeUTF("ik enbenn");
+                dataOutputStream.writeUTF("ikben de beste");
+            } catch (IOException ioException){
+                ioException.printStackTrace();
+            }
+        }
 
-            System.out.println(testQuarto.getBlokkenBox() + "\n");
-            testQuarto.kiesBlok(10);
+        try (DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(new FileInputStream(String.valueOf(animationFile))))){
+           while (dataInputStream.available() > 0) {
+               System.out.println(dataInputStream.readUTF());;
+           }
 
-            while (testQuarto.spelGedaan() == false) {
-                testQuarto.spelRonde();
-                if (testQuarto.spelGedaan() == true) {
-                    System.out.println("Het spel is gedaan.");
-                    System.out.println(testQuarto.getBlokkenBox() + "\n");
-                    if (testQuarto.getSpeelbord().isVol() == true) {
-                        System.out.println("Het is een gelijkspel.");
-                    } else if (testQuarto.getSpeelbord().heeftCombinatie() == true) {
-                        System.out.println("Een speler heeft gewonnen.");
-                    } else {
-                        System.out.println("Er klopt iets niet.");
-                    }
-                }
-            }*/
-    public static void main(String[] args) {
+        } catch (FileNotFoundException e){
+            System.out.println("geen bestand iets fout");
+        }
 
-/*
+        System.out.println(animationFile.toString());
+
+        /*
         Speler joske = new Speler("Joske");
         Speler jefke = new Speler("Jefke");
 
@@ -180,14 +192,14 @@ public class TestKlasse {
 
         SpelerRanking ranking = new SpelerRanking();
 
-        try {
-            ranking.scoreFile2List();
-        } catch (QuartoException e) {
-            e.printStackTrace();
-        }
-
-
-        System.out.println(ranking.getHighScoresRanking());//niks
+//        try {
+//            ranking.scoreFile2List();
+//        } catch (QuartoException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        System.out.println(ranking.getHighScoresRanking());//niks
 
 
     }

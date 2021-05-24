@@ -1,9 +1,11 @@
 package Quarto.View.MenuScreen;
 
 import Quarto.Model.Quarto;
+import Quarto.Model.QuartoException;
 import Quarto.Model.SpelerRanking;
+import Quarto.View.LastGameView.LastGamePresenter2;
+import Quarto.View.LastGameView.LastGameView2;
 import Quarto.View.LastGameView.LastGamePresenter;
-import Quarto.View.LastGameView.LastGameView;
 import Quarto.View.NamesScreen.NamesPresenter;
 import Quarto.View.NamesScreen.NamesView;
 import Quarto.View.RankingScreen.RankingPresenter;
@@ -16,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.WindowEvent;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 
 /**
@@ -99,8 +102,15 @@ public class MenuScreenPresenter {
         view.getToonLaatsteSpel().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                LastGameView lastGameView = new LastGameView();
-                LastGamePresenter lastGamePresenter = new LastGamePresenter(model,lastGameView,uiSettings);
+                try {
+                    model.setPlayerForAnimation();
+                } catch (IOException ioException) {
+                    System.out.println("something went wrong with setting player for animation");
+                } catch (QuartoException exception) {
+                    exception.printStackTrace();
+                }
+                LastGameView2 lastGameView = new LastGameView2(uiSettings);
+                LastGamePresenter2 lastGamePresenter = new LastGamePresenter2(model,lastGameView,uiSettings);
                 view.getScene().setRoot(lastGameView);
                 lastGameView.getScene().getWindow().sizeToScene();
                 try {

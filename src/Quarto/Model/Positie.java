@@ -1,5 +1,7 @@
 package Quarto.Model;
 
+import java.util.StringJoiner;
+
 /**
  * @author Willem Kuijpers
  * @version 1.0 23-4-2021 10:26
@@ -28,5 +30,10 @@ public class Positie {
 
     public int getKollom() {
         return kollom;
+    }
+
+    @Override
+    public String toString() {
+        return "positie" + "|" + kollom + "|"+ rij;
     }
 }
