@@ -128,7 +128,7 @@ public class RankingPresenter {
                     alert.setTitle("Reset Ranking");
                     alert.setContentText("Open ranking again to view the updated ranking.");
                     alert.showAndWait();
-                    //TOEVOEGEN DAT HIJ TRG NAAR MENU GAAT ALS JE OP OK DUWT
+                    //TOEVOEGEN DAT HIJ TRG NAAR MENU GAAT ALS JE OP OK DUWT?
 
                 } catch (QuartoException e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -53,7 +53,8 @@ public class MenuScreenPresenter {
             @Override
             public void handle(ActionEvent actionEvent) {
                 NamesView namesView = new NamesView(uiSettings);
-                NamesPresenter namesPresenter = new NamesPresenter(model,namesView,uiSettings);
+                SpelerRanking ranking = new SpelerRanking();
+                NamesPresenter namesPresenter = new NamesPresenter(model,namesView,uiSettings,ranking);
                 view.getScene().setRoot(namesView);
                 namesView.getScene().getWindow().sizeToScene();
                 try {

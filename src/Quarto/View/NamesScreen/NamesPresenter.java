@@ -2,6 +2,8 @@ package Quarto.View.NamesScreen;
 
 import Quarto.Model.Quarto;
 import Quarto.Model.QuartoException;
+import Quarto.Model.Speler;
+import Quarto.Model.SpelerRanking;
 import Quarto.View.MainScreen.MainScreenPresenter;
 import Quarto.View.MainScreen.MainScreenView;
 import Quarto.View.UISettings;
@@ -17,21 +19,37 @@ public class NamesPresenter {
     private NamesView view;
     private UISettings uiSettings;
 
+    private SpelerRanking ranking;
 
-    public NamesPresenter(Quarto model, NamesView view, UISettings uiSettings) {
+
+    public NamesPresenter(Quarto model, NamesView view, UISettings uiSettings, SpelerRanking ranking) {
         this.model = model;
         this.view = view;
         this.addEventHandlers();
+
+        this.ranking = ranking;
+
         this.updateView();
         addEventHandlers();
     }
 
     private void updateView() {
+        updateListNames();
 
-        // Koppelt event handlers (anon . inner klassen)
-        // aan de controls uit de view.
-        // Event handlers: roepen methodes aan uit het
-        // model en zorgen voor een update van de view.
+    }
+
+    private void updateListNames() {
+        try {
+            this.ranking.scoreFile2List();
+        } catch (QuartoException e) { // exception nog doen!
+            e.printStackTrace();
+        }
+        for (Speler speler :
+                ranking.getHighScoresRanking()) {
+            view.getListNames().add(speler.getNaam());
+        }
+        /*        view.getListNames().sort();*/
+        // nog sorteren!
     }
 
     private void addEventHandlers() {
@@ -39,11 +57,11 @@ public class NamesPresenter {
             @Override
             public void handle(ActionEvent actionEvent) {
                 try {
-                    model.setPlayers( view.getPlayer1TextField().getText(),  view.getPlayer2TextField().getText());
+                    model.setPlayers(view.getPlayer1ComboBox().getValue(), view.getPlayer2ComboBox().getValue());
                     model.kieSpeler();
 
                     MainScreenView mainScreenView = new MainScreenView(uiSettings);
-                    MainScreenPresenter mainScreenPresenter = new MainScreenPresenter(model,mainScreenView,uiSettings);
+                    MainScreenPresenter mainScreenPresenter = new MainScreenPresenter(model, mainScreenView, uiSettings);
                     view.getScene().setRoot(mainScreenView);
 //                try {
 //                    mainScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
@@ -53,8 +71,8 @@ public class NamesPresenter {
                     mainScreenView.getScene().getWindow().sizeToScene();
 //                mainScreenView.getScene().getWindow().setX(uiSettings.getResX()/20);
 //                mainScreenView.getScene().getWindow().setY(uiSettings.getResY()/20);
-                    mainScreenView.getScene().getWindow().setHeight(view.getHeight()*2);
-                    mainScreenView.getScene().getWindow().setWidth(view.getWidth()*3);
+                    mainScreenView.getScene().getWindow().setHeight(view.getHeight() * 2);
+                    mainScreenView.getScene().getWindow().setWidth(view.getWidth() * 3);
                     mainScreenPresenter.windowsHandler();
                 } catch (QuartoException exception) {
                     final Alert enterPlayerNames = new Alert(Alert.AlertType.ERROR);
@@ -63,20 +81,20 @@ public class NamesPresenter {
                     enterPlayerNames.showAndWait();
                     actionEvent.consume();
                 }
-
-
             }
         });
-        // Vult de view met data uit model
     }
 
     public void windowsHandler() {
         view.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
-            public void handle(WindowEvent event) { handleCloseEvent(event); }});
+            public void handle(WindowEvent event) {
+                handleCloseEvent(event);
+            }
+        });
     }
 
-    public void handleCloseEvent(Event event){
+    public void handleCloseEvent(Event event) {
         final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
         stopWindow.setHeaderText("You are about to close the application");
         stopWindow.setContentText("Are you sure, unsaved prgress will be lost");
@@ -88,35 +106,8 @@ public class NamesPresenter {
         stopWindow.showAndWait();
         if (stopWindow.getResult() == null || stopWindow.getResult().equals(noButton)) {
             event.consume();
-        }
-        else {
+        } else {
             view.getScene().getWindow().hide();
         }
     }
-
-//    public void addWindowEventHandlers() {
-//        view.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
-//            @Override
-//            public void handle(WindowEvent event) {
-//                Alert alert = new Alert(Alert.AlertType.WARNING);
-//                alert.setHeaderText("Hierdoor stopt het spel!");
-//                alert.setContentText("Ben je zeker?");
-//                alert.setTitle("Opgelet!");
-//                alert.getButtonTypes().clear();
-//                ButtonType neen = new ButtonType("Neen");
-//                ButtonType ja = new ButtonType("Ja");
-//                alert.getButtonTypes().addAll(neen, ja);
-//                alert.showAndWait();
-//                if (alert.getResult() == null || alert.getResult().equals(neen)) {
-//                    event.consume();
-//                }
-//            }
-//        });
-//    }
-
-//    public void addWindowEventHandlers() {
-//        //Window event handlers (non.innerklassen)
-//    }
-
-
 }
