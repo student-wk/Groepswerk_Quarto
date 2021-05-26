@@ -349,16 +349,16 @@ public class MainScreenPresenter {
                 MenuScreenView menuScreenView = new MenuScreenView(uiSettings);
                 MenuScreenPresenter menuScreenPresenter = new MenuScreenPresenter(model, menuScreenView, uiSettings);
                 view.getScene().setRoot(menuScreenView);
-                try {
-                    menuScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-                } catch (MalformedURLException ex) {
-                    // // do nothing, if toURL-conversion fails, program can continue
-                }
+//                try {
+//                    menuScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+//                } catch (MalformedURLException ex) {
+//                    // // do nothing, if toURL-conversion fails, program can continue
+//                }
                 menuScreenView.getScene().getWindow().sizeToScene();
-                menuScreenView.getScene().getWindow().setX(uiSettings.getResX() / 20);
-                menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
-                menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
-                menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
+//                menuScreenView.getScene().getWindow().setX(uiSettings.getResX() / 20);
+//                menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
+//                menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
+//                menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
 //                menuScreenPresenter.windowsHandler();
             }
         });
