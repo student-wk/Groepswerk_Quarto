@@ -179,20 +179,18 @@ public class MainScreenView extends BorderPane  {
         setTop(menuBar);
         setRight(speelBordView);
         setLeft(blokkenBoxView);
+        setMargin(blokkenBoxView, new Insets(10));
+
+        setBottom(infoGridpane);
 
         infoGridpane.add(turnLabel, 0,0);
         GridPane.setConstraints(turnLabel, 0, 0, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
-
         infoGridpane.add(pieceChosenLabel, infoGridpaneColIndex,0);
         GridPane.setConstraints(pieceChosenLabel, infoGridpaneColIndex, 0, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
-
         infoGridpane.add(this.gekozenBlok, infoGridpaneColIndex,1);
         GridPane.setConstraints(this.gekozenBlok, infoGridpaneColIndex, 1, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
 
-        setBottom(infoGridpane);
         infoGridpane.setGridLinesVisible(true);
-
-        setMargin(blokkenBoxView, new Insets(10));
         infoGridpane.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, BorderWidths.DEFAULT)));
     }
 
@@ -222,5 +220,9 @@ public class MainScreenView extends BorderPane  {
 
     public MenuItem getLastGameItem() {
         return lastGameMI;
+    }
+
+    public GridPane getInfoGridpane() {
+        return infoGridpane;
     }
 }

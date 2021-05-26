@@ -115,6 +115,6 @@ public class Blok {
 
     @Override
     public String toString() {
-        return (grootte + " " + kleur + " " + vorm + " " + vulling + " ");
+        return ("blok" + "|" + grootte + "|" + kleur + "|" + vorm + "|" + vulling);
     }
 }

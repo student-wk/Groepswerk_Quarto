@@ -34,7 +34,7 @@ import java.util.List;
 
 public class MainScreenPresenter {
 
-    private Quarto model;
+    public Quarto model;
     private MainScreenView view;
     private UISettings uiSettings;
 
@@ -53,7 +53,7 @@ public class MainScreenPresenter {
 //        updateBlokkenBoxView();
 //    }
 
-    private void updateTurnView(){
+    protected void updateTurnView(){
         String action = (model.isFlipAction()?"Place a piece!":"Pick a piece!");
         view.getTurnLabel().setText(model.getAlleSpelers().getActieveSpeler().getNaam() + ": " + action );
     }
@@ -62,7 +62,7 @@ public class MainScreenPresenter {
      * BlokkenBox in het model.
      * */
 
-    private void updateBlokkenBoxView() {
+    protected void updateBlokkenBoxView() {
         view.setNode(model.getGekozenBlok());
         for (Blok.Grootte grootte : Blok.Grootte.values()) {
             for (Blok.Kleur kleur : Blok.Kleur.values()) {
@@ -181,12 +181,12 @@ public class MainScreenPresenter {
         }
     }
 
-    private void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException {
+    protected void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException, IOException {
         view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getGekozenBlok());
         if (model.isGameFinished()){showFinishedDialog(); }
     }
 
-    private void showFinishedDialog() throws QuartoException {
+    protected void showFinishedDialog() throws QuartoException, IOException {
 //        Log.debug("showing finished");
         if (!model.isGameFinished()) return;
         ChoiceDialog<String> again = new ChoiceDialog<String>("Ok", "Ok", "Nope");
@@ -217,7 +217,7 @@ public class MainScreenPresenter {
         }
     }
 
-    private void blokkenBoxEventHandlers() {
+    protected void blokkenBoxEventHandlers() {
         for (int i = 0; i < view.getBlokkenBoxView().ROW_SIZE; i++) {
             for (int j = 0; j < view.getBlokkenBoxView().COL_SIZE; j++) {
                 final int row = i;
@@ -247,7 +247,7 @@ public class MainScreenPresenter {
                                 updateBlokkenBoxView();
                                 updateTurnView();
 
-                            } catch (QuartoException exception){
+                            } catch (QuartoException | IOException exception){
                                 final Alert noBlokChosen = new Alert(Alert.AlertType.INFORMATION);
                                 noBlokChosen.setTitle("Place a piece on the playbord.");
                                 noBlokChosen.setContentText(exception.getMessage());
@@ -288,7 +288,7 @@ public class MainScreenPresenter {
                                 updateBlokkenBoxView();
                                 updateTurnView();
 
-                            } catch (QuartoException exception){
+                            } catch (QuartoException | IOException exception){
                                 final Alert noBlokChosen = new Alert(Alert.AlertType.INFORMATION);
                                 noBlokChosen.setTitle("Place a piece on the playbord.");
                                 noBlokChosen.setContentText(exception.getMessage());
@@ -307,7 +307,7 @@ public class MainScreenPresenter {
         }
     }
 
-    private void speelBordEventHandlers() {
+    protected void speelBordEventHandlers() {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 view.getSpeelBordView().getNodeByRowColumnIndex(i,j).setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -324,7 +324,7 @@ public class MainScreenPresenter {
                             model.setGekozenBlok(null);
                             view.setNode(model.getGekozenBlok());
 
-                        } catch (QuartoException e) {
+                        } catch (QuartoException | IOException e) {
                             final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
                             noBlokChosen.setTitle("You cannot close the application yet.");
                             noBlokChosen.setContentText(e.getMessage());
@@ -338,6 +338,10 @@ public class MainScreenPresenter {
         }
     }
 
+    public MainScreenView getView() {
+        return view;
+    }
+
     public void addMenuEventHandlers(){
         view.getSettingsItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -345,17 +349,17 @@ public class MainScreenPresenter {
                 MenuScreenView menuScreenView = new MenuScreenView(uiSettings);
                 MenuScreenPresenter menuScreenPresenter = new MenuScreenPresenter(model, menuScreenView, uiSettings);
                 view.getScene().setRoot(menuScreenView);
-                try {
-                    menuScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-                } catch (MalformedURLException ex) {
-                    // // do nothing, if toURL-conversion fails, program can continue
-                }
+//                try {
+//                    menuScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+//                } catch (MalformedURLException ex) {
+//                    // // do nothing, if toURL-conversion fails, program can continue
+//                }
                 menuScreenView.getScene().getWindow().sizeToScene();
-                menuScreenView.getScene().getWindow().setX(uiSettings.getResX() / 20);
-                menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
-                menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
-                menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
-                menuScreenPresenter.windowsHandler();
+//                menuScreenView.getScene().getWindow().setX(uiSettings.getResX() / 20);
+//                menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
+//                menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
+//                menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
+//                menuScreenPresenter.windowsHandler();
             }
         });
         view.getRankingItem().setOnAction(new EventHandler<ActionEvent>() {
@@ -376,7 +380,7 @@ public class MainScreenPresenter {
                 rankingView.getScene().getWindow().setY(uiSettings.getResY()/20);
                 rankingView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
                 rankingView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
-                rankingPresenter.windowsHandler();
+//                rankingPresenter.windowsHandler();
             }
         });
         view.getLastGameItem().setOnAction(new EventHandler<ActionEvent>() {
@@ -497,5 +501,9 @@ public class MainScreenPresenter {
         else {
             view.getScene().getWindow().hide();
         }
+    }
+
+    public Quarto getModel() {
+        return model;
     }
 }
