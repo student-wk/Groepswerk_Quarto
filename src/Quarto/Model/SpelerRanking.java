@@ -14,7 +14,7 @@ public class SpelerRanking {
     private ArrayList<Speler> highScoresRanking;
     public static final char FILE_SEPARATOR = System.getProperties().getProperty("file.separator").charAt(0);
     private Path Highscore_File = Paths.get("resources"+FILE_SEPARATOR+"ranking"+FILE_SEPARATOR+"ranking.bin");
-    private String HIGHSCORE_FILE = pathToString();
+    private String HIGHSCORE_FILE = Highscore_File.toString();
 
 
     public SpelerRanking() {
@@ -77,10 +77,6 @@ public class SpelerRanking {
     public void clearRankingFile() throws QuartoException {
         this.highScoresRanking.clear();
         SpelerFileHandler.list2BinFile(this.highScoresRanking,HIGHSCORE_FILE);
-    }
-
-    public String pathToString() {
-        return Highscore_File.toString();
     }
 
     public ArrayList<Speler> getHighScoresRanking() {

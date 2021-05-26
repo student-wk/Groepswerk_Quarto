@@ -52,6 +52,8 @@ public class StartScreenView extends BorderPane  {
         } else { // do nothing, if StartScreenImage is not available, program can continue
         }
         this.setBottom(progressPane);
+        setPrefWidth(uiSettings.getLowestRes() / 4);
+        setPrefHeight(uiSettings.getLowestRes() / 4);
     }
 
     Label getTimeDisplay () {return (timeDisplay);}

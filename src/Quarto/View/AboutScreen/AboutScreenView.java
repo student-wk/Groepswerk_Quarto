@@ -40,8 +40,8 @@ public class AboutScreenView extends BorderPane {
         } else { // do nothing, if AboutImage is not available, program can continue
         }
         VBox labelsPane = new VBox();
-        labelsPane.getChildren().addAll(new Label("This application was developed by WDK"),
-                                        new Label(String.format("Free of %c", 169)),
+        labelsPane.getChildren().addAll(new Label("This application was developed by Delawar Jalat & Willem Kuijpers"),
+                                        new Label(String.format("Version 1.0, Free of %c", 169)),
                                         new Label("Enjoy!"));
         centralPane.setBottom(labelsPane);
         setCenter(centralPane);
