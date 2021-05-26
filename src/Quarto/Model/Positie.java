@@ -34,6 +34,6 @@ public class Positie {
 
     @Override
     public String toString() {
-        return "positie" + "|" + kollom + "|"+ rij;
+        return "positie" + "|" + rij + "|"+ kollom;
     }
 }

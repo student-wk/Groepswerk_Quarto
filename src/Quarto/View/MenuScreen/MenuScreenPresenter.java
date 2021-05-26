@@ -102,6 +102,7 @@ public class MenuScreenPresenter {
         view.getToonLaatsteSpel().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                model = new Quarto(Boolean.FALSE);
                 try {
                     model.setPlayerForAnimation();
                 } catch (IOException ioException) {

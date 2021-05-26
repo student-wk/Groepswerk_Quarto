@@ -10,6 +10,7 @@ public class Quarto {
     private AlleSpelers alleSpelers;
     private boolean gameFinished;
     private boolean flipAction;
+    private Boolean animation = true;
 
     private SpelerRanking spelerRanking;
     private AnimationFileHandler animationFileHandler;
@@ -23,12 +24,22 @@ public class Quarto {
         animationFileHandler = new AnimationFileHandler();
     }
 
+    public Quarto(Boolean doNotAnimate) {
+        this.blokkenBox = new BlokkenBox();
+        this.speelbord = new Speelbord();
+        this.gekozenBlok = null;
+        this.spelerRanking = new SpelerRanking();
+        this.animation = doNotAnimate;
+        animationFileHandler = new AnimationFileHandler();
+    }
+
     public Quarto(Speler player1, Speler player2) throws QuartoException, IOException {
         this.setPlayers(player1.getNaam(), player2.getNaam());
         this.blokkenBox = new BlokkenBox();
         this.speelbord = new Speelbord();
         this.gekozenBlok = null;
         this.spelerRanking = new SpelerRanking();
+        animationFileHandler = new AnimationFileHandler();
     }
 
     public boolean isGameFinished() {
@@ -55,7 +66,9 @@ public class Quarto {
             this.gekozenBlok = blok;
             blokkenBox.neemBlok(blok);
             alleSpelers.afwisselen();
-            this.animationFileHandler.addAction(blok.toString());
+            if (animation){
+                this.animationFileHandler.addAction(blok.toString());
+            }
             System.out.println("actieve speler: "+ this.getAlleSpelers().getActieveSpeler());
             flipAction = true;
         }
@@ -70,18 +83,22 @@ public class Quarto {
             throw new QuartoException("Er is geen blok geselecteerd.");
         } else {
             speelbord.voegBlokToe(gekozenBlok, positie);
-            this.animationFileHandler.addAction(positie.toString());
+            if (animation){
+                this.animationFileHandler.addAction(positie.toString());
+            }
 
             flipAction = false;
              if (spelGedaan()) {
                  gameFinished = true;
-                 if (speelbord.isVol()) {
+                 if (animation) {
+                     if (speelbord.isVol()) {
                      this.animationFileHandler.addAction("gamefinished"+"|"+"vol");
-                 } else {
+                     } else {
                      this.animationFileHandler.addAction("gamefinished"+"|"+"won");
+                     }
+                     animationFileHandler.printout();
                  }
 
-                 animationFileHandler.printout();
 
                  updateRanking();
              }
@@ -132,7 +149,9 @@ public class Quarto {
     public void kieSpeler() throws IOException {
         int indexChosenPlayer = alleSpelers.kiesSpeler();
 
-        this.animationFileHandler.initiateFile("oneVone"+"|"+ alleSpelers.getSpeler1().getNaam() + "|"+ alleSpelers.getSpeler2().getNaam() + "|" + indexChosenPlayer );
+        if (animation) {
+            this.animationFileHandler.initiateFile("oneVone" + "|" + alleSpelers.getSpeler1().getNaam() + "|" + alleSpelers.getSpeler2().getNaam() + "|" + indexChosenPlayer);
+        }
 
         System.out.println("actieve speler: "+ this.getAlleSpelers().getActieveSpeler());
 
@@ -147,10 +166,18 @@ public class Quarto {
     }
 
     public void setPlayerForAnimation() throws IOException, QuartoException {
-        System.out.println(animationFileHandler.getAction());
-        String player1FromAnimation = animationFileHandler.getAction().split("\\|")[1];
-        String player2FromAnimation = animationFileHandler.getAction().split("\\|")[2];
+        animationFileHandler.cteateActions();
+//        System.out.println(animationFileHandler.getAction().length());
+        String action = animationFileHandler.getAction();
+        String player1FromAnimation = action.split("\\|")[1];
+        String player2FromAnimation = action.split("\\|")[2];
         this.setPlayers(player1FromAnimation,player2FromAnimation);
-        this.alleSpelers.setActieveSpeler(Integer.parseInt(animationFileHandler.getAction().split("\\|")[3]));
+        this.alleSpelers.setActieveSpeler(Integer.parseInt(action.split("\\|")[3]));
+    }
+
+
+
+    public AnimationFileHandler getAnimationFileHandler() {
+        return animationFileHandler;
     }
 }

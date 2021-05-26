@@ -34,7 +34,7 @@ import java.util.List;
 
 public class MainScreenPresenter {
 
-    private Quarto model;
+    public Quarto model;
     private MainScreenView view;
     private UISettings uiSettings;
 
@@ -53,7 +53,7 @@ public class MainScreenPresenter {
 //        updateBlokkenBoxView();
 //    }
 
-    private void updateTurnView(){
+    protected void updateTurnView(){
         String action = (model.isFlipAction()?"Place a piece!":"Pick a piece!");
         view.getTurnLabel().setText(model.getAlleSpelers().getActieveSpeler().getNaam() + ": " + action );
     }
@@ -62,7 +62,7 @@ public class MainScreenPresenter {
      * BlokkenBox in het model.
      * */
 
-    private void updateBlokkenBoxView() {
+    protected void updateBlokkenBoxView() {
         view.setNode(model.getGekozenBlok());
         for (Blok.Grootte grootte : Blok.Grootte.values()) {
             for (Blok.Kleur kleur : Blok.Kleur.values()) {
@@ -181,12 +181,12 @@ public class MainScreenPresenter {
         }
     }
 
-    private void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException, IOException {
+    protected void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException, IOException {
         view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getGekozenBlok());
         if (model.isGameFinished()){showFinishedDialog(); }
     }
 
-    private void showFinishedDialog() throws QuartoException, IOException {
+    protected void showFinishedDialog() throws QuartoException, IOException {
 //        Log.debug("showing finished");
         if (!model.isGameFinished()) return;
         ChoiceDialog<String> again = new ChoiceDialog<String>("Ok", "Ok", "Nope");
@@ -217,7 +217,7 @@ public class MainScreenPresenter {
         }
     }
 
-    private void blokkenBoxEventHandlers() {
+    protected void blokkenBoxEventHandlers() {
         for (int i = 0; i < view.getBlokkenBoxView().ROW_SIZE; i++) {
             for (int j = 0; j < view.getBlokkenBoxView().COL_SIZE; j++) {
                 final int row = i;
@@ -307,7 +307,7 @@ public class MainScreenPresenter {
         }
     }
 
-    private void speelBordEventHandlers() {
+    protected void speelBordEventHandlers() {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 view.getSpeelBordView().getNodeByRowColumnIndex(i,j).setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -501,5 +501,9 @@ public class MainScreenPresenter {
         else {
             view.getScene().getWindow().hide();
         }
+    }
+
+    public Quarto getModel() {
+        return model;
     }
 }
