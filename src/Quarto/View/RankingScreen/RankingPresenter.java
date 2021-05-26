@@ -10,6 +10,7 @@ import Quarto.View.InfoScreen.InfoScreenPresenter;
 import Quarto.View.InfoScreen.InfoScreenView;
 import Quarto.View.LastGameView.LastGamePresenter;
 import Quarto.View.LastGameView.LastGameView;
+import Quarto.View.MainScreen.MainScreenPresenter;
 import Quarto.View.MenuScreen.MenuScreenPresenter;
 import Quarto.View.MenuScreen.MenuScreenView;
 import Quarto.View.UISettings;
@@ -112,7 +113,7 @@ public class RankingPresenter {
                 menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
                 menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
                 menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
-//                menuScreenPresenter.a();
+                menuScreenPresenter.windowsHandler();
             }
         });
     }
@@ -128,12 +129,11 @@ public class RankingPresenter {
                     alert.setTitle("Reset Ranking");
                     alert.setContentText("Open ranking again to view the updated ranking.");
                     alert.showAndWait();
-                    //TOEVOEGEN DAT HIJ TRG NAAR MENU GAAT ALS JE OP OK DUWT?
 
                 } catch (QuartoException e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Unable to clear ranking in source file");
-                    alert.setContentText(e.getMessage()); //nog checken welke message hij trggeeft
+                    alert.setContentText(e.getMessage());
                     alert.showAndWait();
                 }
             }
@@ -157,7 +157,7 @@ public class RankingPresenter {
                 menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
                 menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
                 menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
-//                menuScreenPresenter.windowsHandler();
+                menuScreenPresenter.windowsHandler();
             }
         });
         rankingView.getLastGameItem().setOnAction(new EventHandler<ActionEvent>() {
@@ -180,12 +180,7 @@ public class RankingPresenter {
                 lastGamePresenter.windowsHandler();
             }
         });
-//        rankingView.getExitItem().setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                handleCloseEvent(event);
-//            }
-//        });
+
         rankingView.getAboutItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -254,49 +249,36 @@ public class RankingPresenter {
                 }
                 infoScreenStage.showAndWait();
             }});
-    }
-
-    private void afsluitenHandler() {
         rankingView.getExitItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                rankingView.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
-                    @Override
-                    public void handle(WindowEvent event) {
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setHeaderText("Hierdoor stopt het spel!");
-                        alert.setContentText("Ben je zeker?");
-                        alert.setTitle("Opgelet!");
-                        alert.getButtonTypes().clear();
-                        ButtonType neen = new ButtonType("Neen");
-                        ButtonType ja = new ButtonType("Ja");
-                        alert.getButtonTypes().addAll(neen, ja);
-                        alert.showAndWait();
-                        if (alert.getResult() == null || alert.getResult().equals(neen)) {
-                            event.consume();
-                        }
-                    }
-                });
+                handleCloseEvent(actionEvent);
             }
         });
     }
 
-    public void addWindowEventHandlers() {
+    public void handleCloseEvent(Event event) {
+        final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
+        stopWindow.setHeaderText("Je gaat de applicatie afsluiten.");
+        stopWindow.setContentText("Ben je zeker? Onopgeslaagde data kan verloren gaan.");
+        stopWindow.setTitle("WAARSCHUWING!");
+        stopWindow.getButtonTypes().clear();
+        ButtonType noButton = new ButtonType("Nee");
+        ButtonType yesButton = new ButtonType("Ja");
+        stopWindow.getButtonTypes().addAll(yesButton, noButton);
+        stopWindow.showAndWait();
+        if (stopWindow.getResult() == null || stopWindow.getResult().equals(noButton)) {
+            event.consume();
+        } else {
+            rankingView.getScene().getWindow().hide();
+        }
+    }
+
+    public void windowsHandler() {
         rankingView.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Hierdoor stopt het spel!");
-                alert.setContentText("Ben je zeker?");
-                alert.setTitle("Opgelet!");
-                alert.getButtonTypes().clear();
-                ButtonType neen = new ButtonType("Neen");
-                ButtonType ja = new ButtonType("Ja");
-                alert.getButtonTypes().addAll(neen, ja);
-                alert.showAndWait();
-                if (alert.getResult() == null || alert.getResult().equals(neen)) {
-                    event.consume();
-                }
+                handleCloseEvent(event);
             }
         });
     }

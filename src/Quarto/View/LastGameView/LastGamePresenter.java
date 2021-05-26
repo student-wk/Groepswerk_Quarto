@@ -41,7 +41,7 @@ public class LastGamePresenter {
     private LastGameView lastGameView;
     private UISettings uiSettings;
 
-    public LastGamePresenter(Quarto model,LastGameView lastGameView, UISettings uiSettings) {
+    public LastGamePresenter(Quarto model, LastGameView lastGameView, UISettings uiSettings) {
         this.model = model;
         this.lastGameView = lastGameView;
         this.uiSettings = uiSettings;
@@ -75,12 +75,12 @@ public class LastGamePresenter {
                 menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
                 menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
                 menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
-//                menuScreenPresenter.windowsHandler();
+                menuScreenPresenter.windowsHandler();
             }
         });
     }
 
-    public void addMenuEventHandlers(){
+    public void addMenuEventHandlers() {
         lastGameView.getSettingsItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -97,7 +97,7 @@ public class LastGamePresenter {
                 menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
                 menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
                 menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
-//                menuScreenPresenter.windowsHandler();
+                menuScreenPresenter.windowsHandler();
             }
         });
         lastGameView.getRankingItem().setOnAction(new EventHandler<ActionEvent>() {
@@ -105,7 +105,7 @@ public class LastGamePresenter {
             public void handle(ActionEvent actionEvent) {
                 RankingView rankingView = new RankingView();
                 SpelerRanking spelerRanking = new SpelerRanking();
-                RankingPresenter rankingPresenter = new RankingPresenter(model,rankingView,uiSettings,spelerRanking);
+                RankingPresenter rankingPresenter = new RankingPresenter(model, rankingView, uiSettings, spelerRanking);
                 lastGameView.getScene().setRoot(rankingView);
                 rankingView.getScene().getWindow().sizeToScene();
                 try {
@@ -114,11 +114,11 @@ public class LastGamePresenter {
                     // // do nothing, if toURL-conversion fails, program can continue
                 }
                 rankingView.getScene().getWindow().sizeToScene();
-                rankingView.getScene().getWindow().setX(uiSettings.getResX()/20);
-                rankingView.getScene().getWindow().setY(uiSettings.getResY()/20);
-                rankingView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
-                rankingView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
-//                rankingPresenter.windowsHandler();
+                rankingView.getScene().getWindow().setX(uiSettings.getResX() / 20);
+                rankingView.getScene().getWindow().setY(uiSettings.getResY() / 20);
+                rankingView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
+                rankingView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
+                rankingPresenter.windowsHandler();
             }
         });
         lastGameView.getExitItem().setOnAction(new EventHandler<ActionEvent>() {
@@ -159,7 +159,8 @@ public class LastGamePresenter {
                     }
                 }
                 aboutScreenStage.showAndWait();
-            }});
+            }
+        });
         lastGameView.getInfoItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -170,40 +171,42 @@ public class LastGamePresenter {
                 infoScreenStage.initModality(Modality.APPLICATION_MODAL);
                 Scene scene = new Scene(infoScreenView);
                 infoScreenStage.setScene(scene);
-                infoScreenStage.setTitle(uiSettings.getApplicationName()+ " - Info");
+                infoScreenStage.setTitle(uiSettings.getApplicationName() + " - Info");
                 infoScreenStage.setX(lastGameView.getScene().getWindow().getX() + uiSettings.getResX() / 10);
                 infoScreenStage.setY(lastGameView.getScene().getWindow().getY() + uiSettings.getResY() / 10);
                 if (Files.exists(uiSettings.getApplicationIconPath())) {
                     try {
                         infoScreenStage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
-                    }
-                    catch (MalformedURLException ex) {
+                    } catch (MalformedURLException ex) {
                         // do nothing, if toURL-conversion fails, program can continue
                     }
                 } else { // do nothing, if ApplicationIconImage is not available, program can continue
                 }
-                infoScreenView.getScene().getWindow().setHeight(uiSettings.getResY()/2);
-                infoScreenView.getScene().getWindow().setWidth(uiSettings.getResX()/2);
-                if (uiSettings.styleSheetAvailable()){
+                infoScreenView.getScene().getWindow().setHeight(uiSettings.getResY() / 2);
+                infoScreenView.getScene().getWindow().setWidth(uiSettings.getResX() / 2);
+                if (uiSettings.styleSheetAvailable()) {
                     infoScreenView.getScene().getStylesheets().removeAll();
                     try {
                         infoScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-                    }
-                    catch (MalformedURLException ex) {
+                    } catch (MalformedURLException ex) {
                         // do nothing, if toURL-conversion fails, program can continue
                     }
                 }
                 infoScreenStage.showAndWait();
-            }});
+            }
+        });
     }
 
     public void windowsHandler() {
         lastGameView.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
-            public void handle(WindowEvent event) { handleCloseEvent(event); }});
+            public void handle(WindowEvent event) {
+                handleCloseEvent(event);
+            }
+        });
     }
 
-    public void handleCloseEvent(Event event){
+    public void handleCloseEvent(Event event) {
         final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
         stopWindow.setHeaderText("Je gaat de applicatie afsluiten.");
         stopWindow.setContentText("Ben je zeker? Onopgeslaagde data kan verloren gaan.");

@@ -91,7 +91,7 @@ public class MenuScreenPresenter {
                 rankingView.getScene().getWindow().setY(uiSettings.getResY()/20);
                 rankingView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
                 rankingView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
-//                rankingPresenter.windowsHandler();
+                rankingPresenter.windowsHandler();
             }
         });
     }

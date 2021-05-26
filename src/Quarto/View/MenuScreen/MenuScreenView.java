@@ -12,20 +12,6 @@ import javafx.scene.layout.VBox;
  */
 public class MenuScreenView extends VBox {
 
-
-    /*
-    * Menuscherm met meerdere knoppen:
-    *   Nieuw Spel
-    *   Ranking
-    *   Toon Laatste Spel
-    *   Terug
-    *   Afsluiten
-    *
-    * BorderPane maken en daarin VBox zetten met knoppen? Anders gwn Vbox die
-    * herschaalt tot normaal scherm.
-    * (zie wrs https://docs.oracle.com/javase/8/javafx/api/javafx/scene/layout/Region.html)
-    * */
-
     private UISettings uiSettings;
     private Button nieuwSpel;
     private Button ranking;

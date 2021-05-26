@@ -338,10 +338,6 @@ public class MainScreenPresenter {
         }
     }
 
-
-
-
-
     public void addMenuEventHandlers(){
         view.getSettingsItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -359,7 +355,7 @@ public class MainScreenPresenter {
                 menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
                 menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
                 menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
-//                menuScreenPresenter.windowsHandler();
+                menuScreenPresenter.windowsHandler();
             }
         });
         view.getRankingItem().setOnAction(new EventHandler<ActionEvent>() {
@@ -380,7 +376,7 @@ public class MainScreenPresenter {
                 rankingView.getScene().getWindow().setY(uiSettings.getResY()/20);
                 rankingView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
                 rankingView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
-//                rankingPresenter.windowsHandler();
+                rankingPresenter.windowsHandler();
             }
         });
         view.getLastGameItem().setOnAction(new EventHandler<ActionEvent>() {
