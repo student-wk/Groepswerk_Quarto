@@ -2,7 +2,7 @@ package Quarto.View.MenuScreen;
 
 import Quarto.Model.Quarto;
 import Quarto.Model.QuartoException;
-import Quarto.Model.SpelerRanking;
+import Quarto.Model.PlayerRanking;
 import Quarto.View.LastGameScreen.LastGamePresenter;
 import Quarto.View.LastGameScreen.LastGameView;
 import Quarto.View.NamesScreen.NamesPresenter;
@@ -54,7 +54,7 @@ public class MenuScreenPresenter {
             @Override
             public void handle(ActionEvent actionEvent) {
                 NamesView namesView = new NamesView(uiSettings);
-                SpelerRanking ranking = new SpelerRanking();
+                PlayerRanking ranking = new PlayerRanking();
                 NamesPresenter namesPresenter = new NamesPresenter(model,namesView,uiSettings,ranking);
                 view.getScene().setRoot(namesView);
                 namesView.getScene().getWindow().sizeToScene();
@@ -78,8 +78,8 @@ public class MenuScreenPresenter {
             @Override
             public void handle(ActionEvent actionEvent) {
                 RankingView rankingView = new RankingView();
-                SpelerRanking spelerRanking = new SpelerRanking();
-                RankingPresenter rankingPresenter = new RankingPresenter(model,rankingView,uiSettings, spelerRanking);
+                PlayerRanking playerRanking = new PlayerRanking();
+                RankingPresenter rankingPresenter = new RankingPresenter(model,rankingView,uiSettings, playerRanking);
                 view.getScene().setRoot(rankingView);
                 rankingView.getScene().getWindow().sizeToScene();
                 try {

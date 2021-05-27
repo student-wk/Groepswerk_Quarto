@@ -1,6 +1,6 @@
 package Quarto.View.MainScreen;
 
-import Quarto.Model.Blok;
+import Quarto.Model.Piece;
 import Quarto.View.UISettings;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -9,10 +9,8 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 
 public class MainScreenView extends BorderPane  {
 
@@ -55,13 +53,13 @@ public class MainScreenView extends BorderPane  {
         this.turnLabel.setMaxWidth(200);
         this.turnLabel.setMaxHeight(30);
         this.turnLabel.setStyle("-fx-background-color: orange");
-        this.turnLabel.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT) ));
+        this.turnLabel.setBorder(new Border(new BorderStroke(javafx.scene.paint.Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT) ));
 
         this.pieceChosenLabel = new Label("Chosen Piece");
         this.pieceChosenLabel.setMaxWidth(200);
         this.pieceChosenLabel.setMaxHeight(30);
         this.pieceChosenLabel.setStyle("-fx-background-color: orange");
-        this.pieceChosenLabel.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT) ));
+        this.pieceChosenLabel.setBorder(new Border(new BorderStroke(javafx.scene.paint.Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT) ));
 
         this.infoGridpane = new GridPane();
         this.infoGridpane.setHgap(20);
@@ -73,20 +71,20 @@ public class MainScreenView extends BorderPane  {
     }
 
 
-    public void setNode(Blok gekozenBlok) {
+    public void setNode(Piece gekozenPiece) {
         infoGridpane.getChildren().remove(this.gekozenBlok);
-        if (gekozenBlok == null) {
+        if (gekozenPiece == null) {
             this.gekozenBlok = new Circle(speelBordView.BIG_SIZE,speelBordView.DEFAULT_COLOR);
-        } else if (gekozenBlok.getVorm().equals(Blok.Vorm.ROND)){
+        } else if (gekozenPiece.getShape().equals(Piece.Shape.ROUND)){
             Circle circle = new Circle();
-            if (gekozenBlok.getKleur().equals(Blok.Kleur.WIT)){
-                if (gekozenBlok.getVulling().equals(Blok.Vulling.VOL)&& gekozenBlok.getGrootte().equals(Blok.Grootte.GROOT)){
+            if (gekozenPiece.getColor().equals(Piece.Color.WHITE)){
+                if (gekozenPiece.getFilling().equals(Piece.Filling.FULL)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
                     circle.setRadius(speelBordView.BIG_SIZE);
                     circle.setFill(speelBordView.RED_COLOR);
-                } else if (gekozenBlok.getVulling().equals(Blok.Vulling.VOL) && gekozenBlok.getGrootte().equals(Blok.Grootte.KLEIN)){
+                } else if (gekozenPiece.getFilling().equals(Piece.Filling.FULL) && gekozenPiece.getSize().equals(Piece.Size.SMALL)){
                     circle.setRadius(speelBordView.SMALL_SIZE);
                     circle.setFill(speelBordView.RED_COLOR);
-                } else if (gekozenBlok.getVulling().equals(Blok.Vulling.HOL)&& gekozenBlok.getGrootte().equals(Blok.Grootte.GROOT)){
+                } else if (gekozenPiece.getFilling().equals(Piece.Filling.EMPTY)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
                     circle.setRadius(speelBordView.BIG_SIZE_EMPTY);
                     circle.setStroke(speelBordView.RED_COLOR);
                     circle.setFill(speelBordView.DEFAULT_COLOR);
@@ -98,13 +96,13 @@ public class MainScreenView extends BorderPane  {
                     circle.setStrokeWidth(speelBordView.STROKE_WIDTH_SMALL);
                 }
             } else {
-                if (gekozenBlok.getVulling().equals(Blok.Vulling.VOL)&& gekozenBlok.getGrootte().equals(Blok.Grootte.GROOT)){
+                if (gekozenPiece.getFilling().equals(Piece.Filling.FULL)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
                     circle.setRadius(speelBordView.BIG_SIZE);
                     circle.setFill(speelBordView.BlUE_COLOR);
-                } else if (gekozenBlok.getVulling().equals(Blok.Vulling.VOL) && gekozenBlok.getGrootte().equals(Blok.Grootte.KLEIN)){
+                } else if (gekozenPiece.getFilling().equals(Piece.Filling.FULL) && gekozenPiece.getSize().equals(Piece.Size.SMALL)){
                     circle.setRadius(speelBordView.SMALL_SIZE);
                     circle.setFill(speelBordView.BlUE_COLOR);
-                } else if (gekozenBlok.getVulling().equals(Blok.Vulling.HOL)&& gekozenBlok.getGrootte().equals(Blok.Grootte.GROOT)){
+                } else if (gekozenPiece.getFilling().equals(Piece.Filling.EMPTY)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
                     circle.setRadius(speelBordView.BIG_SIZE_EMPTY);
                     circle.setStroke(speelBordView.BlUE_COLOR);
                     circle.setFill(speelBordView.DEFAULT_COLOR);
@@ -119,16 +117,16 @@ public class MainScreenView extends BorderPane  {
             this.gekozenBlok= circle;
         } else {
             Rectangle rectangle = new Rectangle();
-            if (gekozenBlok.getKleur().equals(Blok.Kleur.WIT)){
-                if (gekozenBlok.getVulling().equals(Blok.Vulling.VOL)&& gekozenBlok.getGrootte().equals(Blok.Grootte.GROOT)){
+            if (gekozenPiece.getColor().equals(Piece.Color.WHITE)){
+                if (gekozenPiece.getFilling().equals(Piece.Filling.FULL)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
                     rectangle.setFill(speelBordView.RED_COLOR);
                     rectangle.setWidth(speelBordView.BIG_SIZE*2);
                     rectangle.setHeight(speelBordView.BIG_SIZE*2);
-                } else if (gekozenBlok.getVulling().equals(Blok.Vulling.VOL) && gekozenBlok.getGrootte().equals(Blok.Grootte.KLEIN)){
+                } else if (gekozenPiece.getFilling().equals(Piece.Filling.FULL) && gekozenPiece.getSize().equals(Piece.Size.SMALL)){
                     rectangle.setHeight(speelBordView.SMALL_SIZE*2);
                     rectangle.setWidth(speelBordView.SMALL_SIZE*2);
                     rectangle.setFill(speelBordView.RED_COLOR);
-                } else if (gekozenBlok.getVulling().equals(Blok.Vulling.HOL)&& gekozenBlok.getGrootte().equals(Blok.Grootte.GROOT)){
+                } else if (gekozenPiece.getFilling().equals(Piece.Filling.EMPTY)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
                     rectangle.setWidth(speelBordView.BIG_SIZE_EMPTY*2);
                     rectangle.setHeight(speelBordView.BIG_SIZE_EMPTY*2);
                     rectangle.setStroke(speelBordView.RED_COLOR);
@@ -142,15 +140,15 @@ public class MainScreenView extends BorderPane  {
                     rectangle.setStrokeWidth(speelBordView.STROKE_WIDTH_SMALL);
                 }
             } else {
-                if (gekozenBlok.getVulling().equals(Blok.Vulling.VOL)&& gekozenBlok.getGrootte().equals(Blok.Grootte.GROOT)){
+                if (gekozenPiece.getFilling().equals(Piece.Filling.FULL)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
                     rectangle.setFill(speelBordView.BlUE_COLOR);
                     rectangle.setWidth(speelBordView.BIG_SIZE*2);
                     rectangle.setHeight(speelBordView.BIG_SIZE*2);
-                } else if (gekozenBlok.getVulling().equals(Blok.Vulling.VOL) && gekozenBlok.getGrootte().equals(Blok.Grootte.KLEIN)){
+                } else if (gekozenPiece.getFilling().equals(Piece.Filling.FULL) && gekozenPiece.getSize().equals(Piece.Size.SMALL)){
                     rectangle.setHeight(speelBordView.SMALL_SIZE*2);
                     rectangle.setWidth(speelBordView.SMALL_SIZE*2);
                     rectangle.setFill(speelBordView.BlUE_COLOR);
-                } else if (gekozenBlok.getVulling().equals(Blok.Vulling.HOL)&& gekozenBlok.getGrootte().equals(Blok.Grootte.GROOT)){
+                } else if (gekozenPiece.getFilling().equals(Piece.Filling.EMPTY)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
                     rectangle.setWidth(speelBordView.BIG_SIZE_EMPTY*2);
                     rectangle.setHeight(speelBordView.BIG_SIZE_EMPTY*2);
                     rectangle.setStroke(speelBordView.BlUE_COLOR);
@@ -191,7 +189,7 @@ public class MainScreenView extends BorderPane  {
         GridPane.setConstraints(this.gekozenBlok, infoGridpaneColIndex, 1, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
 
         infoGridpane.setGridLinesVisible(true);
-        infoGridpane.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, BorderWidths.DEFAULT)));
+        infoGridpane.setBorder(new Border(new BorderStroke(javafx.scene.paint.Color.BLACK, BorderStrokeStyle.SOLID, null, BorderWidths.DEFAULT)));
     }
 
     public Label getTurnLabel() {

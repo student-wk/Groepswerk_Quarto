@@ -5,9 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.StringJoiner;
+
 
 public class AnimationFileHandler {
     private final static Path ANIMATIONFILE = Paths.get("resources"+ File.separator+"animation"+ File.separator+"animation.bin");
@@ -15,9 +14,7 @@ public class AnimationFileHandler {
     private static int COUNT = 0;
 
 
-
     public AnimationFileHandler()  {
-
     }
 
     public void initiateFile(String initialAction) throws IOException {
