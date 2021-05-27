@@ -1,8 +1,9 @@
 package Quarto.View.LastGameScreen;
 
-import Quarto.Model.Blok;
-import Quarto.Model.Blok.*;
-import Quarto.Model.Positie;
+
+import Quarto.Model.Piece;
+import Quarto.Model.Piece.*;
+import Quarto.Model.Position;
 import Quarto.Model.Quarto;
 import Quarto.Model.QuartoException;
 import Quarto.View.MainScreen.MainScreenPresenter;
@@ -70,7 +71,7 @@ public class LastGamePresenter extends MainScreenPresenter {
                     int colIndex = Integer.parseUnsignedInt(action[2]);
                     try {
 
-                        model.plaatsBlok(new Positie(rowIndex,colIndex));
+                        model.plaatsBlok(new Position(rowIndex,colIndex));
                         updateSpeelBordView(rowIndex, colIndex);
                         updateTurnView();
                         model.setGekozenBlok(null);
@@ -118,9 +119,9 @@ public class LastGamePresenter extends MainScreenPresenter {
         Alert gameFinished = new Alert(Alert.AlertType.INFORMATION);
 
 //        ChoiceDialog<String> again = new ChoiceDialog<String>("Ok", "Ok", "Nope");
-        if (model.getSpeelbord().heeftCombinatie()) {
+        if (model.getSpeelbord().hasCombination()) {
             gameFinished.setTitle( "Game finished!");
-            gameFinished.setContentText(model.getAlleSpelers().getActieveSpeler().getNaam() + " won");
+            gameFinished.setContentText(model.getAlleSpelers().getActivePlayer().getName() + " won");
         } else {
             gameFinished.setTitle("Game finished!");
             gameFinished.setContentText("Playbord is full!");
@@ -146,32 +147,32 @@ public class LastGamePresenter extends MainScreenPresenter {
 //        }
     }
 
-    public Blok actionToBlok (String[] action) {
-        Blok blok = new Blok();
+    public Piece actionToBlok (String[] action) {
+        Piece piece = new Piece();
         if (action[1].equals("groot")){
-            blok.setGrootte(Grootte.GROOT);
+            piece.setSize(Size.BIG);
         }else {
-            blok.setGrootte(Grootte.KLEIN);
+            piece.setSize(Size.SMALL);
         }
 
         if (action[2].equals("wit")){
-            blok.setKleur(Kleur.WIT);
+            piece.setColor(Color.WHITE);
         }else {
-            blok.setKleur(Kleur.ZWART);
+            piece.setColor(Color.BLACK);
         }
 
         if (action[3].equals("rond")){
-            blok.setVorm(Vorm.ROND);
+            piece.setShape(Shape.ROUND);
         }else {
-            blok.setVorm(Vorm.VIERKANT);
+            piece.setShape(Shape.SQUARE);
         }
 
         if (action[4].equals("hol")){
-            blok.setVulling(Vulling.HOL);
+            piece.setFilling(Filling.EMPTY);
         }else {
-            blok.setVulling(Vulling.VOL);
+            piece.setFilling(Filling.FULL);
         }
-        return blok;
+        return piece;
     }
 
     @Override
