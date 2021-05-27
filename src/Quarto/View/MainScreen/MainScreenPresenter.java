@@ -29,8 +29,8 @@ import java.nio.file.Files;
 
 public class MainScreenPresenter {
 
-    public Quarto model;
-    private MainScreenView view;
+    protected Quarto model;
+    protected MainScreenView view;
     private UISettings uiSettings;
 
     public MainScreenPresenter(Quarto model, MainScreenView view, UISettings uiSettings) {

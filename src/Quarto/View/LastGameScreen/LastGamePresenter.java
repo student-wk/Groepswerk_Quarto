@@ -10,6 +10,7 @@ import Quarto.View.UISettings;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
@@ -50,7 +51,7 @@ public class LastGamePresenter extends MainScreenPresenter {
 
     private void updateAnimation() {
         quatroTimeline.getKeyFrames().add(new KeyFrame(
-                Duration.millis(1000), new EventHandler<ActionEvent>() {
+                Duration.millis(100), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 String actiontoprint = model.getAnimationFileHandler().getAction();
@@ -83,7 +84,7 @@ public class LastGamePresenter extends MainScreenPresenter {
 
                     }
 
-                } else {
+                } else if (action[0].equals("gamefinished")){
                     if (model.isGameFinished()){
                         System.out.println("now show dialog");
                         try {
@@ -95,40 +96,37 @@ public class LastGamePresenter extends MainScreenPresenter {
                         }
                     }
 
+                    quatroTimeline.stop();
                 }
 
                 System.out.println(actiontoprint);
 
             }
         }));
+
     }
 
     @Override
     protected void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException, IOException {
         view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getGekozenBlok());
-
-
     }
 
     @Override
     protected void showFinishedDialog() throws QuartoException, IOException {
 //        Log.debug("showing finished");
         if (!model.isGameFinished()) return;
-        ChoiceDialog<String> again = new ChoiceDialog<String>("Ok", "Ok", "Nope");
+        Alert gameFinished = new Alert(Alert.AlertType.INFORMATION);
+
+//        ChoiceDialog<String> again = new ChoiceDialog<String>("Ok", "Ok", "Nope");
         if (model.getSpeelbord().heeftCombinatie()) {
-            again.setTitle(model.getAlleSpelers().getActieveSpeler().getNaam() + " has won!");
-            again.setHeaderText(model.getAlleSpelers().getActieveSpeler().getNaam() + " has won");
-//            CombinationView combinationView = new CombinationView();
-//            new CombinationPresenter(model.getRiddle(), combinationView);
-//            again.setGraphic(combinationView);
+            gameFinished.setTitle( "Game finished!");
+            gameFinished.setContentText(model.getAlleSpelers().getActieveSpeler().getNaam() + " won");
         } else {
-            again.setTitle("Playbord is full!");
-            again.setHeaderText("Playbord is full!");
-//            again.setGraphic(new ImageView("images/duim.png"));
-//            again.setHeaderText("You found it in " + model.getNumberOfGuessesDone() + " moves...");
+            gameFinished.setTitle("Game finished!");
+            gameFinished.setContentText("Playbord is full!");
         }
-        again.setContentText("You wanna replay again?");
-        again.show();
+        gameFinished.show();
+
 
 //        String result = again.getResult();
 //        if (result == null || result.equals("Nope")) {
@@ -178,34 +176,24 @@ public class LastGamePresenter extends MainScreenPresenter {
 
     @Override
     protected void blokkenBoxEventHandlers() {
-
     }
 
     @Override
     protected void speelBordEventHandlers() {
-
     }
 
     public void addEventHandlers() {
-        view.getPlayAnimation().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                System.out.println(quatroTimeline.getStatus());
-                if (quatroTimeline.getStatus().equals(Animation.Status.STOPPED)) {
-                    quatroTimeline.play();
-                } else if (quatroTimeline.getStatus().equals(Animation.Status.PAUSED)){
-                    quatroTimeline.play();
-                } else {
-                    quatroTimeline.pause();
+        view.getPlayAnimation().setOnAction(actionEvent -> {
+            System.out.println(quatroTimeline.getStatus());
+            if (quatroTimeline.getStatus().equals(Animation.Status.STOPPED)) {
+                quatroTimeline.play();
+            } else if (quatroTimeline.getStatus().equals(Animation.Status.PAUSED)) {
+                quatroTimeline.play();
+            } else {
+                quatroTimeline.pause();
 
-                }
-//                if (quatroTimeline.getStatus().equals(Animation.Status.PAUSED)) {
-//                    quatroTimeline.play();
-//                    updateAnimation();
-//                } else {
-//                    quatroTimeline.pause();
-//                }
             }
+            System.out.println(quatroTimeline.getStatus().name());
         });
     }
 }

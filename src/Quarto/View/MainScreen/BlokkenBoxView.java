@@ -188,7 +188,6 @@ public class BlokkenBoxView extends GridPane {
         setHgap(20);
         setVgap(20);
         this.setAlignment(Pos.CENTER);
-
         for (int i = 0; i < ROW_SIZE; i++) {
             for (int j = 0; j < COL_SIZE; j++) {
                 this.add(circles[i][j], j, i);
@@ -196,27 +195,19 @@ public class BlokkenBoxView extends GridPane {
 
             }
         }
-
         for (int i = 0; i < ROW_SIZE; i++) {
             for (int j = 0; j < COL_SIZE; j++) {
                 this.add(rectangles[i][j], j+2, i);
                 GridPane.setConstraints(rectangles[i][j], j+2, i, 1, 1, HPos.CENTER, VPos.CENTER, Priority.NEVER, Priority.NEVER);
             }
         }
-
         this.getRowConstraints().addAll(rowConstraints,rowConstraints,rowConstraints,rowConstraints);
         this.getColumnConstraints().addAll(columnConstraints,columnConstraints,columnConstraints,columnConstraints);
         this.setGridLinesVisible(true);
-
-
-
-
     }
-
     public Circle[][] getCircles() {
         return circles;
     }
-
     public Rectangle[][] getRectangles() {
         return rectangles;
     }
