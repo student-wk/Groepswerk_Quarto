@@ -1,8 +1,8 @@
 package Quarto.View.LastGameScreen;
 
-import Quarto.Model.Piece;
-import Quarto.Model.Piece.*;
-import Quarto.Model.Position;
+import Quarto.Model.Blok;
+import Quarto.Model.Blok.*;
+import Quarto.Model.Positie;
 import Quarto.Model.Quarto;
 import Quarto.Model.QuartoException;
 import Quarto.View.MainScreen.MainScreenPresenter;
@@ -10,6 +10,7 @@ import Quarto.View.UISettings;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
@@ -50,7 +51,7 @@ public class LastGamePresenter extends MainScreenPresenter {
 
     private void updateAnimation() {
         quatroTimeline.getKeyFrames().add(new KeyFrame(
-                Duration.millis(1000), new EventHandler<ActionEvent>() {
+                Duration.millis(100), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 String actiontoprint = model.getAnimationFileHandler().getAction();
@@ -64,12 +65,12 @@ public class LastGamePresenter extends MainScreenPresenter {
                         LastGamePresenter.super.updateBlokkenBoxView();
                         LastGamePresenter.super.updateTurnView();
                     }
-                } else if (action[0].equals("position")){
+                } else if (action[0].equals("positie")){
                     int rowIndex = Integer.parseUnsignedInt(action[1]);
                     int colIndex = Integer.parseUnsignedInt(action[2]);
                     try {
 
-                        model.plaatsBlok(new Position(rowIndex,colIndex));
+                        model.plaatsBlok(new Positie(rowIndex,colIndex));
                         updateSpeelBordView(rowIndex, colIndex);
                         updateTurnView();
                         model.setGekozenBlok(null);
@@ -83,7 +84,7 @@ public class LastGamePresenter extends MainScreenPresenter {
 
                     }
 
-                } else {
+                } else if (action[0].equals("gamefinished")){
                     if (model.isGameFinished()){
                         System.out.println("now show dialog");
                         try {
@@ -95,40 +96,37 @@ public class LastGamePresenter extends MainScreenPresenter {
                         }
                     }
 
+                    quatroTimeline.stop();
                 }
 
                 System.out.println(actiontoprint);
 
             }
         }));
+
     }
 
     @Override
     protected void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException, IOException {
         view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getGekozenBlok());
-
-
     }
 
     @Override
     protected void showFinishedDialog() throws QuartoException, IOException {
 //        Log.debug("showing finished");
         if (!model.isGameFinished()) return;
-        ChoiceDialog<String> again = new ChoiceDialog<String>("Ok", "Ok", "Nope");
-        if (model.getSpeelbord().hasCombination()) {
-            again.setTitle(model.getAlleSpelers().getActivePlayer().getName() + " has won!");
-            again.setHeaderText(model.getAlleSpelers().getActivePlayer().getName() + " has won");
-//            CombinationView combinationView = new CombinationView();
-//            new CombinationPresenter(model.getRiddle(), combinationView);
-//            again.setGraphic(combinationView);
+        Alert gameFinished = new Alert(Alert.AlertType.INFORMATION);
+
+//        ChoiceDialog<String> again = new ChoiceDialog<String>("Ok", "Ok", "Nope");
+        if (model.getSpeelbord().heeftCombinatie()) {
+            gameFinished.setTitle( "Game finished!");
+            gameFinished.setContentText(model.getAlleSpelers().getActieveSpeler().getNaam() + " won");
         } else {
-            again.setTitle("Playbord is full!");
-            again.setHeaderText("Playbord is full!");
-//            again.setGraphic(new ImageView("images/duim.png"));
-//            again.setHeaderText("You found it in " + model.getNumberOfGuessesDone() + " moves...");
+            gameFinished.setTitle("Game finished!");
+            gameFinished.setContentText("Playbord is full!");
         }
-        again.setContentText("You wanna replay again?");
-        again.show();
+        gameFinished.show();
+
 
 //        String result = again.getResult();
 //        if (result == null || result.equals("Nope")) {
@@ -148,64 +146,54 @@ public class LastGamePresenter extends MainScreenPresenter {
 //        }
     }
 
-    public Piece actionToBlok (String[] action) {
-        Piece piece = new Piece();
+    public Blok actionToBlok (String[] action) {
+        Blok blok = new Blok();
         if (action[1].equals("groot")){
-            piece.setSize(Size.BIG);
+            blok.setGrootte(Grootte.GROOT);
         }else {
-            piece.setSize(Size.SMALL);
+            blok.setGrootte(Grootte.KLEIN);
         }
 
         if (action[2].equals("wit")){
-            piece.setColor(Color.WHITE);
+            blok.setKleur(Kleur.WIT);
         }else {
-            piece.setColor(Color.BLACK);
+            blok.setKleur(Kleur.ZWART);
         }
 
         if (action[3].equals("rond")){
-            piece.setShape(Shape.ROUND);
+            blok.setVorm(Vorm.ROND);
         }else {
-            piece.setShape(Shape.SQUARE);
+            blok.setVorm(Vorm.VIERKANT);
         }
 
         if (action[4].equals("hol")){
-            piece.setFilling(Filling.EMPTY);
+            blok.setVulling(Vulling.HOL);
         }else {
-            piece.setFilling(Filling.FULL);
+            blok.setVulling(Vulling.VOL);
         }
-        return piece;
+        return blok;
     }
 
     @Override
     protected void blokkenBoxEventHandlers() {
-
     }
 
     @Override
     protected void speelBordEventHandlers() {
-
     }
 
     public void addEventHandlers() {
-        view.getPlayAnimation().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                System.out.println(quatroTimeline.getStatus());
-                if (quatroTimeline.getStatus().equals(Animation.Status.STOPPED)) {
-                    quatroTimeline.play();
-                } else if (quatroTimeline.getStatus().equals(Animation.Status.PAUSED)){
-                    quatroTimeline.play();
-                } else {
-                    quatroTimeline.pause();
+        view.getPlayAnimation().setOnAction(actionEvent -> {
+            System.out.println(quatroTimeline.getStatus());
+            if (quatroTimeline.getStatus().equals(Animation.Status.STOPPED)) {
+                quatroTimeline.play();
+            } else if (quatroTimeline.getStatus().equals(Animation.Status.PAUSED)) {
+                quatroTimeline.play();
+            } else {
+                quatroTimeline.pause();
 
-                }
-//                if (quatroTimeline.getStatus().equals(Animation.Status.PAUSED)) {
-//                    quatroTimeline.play();
-//                    updateAnimation();
-//                } else {
-//                    quatroTimeline.pause();
-//                }
             }
+            System.out.println(quatroTimeline.getStatus().name());
         });
     }
 }
