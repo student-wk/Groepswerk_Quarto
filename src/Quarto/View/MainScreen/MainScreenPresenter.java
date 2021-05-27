@@ -3,8 +3,8 @@ package Quarto.View.MainScreen;
 import Quarto.Model.*;
 import Quarto.View.AboutScreen.*;
 import Quarto.View.InfoScreen.*;
-import Quarto.View.LastGameView.LastGamePresenter;
-import Quarto.View.LastGameView.LastGameView;
+import Quarto.View.LastGameScreen.LastGamePresenter;
+import Quarto.View.LastGameScreen.LastGameView;
 import Quarto.View.MenuScreen.MenuScreenPresenter;
 import Quarto.View.MenuScreen.MenuScreenView;
 import Quarto.View.RankingScreen.RankingPresenter;
@@ -17,20 +17,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.*;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Formatter;
-import java.util.List;
 
 public class MainScreenPresenter {
 
@@ -57,6 +52,7 @@ public class MainScreenPresenter {
         String action = (model.isFlipAction()?"Place a piece!":"Pick a piece!");
         view.getTurnLabel().setText(model.getAlleSpelers().getActieveSpeler().getNaam() + ": " + action );
     }
+
     /*
      * Deze methode zorgt ervoor dat de afgebeelde blokkenbox telkens geupdated wordt naar de huidige toestand van de
      * BlokkenBox in het model.
@@ -349,17 +345,17 @@ public class MainScreenPresenter {
                 MenuScreenView menuScreenView = new MenuScreenView(uiSettings);
                 MenuScreenPresenter menuScreenPresenter = new MenuScreenPresenter(model, menuScreenView, uiSettings);
                 view.getScene().setRoot(menuScreenView);
-//                try {
-//                    menuScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-//                } catch (MalformedURLException ex) {
-//                    // // do nothing, if toURL-conversion fails, program can continue
-//                }
+                try {
+                    menuScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+                } catch (MalformedURLException ex) {
+                    // // do nothing, if toURL-conversion fails, program can continue
+                }
                 menuScreenView.getScene().getWindow().sizeToScene();
-//                menuScreenView.getScene().getWindow().setX(uiSettings.getResX() / 20);
-//                menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
-//                menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
-//                menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
-//                menuScreenPresenter.windowsHandler();
+                menuScreenView.getScene().getWindow().setX(uiSettings.getResX() / 20);
+                menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
+                menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
+                menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
+                menuScreenPresenter.windowsHandler();
             }
         });
         view.getRankingItem().setOnAction(new EventHandler<ActionEvent>() {
@@ -380,13 +376,13 @@ public class MainScreenPresenter {
                 rankingView.getScene().getWindow().setY(uiSettings.getResY()/20);
                 rankingView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
                 rankingView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
-//                rankingPresenter.windowsHandler();
+                rankingPresenter.windowsHandler();
             }
         });
         view.getLastGameItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                LastGameView lastGameView = new LastGameView();
+                LastGameView lastGameView = new LastGameView(uiSettings);
                 LastGamePresenter lastGamePresenter = new LastGamePresenter(model,lastGameView,uiSettings);
                 view.getScene().setRoot(lastGameView);
                 lastGameView.getScene().getWindow().sizeToScene();
@@ -422,14 +418,14 @@ public class MainScreenPresenter {
                 aboutScreenStage.setTitle(uiSettings.getApplicationName() + " - About");
                 aboutScreenStage.setX(view.getScene().getWindow().getX() + uiSettings.getResX() / 10);
                 aboutScreenStage.setY(view.getScene().getWindow().getY() + uiSettings.getResY() / 10);
-//                if (Files.exists(uiSettings.getApplicationIconPath())) {
-//                    try {
-//                        aboutScreenStage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
-//                    } catch (MalformedURLException ex) {
-//                        // do nothing, if toURL-conversion fails, program can continue
-//                    }
-//                } else { // do nothing, if ApplicationIconImage is not available, program can continue
-//                }
+                if (Files.exists(uiSettings.getApplicationIconPath())) {
+                    try {
+                        aboutScreenStage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
+                    } catch (MalformedURLException ex) {
+                        // do nothing, if toURL-conversion fails, program can continue
+                    }
+                } else { // do nothing, if ApplicationIconImage is not available, program can continue
+                }
                 aboutScreenView.getScene().getWindow().setHeight(uiSettings.getResY() / 2);
                 aboutScreenView.getScene().getWindow().setWidth(uiSettings.getResX() / 2);
                 if (uiSettings.styleSheetAvailable()) {

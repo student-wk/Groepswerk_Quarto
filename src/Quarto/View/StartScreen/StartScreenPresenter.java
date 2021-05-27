@@ -41,37 +41,14 @@ public class StartScreenPresenter {
                     // // do nothing, if toURL-conversion fails, program can continue
                 }
                 menuScreenView.getScene().getWindow().sizeToScene();
-//                menuScreenView.getScene().getWindow().setX(view.getLayoutX());
-//                menuScreenView.getScene().getWindow().setY(view.getLayoutY());
+                menuScreenView.getScene().getWindow().setX(view.getLayoutX());
+                menuScreenView.getScene().getWindow().setY(view.getLayoutY());
                 menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 25);
                 menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 50);
                 menuScreenPresenter.windowsHandler();
             }
         });
     }
-
-
-        // OUDE OVERGANG NAAR MAINSCREEN:
-
-/*        view.getTransition().setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                MainScreenView msView = new MainScreenView(uiSettings);
-                MainScreenPresenter msPresenter = new MainScreenPresenter(model, msView, uiSettings);
-                view.getScene().setRoot(msView);
-                try {
-                    msView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-                } catch (MalformedURLException ex) {
-                    // // do nothing, if toURL-conversion fails, program can continue
-                }
-                msView.getScene().getWindow().sizeToScene();
-                msView.getScene().getWindow().setX(uiSettings.getResX()/20);
-                msView.getScene().getWindow().setY(uiSettings.getResY()/20);
-                msView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
-                msView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
-                msPresenter.windowsHandler();
-            }
-        });*/
 
     public void windowsHandler() {
         view.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {

@@ -3,9 +3,8 @@ package Quarto.View.MenuScreen;
 import Quarto.Model.Quarto;
 import Quarto.Model.QuartoException;
 import Quarto.Model.SpelerRanking;
-import Quarto.View.LastGameView.LastGamePresenter2;
-import Quarto.View.LastGameView.LastGameView2;
-import Quarto.View.LastGameView.LastGamePresenter;
+import Quarto.View.LastGameScreen.LastGamePresenter;
+import Quarto.View.LastGameScreen.LastGameView;
 import Quarto.View.NamesScreen.NamesPresenter;
 import Quarto.View.NamesScreen.NamesView;
 import Quarto.View.RankingScreen.RankingPresenter;
@@ -41,7 +40,6 @@ public class MenuScreenPresenter {
     }
 
     private void updateView() {
-
     }
 
     private void EventHandlers() {
@@ -66,8 +64,8 @@ public class MenuScreenPresenter {
                     // // do nothing, if toURL-conversion fails, program can continue
                 }
                 namesView.getScene().getWindow().sizeToScene();
-//                namesView.getScene().getWindow().setX(uiSettings.getResX()/20);
-//                namesView.getScene().getWindow().setY(uiSettings.getResY()/20);
+                namesView.getScene().getWindow().setX(uiSettings.getResX()/20);
+                namesView.getScene().getWindow().setY(uiSettings.getResY()/20);
                 namesView.getScene().getWindow().setHeight(view.getHeight());
                 namesView.getScene().getWindow().setWidth(view.getWidth());
                 namesPresenter.windowsHandler();
@@ -107,12 +105,12 @@ public class MenuScreenPresenter {
                 try {
                     model.setPlayerForAnimation();
                 } catch (IOException ioException) {
-                    System.out.println("something went wrong with setting player for animation");
+                    System.out.println("Something went wrong with setting player for animation");
                 } catch (QuartoException exception) {
                     exception.printStackTrace();
                 }
-                LastGameView2 lastGameView = new LastGameView2(uiSettings);
-                LastGamePresenter2 lastGamePresenter = new LastGamePresenter2(model,lastGameView,uiSettings);
+                LastGameView lastGameView = new LastGameView(uiSettings);
+                LastGamePresenter lastGamePresenter = new LastGamePresenter(model,lastGameView,uiSettings);
                 view.getScene().setRoot(lastGameView);
                 lastGameView.getScene().getWindow().sizeToScene();
                 try {
@@ -147,12 +145,12 @@ public class MenuScreenPresenter {
 
     private void handleCloseEvent(Event event){
         final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
-        stopWindow.setHeaderText("Je gaat de applicatie afsluiten.");
-        stopWindow.setContentText("Ben je zeker? Onopgeslaagde data kan verloren gaan.");
-        stopWindow.setTitle("WAARSCHUWING!");
+        stopWindow.setHeaderText("You're going to exit the application.");
+        stopWindow.setContentText("Are you sure?");
+        stopWindow.setTitle("WARNING!");
         stopWindow.getButtonTypes().clear();
-        ButtonType noButton = new ButtonType("Nee");
-        ButtonType yesButton = new ButtonType("Ja");
+        ButtonType noButton = new ButtonType("No");
+        ButtonType yesButton = new ButtonType("Yes");
         stopWindow.getButtonTypes().addAll(yesButton, noButton);
         stopWindow.showAndWait();
         if (stopWindow.getResult() == null || stopWindow.getResult().equals(noButton)) {

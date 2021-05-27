@@ -1,4 +1,4 @@
-package Quarto.View.LastGameView;
+package Quarto.View.LastGameScreen;
 
 import Quarto.View.MainScreen.MainScreenView;
 import Quarto.View.UISettings;
@@ -8,10 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
-public class LastGameView2 extends MainScreenView {
+public class LastGameView extends MainScreenView {
     private Button playAnimation;
 
-    public LastGameView2(UISettings uiSettings) {
+    public LastGameView(UISettings uiSettings) {
         super(uiSettings);
         intialiseNodes();
         layoutNodes();

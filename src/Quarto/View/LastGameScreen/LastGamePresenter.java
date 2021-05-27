@@ -1,4 +1,4 @@
-package Quarto.View.LastGameView;
+package Quarto.View.LastGameScreen;
 
 import Quarto.Model.Blok;
 import Quarto.Model.Blok.*;
@@ -10,7 +10,6 @@ import Quarto.View.UISettings;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
@@ -20,17 +19,17 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
-public class LastGamePresenter2 extends MainScreenPresenter {
-    private LastGameView2 view2;
+public class LastGamePresenter extends MainScreenPresenter {
+    private LastGameView view;
     private Quarto model;
 
     private Timeline quatroTimeline;
 
 
 
-    public LastGamePresenter2(Quarto model, LastGameView2 view, UISettings uiSettings) {
+    public LastGamePresenter(Quarto model, LastGameView view, UISettings uiSettings) {
         super(model, view, uiSettings);
-        this.view2 = view;
+        this.view = view;
         this.model = model;
         addEventHandlers();
         setupTimeline();
@@ -62,8 +61,8 @@ public class LastGamePresenter2 extends MainScreenPresenter {
                     } catch (QuartoException | IOException exception) {
                         exception.printStackTrace();
                     } finally {
-                        LastGamePresenter2.super.updateBlokkenBoxView();
-                        LastGamePresenter2.super.updateTurnView();
+                        LastGamePresenter.super.updateBlokkenBoxView();
+                        LastGamePresenter.super.updateTurnView();
                     }
                 } else if (action[0].equals("positie")){
                     int rowIndex = Integer.parseUnsignedInt(action[1]);
@@ -74,7 +73,7 @@ public class LastGamePresenter2 extends MainScreenPresenter {
                         updateSpeelBordView(rowIndex, colIndex);
                         updateTurnView();
                         model.setGekozenBlok(null);
-                        view2.setNode(model.getGekozenBlok());
+                        view.setNode(model.getGekozenBlok());
 
                     } catch (QuartoException | IOException e) {
                         final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
@@ -106,7 +105,7 @@ public class LastGamePresenter2 extends MainScreenPresenter {
 
     @Override
     protected void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException, IOException {
-        view2.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getGekozenBlok());
+        view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getGekozenBlok());
 
 
     }
@@ -188,7 +187,7 @@ public class LastGamePresenter2 extends MainScreenPresenter {
     }
 
     public void addEventHandlers() {
-        view2.getPlayAnimation().setOnAction(new EventHandler<ActionEvent>() {
+        view.getPlayAnimation().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 System.out.println(quatroTimeline.getStatus());
@@ -209,8 +208,4 @@ public class LastGamePresenter2 extends MainScreenPresenter {
             }
         });
     }
-
-
-
-
 }

@@ -13,45 +13,45 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.WindowEvent;
-
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.Collections;
 
 public class NamesPresenter {
     private Quarto model;
     private NamesView view;
     private UISettings uiSettings;
-
     private SpelerRanking ranking;
 
 
     public NamesPresenter(Quarto model, NamesView view, UISettings uiSettings, SpelerRanking ranking) {
         this.model = model;
         this.view = view;
+        this.uiSettings = uiSettings;
         this.addEventHandlers();
-
         this.ranking = ranking;
-
         this.updateView();
         addEventHandlers();
     }
 
     private void updateView() {
         updateListNames();
-
     }
 
     private void updateListNames() {
         try {
             this.ranking.scoreFile2List();
-        } catch (QuartoException e) { // exception nog doen!
-            e.printStackTrace();
+        } catch (QuartoException e) {
+            final Alert enterPlayerNames = new Alert(Alert.AlertType.ERROR);
+            enterPlayerNames.setTitle("Error using sourcefile");
+            enterPlayerNames.setContentText(e.getMessage());
+            enterPlayerNames.showAndWait();
         }
         for (Speler speler :
                 ranking.getHighScoresRanking()) {
             view.getListNames().add(speler.getNaam());
         }
-        /*        view.getListNames().sort();*/
-        // nog sorteren!
+        Collections.sort(view.getListNames());
     }
 
     private void addEventHandlers() {
@@ -65,14 +65,14 @@ public class NamesPresenter {
                     MainScreenView mainScreenView = new MainScreenView(uiSettings);
                     MainScreenPresenter mainScreenPresenter = new MainScreenPresenter(model, mainScreenView, uiSettings);
                     view.getScene().setRoot(mainScreenView);
-//                try {
-//                    mainScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-//                } catch (MalformedURLException ex) {
-//                    // // do nothing, if toURL-conversion fails, program can continue
-//                }
+                try {
+                    mainScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+                } catch (MalformedURLException ex) {
+                    // // do nothing, if toURL-conversion fails, program can continue
+                }
                     mainScreenView.getScene().getWindow().sizeToScene();
-//                mainScreenView.getScene().getWindow().setX(uiSettings.getResX()/20);
-//                mainScreenView.getScene().getWindow().setY(uiSettings.getResY()/20);
+                mainScreenView.getScene().getWindow().setX(uiSettings.getResX()/20);
+                mainScreenView.getScene().getWindow().setY(uiSettings.getResY()/20);
                     mainScreenView.getScene().getWindow().setHeight(view.getHeight() * 2);
                     mainScreenView.getScene().getWindow().setWidth(view.getWidth() * 3);
                     mainScreenPresenter.windowsHandler();

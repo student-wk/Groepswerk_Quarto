@@ -8,9 +8,8 @@ import Quarto.View.AboutScreen.AboutScreenPresenter;
 import Quarto.View.AboutScreen.AboutScreenView;
 import Quarto.View.InfoScreen.InfoScreenPresenter;
 import Quarto.View.InfoScreen.InfoScreenView;
-import Quarto.View.LastGameView.LastGamePresenter;
-import Quarto.View.LastGameView.LastGameView;
-import Quarto.View.MainScreen.MainScreenPresenter;
+import Quarto.View.LastGameScreen.LastGamePresenter;
+import Quarto.View.LastGameScreen.LastGameView;
 import Quarto.View.MenuScreen.MenuScreenPresenter;
 import Quarto.View.MenuScreen.MenuScreenView;
 import Quarto.View.UISettings;
@@ -18,23 +17,16 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Formatter;
-import java.util.List;
 
 /**
  * @author Willem Kuijpers
@@ -163,7 +155,7 @@ public class RankingPresenter {
         rankingView.getLastGameItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                LastGameView lastGameView = new LastGameView();
+                LastGameView lastGameView = new LastGameView(uiSettings);
                 LastGamePresenter lastGamePresenter = new LastGamePresenter(model,lastGameView,uiSettings);
                 rankingView.getScene().setRoot(lastGameView);
                 lastGameView.getScene().getWindow().sizeToScene();

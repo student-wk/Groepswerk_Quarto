@@ -64,7 +64,7 @@ public class Quarto {
     public void kiesBlok(Blok blok) throws QuartoException, IOException {
 
         if (gekozenBlok != null) {
-            throw new QuartoException("Er is al een blok gekozen.");
+            throw new QuartoException("A piece has already been chosen.");
         } else {
             this.gekozenBlok = blok;
             blokkenBox.neemBlok(blok);
@@ -72,7 +72,7 @@ public class Quarto {
             if (animation){
                 this.animationFileHandler.addAction(blok.toString());
             }
-            System.out.println("actieve speler: "+ this.getAlleSpelers().getActieveSpeler());
+            System.out.println("active player: "+ this.getAlleSpelers().getActieveSpeler());
             flipAction = true;
         }
     }
