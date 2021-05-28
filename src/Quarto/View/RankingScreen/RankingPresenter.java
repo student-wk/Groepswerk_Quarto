@@ -49,10 +49,6 @@ public class RankingPresenter {
         eventHandlers();
     }
 
-    /*
-    * Update de grafiek met de gegevens uit het bestand.
-    * */
-
     private void updateView() {
         try {
             this.playerRanking.scoreFile2List();

@@ -55,8 +55,8 @@ public class StartScreenPresenter {
              @Override
              public void handle(WindowEvent event) {
                  Alert stopWindow = new Alert(Alert.AlertType.ERROR);
-                 stopWindow.setHeaderText("Je kan de applicatie nog niet afsluiten.");
-                 stopWindow.setContentText("Probeer opnieuw als het programma is opgestart.");
+                 stopWindow.setHeaderText("You can't close the application yet.");
+                 stopWindow.setContentText("Try again when the program has finished loading.");
                  stopWindow.showAndWait();
                  event.consume();
              }

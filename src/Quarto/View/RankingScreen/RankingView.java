@@ -87,10 +87,6 @@ public class RankingView extends BorderPane {
         return resetRanking;
     }
 
-    public BarChart<String, Number> getBarChart() {
-        return barChart;
-    }
-
     public XYChart.Series<String, Number> getSeries() {
         return series;
     }
