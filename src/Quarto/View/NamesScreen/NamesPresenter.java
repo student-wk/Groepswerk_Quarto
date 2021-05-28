@@ -61,7 +61,6 @@ public class NamesPresenter {
                 try {
                     model.setPlayers(view.getPlayer1ComboBox().getValue(), view.getPlayer2ComboBox().getValue());
                     model.choosePlayer();
-
                     MainScreenView mainScreenView = new MainScreenView(uiSettings);
                     MainScreenPresenter mainScreenPresenter = new MainScreenPresenter(model, mainScreenView, uiSettings);
                     view.getScene().setRoot(mainScreenView);
@@ -70,12 +69,12 @@ public class NamesPresenter {
                 } catch (MalformedURLException ex) {
                     // // do nothing, if toURL-conversion fails, program can continue
                 }
-                    mainScreenView.getScene().getWindow().sizeToScene();
-                mainScreenView.getScene().getWindow().setX(uiSettings.getResX()/20);
-                mainScreenView.getScene().getWindow().setY(uiSettings.getResY()/20);
-                    mainScreenView.getScene().getWindow().setHeight(view.getHeight() * 2);
-                    mainScreenView.getScene().getWindow().setWidth(view.getWidth() * 3);
-                    mainScreenPresenter.windowsHandler();
+                mainScreenView.getScene().getWindow().sizeToScene();
+                mainScreenView.getScene().getWindow().setX(uiSettings.getResX()/4);
+                mainScreenView.getScene().getWindow().setY(uiSettings.getResY()/4);
+                mainScreenView.getScene().getWindow().setHeight(6 * uiSettings.getResY() / 10);
+                mainScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResY() / 10);
+                mainScreenPresenter.windowsHandler();
                 } catch (QuartoException | IOException exception) {
                     final Alert enterPlayerNames = new Alert(Alert.AlertType.ERROR);
                     enterPlayerNames.setTitle("Enter names");
