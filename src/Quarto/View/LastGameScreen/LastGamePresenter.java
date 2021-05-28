@@ -14,15 +14,21 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.util.Duration;
-// for commit
 
+
+/**
+ * This presenter is a subclass of MainScreenPresenter to control the animation view which is a subclass of MainScreenView
+ * Makes use of timeline to pause actions (placing of pieces on a playboard or choosing pieces to place)
+ *
+ * @author Delawar Jalat
+ * @version 1.0 24-4-2021 14:26
+ */
 
 import java.io.IOException;
 
 public class LastGamePresenter extends MainScreenPresenter {
     private LastGameView view;
     private GameStatus gameStatus;
-//    private ChoiceDialog<String> again;
 
     private Timeline quatroTimeline;
 
@@ -44,9 +50,15 @@ public class LastGamePresenter extends MainScreenPresenter {
         updateAnimation();
     }
 
+    @Override
+    protected void updatePlayboardView(int rowIndex, int colIndex)  {
+        view.getPlayboardView().addPiece(rowIndex, colIndex, model.getChosenPiece());
+    }
+
+
     private void updateAnimation() {
         quatroTimeline.getKeyFrames().add(new KeyFrame(
-                Duration.millis(100), new EventHandler<ActionEvent>() {
+                Duration.millis(1000), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 String actiontoprintrint = model.getAnimationFileHandler().getAction();
@@ -61,7 +73,7 @@ public class LastGamePresenter extends MainScreenPresenter {
                             updatePiecesView();
                             updateTurnStatusView();
                         } catch (QuartoException | IOException exception) {
-                            exception.printStackTrace();
+                            //DO nothing, this is an animation
                         }
                         break;
                     case "position":
@@ -77,31 +89,43 @@ public class LastGamePresenter extends MainScreenPresenter {
                             model.setChosenPiece(null);
                             view.setNode(model.getChosenPiece());
                         } catch (QuartoException | IOException e) {
-                            final Alert noPieceChosen = new Alert(Alert.AlertType.ERROR);
-                            noPieceChosen.setTitle("You cannot close the application yet.");
-                            noPieceChosen.setContentText(e.getMessage());
-                            noPieceChosen.show();
+                            //Do nothing, this is an animation
                         }
                         break;
                     case "gamefinished":
                         gameStatus = GameStatus.GAME_FINISHED;
                         break;
+                    default:
+                        gameStatus = GameStatus.INCOMPLETE;
                 }
 
             }
         }));
         quatroTimeline.setOnFinished(finished -> {
-            try {
                 showFinishedDialog();
                 quatroTimeline.stop();
-            } catch (QuartoException exception) {
-                exception.printStackTrace();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
         });
 
     }
+
+    @Override
+    protected void showFinishedDialog()  {
+        Alert gameFinished = new Alert(Alert.AlertType.CONFIRMATION);
+        gameFinished.setTitle("Game Finished");
+        gameFinished.setContentText("Press \"Replay Button\" to replay");
+        if (gameStatus.equals(GameStatus.GAME_FINISHED)){
+            if (model.getBoard().hasCombination()) {
+                gameFinished.setHeaderText(model.getAllPlayers().getActivePlayer().getName() + " won");
+            } else {
+                gameFinished.setHeaderText("Playboard is full!");
+            }
+        } else if (gameStatus.equals(GameStatus.INCOMPLETE)){
+            gameFinished.setHeaderText("Game not completed");
+        }
+        gameFinished.show();
+        view.getPlayAnimation().setText("Replay?");
+    }
+
 
     public void addEventHandlers() {
         view.getPlayAnimation().setOnAction(actionEvent -> {
@@ -124,35 +148,9 @@ public class LastGamePresenter extends MainScreenPresenter {
         this.gameStatus = GameStatus.NOT_SET;
         model.reset();
         view.initialiseNodes();
-        view.setPlayAnimation("Replay");
+        view.setPlayAnimation("Replay?");
         view.layoutNodes();
         addEventHandlers();
-    }
-
-
-
-    @Override
-    protected void updatePlayboardView(int rowIndex, int colIndex) throws QuartoException, IOException {
-        view.getPlayboardView().addPiece(rowIndex, colIndex, model.getChosenPiece());
-    }
-
-    //
-    @Override
-    protected void showFinishedDialog() throws QuartoException, IOException {
-        Alert gameFinished = new Alert(Alert.AlertType.CONFIRMATION);
-        gameFinished.setTitle("Game Finished");
-        gameFinished.setContentText("Press Replay Button to replay");
-        if (gameStatus.equals(GameStatus.GAME_FINISHED)){
-            if (model.getBoard().hasCombination()) {
-                gameFinished.setHeaderText(model.getAllPlayers().getActivePlayer().getName() + " won");
-            } else {
-                gameFinished.setHeaderText("Playboard is full!");
-            }
-        } else if (gameStatus.equals(GameStatus.INCOMPLETE)){
-            gameFinished.setHeaderText("Game not completed");
-        }
-        gameFinished.show();
-        view.getPlayAnimation().setText("Replay?");
     }
 
     public Piece actionToPiece (String[] action) {
