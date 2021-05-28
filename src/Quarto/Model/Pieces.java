@@ -42,12 +42,8 @@ public class Pieces {
  * @param piece the specific piece you want to delete.
 * */
 
-    public void takePiece(Piece piece) throws QuartoException {
-        if (!pieceSet.contains(piece)) {
-            throw new QuartoException("Er is geen geldige blok geselecteerd.");
-        } else {
-            pieceSet.remove(piece);
-        }
+    public void takePiece(Piece piece) {
+        pieceSet.remove(piece);
     }
 
     public Set<Piece> getPieceSet() {

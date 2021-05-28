@@ -40,18 +40,18 @@ public class MainScreenPresenter {
         this.model = model;
         this.view = view;
         this.uiSettings = uiSettings;
-        updateBlokkenBoxView();
+        updatePiecesView();
         addMenuEventHandlers();
-        blokkenBoxEventHandlers();
-        speelBordEventHandlers();
-        updateTurnView();
+        piecesEventHandlers();
+        playboardEventHandlers();
+        updateTurnStatusView();
     }
 
 //    private void updateView() {
-//        updateBlokkenBoxView();
+//        updatePiecesView();
 //    }
 
-    protected void updateTurnView(){
+    protected void updateTurnStatusView(){
         String action = (model.isFlipAction()?"Place a piece!":"Pick a piece!");
         view.getTurnLabel().setText(model.getAllPlayers().getActivePlayer().getName() + ": " + action );
     }
@@ -61,7 +61,7 @@ public class MainScreenPresenter {
      * BlokkenBox in het model.
      * */
 
-    protected void updateBlokkenBoxView() {
+    protected void updatePiecesView() {
         view.setNode(model.getChosenPiece());
         for (Piece.Size size : Piece.Size.values()) {
             for (Piece.Color color : Piece.Color.values()) {
@@ -75,46 +75,46 @@ public class MainScreenPresenter {
                                     int rowIndex;
                                     if (piece.getFilling().equals(Piece.Filling.FULL)&& piece.getSize().equals(Piece.Size.BIG)){
                                         rowIndex = 0;
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setFill(view.getPiecesView().DEFAULT_COLOR);
                                     } else if (piece.getFilling().equals(Piece.Filling.FULL) && piece.getSize().equals(Piece.Size.SMALL)){
                                         rowIndex = 1;
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxView().BIG_SIZE);
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setRadius(view.getPiecesView().BIG_SIZE);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setFill(view.getPiecesView().DEFAULT_COLOR);
                                     } else if (piece.getFilling().equals(Piece.Filling.EMPTY)&& piece.getSize().equals(Piece.Size.BIG)){
                                         rowIndex = 2;
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxView().BIG_SIZE);
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setStrokeWidth(0);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setRadius(view.getPiecesView().BIG_SIZE);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setStroke(view.getPiecesView().DEFAULT_COLOR);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setFill(view.getPiecesView().DEFAULT_COLOR);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setStrokeWidth(0);
                                     } else {
                                         rowIndex = 3;
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxView().BIG_SIZE);
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setStrokeWidth(0);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setRadius(view.getPiecesView().BIG_SIZE);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setStroke(view.getPiecesView().DEFAULT_COLOR);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setFill(view.getPiecesView().DEFAULT_COLOR);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setStrokeWidth(0);
                                     }
                                 } else {
                                     int colIndex = 1;
                                     int rowIndex;
                                     if (piece.getFilling().equals(Piece.Filling.FULL)&& piece.getSize().equals(Piece.Size.BIG)){
                                         rowIndex = 0;
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setFill(view.getPiecesView().DEFAULT_COLOR);
                                     } else if (piece.getFilling().equals(Piece.Filling.FULL) && piece.getSize().equals(Piece.Size.SMALL)){
                                         rowIndex = 1;
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxView().BIG_SIZE);
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setRadius(view.getPiecesView().BIG_SIZE);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setFill(view.getPiecesView().DEFAULT_COLOR);
                                     } else if (piece.getFilling().equals(Piece.Filling.EMPTY)&& piece.getSize().equals(Piece.Size.BIG)){
                                         rowIndex = 2;
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxView().BIG_SIZE);
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setStrokeWidth(0);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setRadius(view.getPiecesView().BIG_SIZE);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setStroke(view.getPiecesView().DEFAULT_COLOR);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setFill(view.getPiecesView().DEFAULT_COLOR);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setStrokeWidth(0);
                                     } else {
                                         rowIndex = 3;
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxView().BIG_SIZE);
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                        view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setStrokeWidth(0);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setRadius(view.getPiecesView().BIG_SIZE);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setStroke(view.getPiecesView().DEFAULT_COLOR);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setFill(view.getPiecesView().DEFAULT_COLOR);
+                                        view.getPiecesView().getCircles()[rowIndex][colIndex].setStrokeWidth(0);
                                     }
                                 }
                             } else if (piece.getShape().equals(Piece.Shape.SQUARE)){
@@ -123,52 +123,52 @@ public class MainScreenPresenter {
                                     int rowIndex;
                                     if (piece.getFilling().equals(Piece.Filling.FULL)&& piece.getSize().equals(Piece.Size.BIG)){
                                         rowIndex = 0;
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setFill(view.getPiecesView().DEFAULT_COLOR);
                                     } else if (piece.getFilling().equals(Piece.Filling.FULL) && piece.getSize().equals(Piece.Size.SMALL)){
                                         rowIndex = 1;
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxView().BIG_SIZE*2);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxView().BIG_SIZE*2);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setHeight(view.getPiecesView().BIG_SIZE*2);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setWidth(view.getPiecesView().BIG_SIZE*2);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setFill(view.getPiecesView().DEFAULT_COLOR);
                                     } else if (piece.getFilling().equals(Piece.Filling.EMPTY)&& piece.getSize().equals(Piece.Size.BIG)){
                                         rowIndex = 2;
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxView().BIG_SIZE*2);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxView().BIG_SIZE*2);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setStrokeWidth(0);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setWidth(view.getPiecesView().BIG_SIZE*2);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setHeight(view.getPiecesView().BIG_SIZE*2);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setStroke(view.getPiecesView().DEFAULT_COLOR);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setFill(view.getPiecesView().DEFAULT_COLOR);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setStrokeWidth(0);
                                     } else {
                                         rowIndex = 3;
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxView().BIG_SIZE*2);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxView().BIG_SIZE*2);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setStrokeWidth(0);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setHeight(view.getPiecesView().BIG_SIZE*2);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setWidth(view.getPiecesView().BIG_SIZE*2);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setStroke(view.getPiecesView().DEFAULT_COLOR);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setFill(view.getPiecesView().DEFAULT_COLOR);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setStrokeWidth(0);
                                     }
                                 } else {
                                     int colIndex = 1;
                                     int rowIndex;
                                     if (piece.getFilling().equals(Piece.Filling.FULL)&& piece.getSize().equals(Piece.Size.BIG)){
                                         rowIndex = 0;
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setFill(view.getPiecesView().DEFAULT_COLOR);
                                     } else if (piece.getFilling().equals(Piece.Filling.FULL) && piece.getSize().equals(Piece.Size.SMALL)){
                                         rowIndex = 1;
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxView().BIG_SIZE*2);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxView().BIG_SIZE*2);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setHeight(view.getPiecesView().BIG_SIZE*2);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setWidth(view.getPiecesView().BIG_SIZE*2);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setFill(view.getPiecesView().DEFAULT_COLOR);
                                     } else if (piece.getFilling().equals(Piece.Filling.EMPTY)&& piece.getSize().equals(Piece.Size.BIG)){
                                         rowIndex = 2;
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxView().BIG_SIZE*2);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxView().BIG_SIZE*2);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setStrokeWidth(0);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setWidth(view.getPiecesView().BIG_SIZE*2);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setHeight(view.getPiecesView().BIG_SIZE*2);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setStroke(view.getPiecesView().DEFAULT_COLOR);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setFill(view.getPiecesView().DEFAULT_COLOR);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setStrokeWidth(0);
                                     } else {
                                         rowIndex = 3;
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxView().BIG_SIZE*2);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxView().BIG_SIZE*2);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                        view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setStrokeWidth(0);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setHeight(view.getPiecesView().BIG_SIZE*2);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setWidth(view.getPiecesView().BIG_SIZE*2);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setStroke(view.getPiecesView().DEFAULT_COLOR);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setFill(view.getPiecesView().DEFAULT_COLOR);
+                                        view.getPiecesView().getRectangles()[rowIndex][colIndex].setStrokeWidth(0);
                                     }
                                 }
                             }
@@ -180,26 +180,19 @@ public class MainScreenPresenter {
         }
     }
 
-    protected void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException, IOException {
-        view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getChosenPiece());
+    protected void updatePlayboardView(int rowIndex, int colIndex) throws QuartoException, IOException {
+        view.getPlayboardView().addPiece(rowIndex, colIndex, model.getChosenPiece());
         if (model.isGameFinished()){showFinishedDialog(); }
     }
 
     protected void showFinishedDialog() throws QuartoException, IOException {
-//        Log.debug("showing finished");
         if (!model.isGameFinished()) return;
         ChoiceDialog<String> again = new ChoiceDialog<String>("Ok", "Yes", "No");
+        again.setTitle("Game finished!");
         if (model.getBoard().hasCombination()) {
-            again.setTitle(model.getAllPlayers().getActivePlayer().getName() + " has won!");
             again.setHeaderText(model.getAllPlayers().getActivePlayer().getName() + " has won!");
-//            CombinationView combinationView = new CombinationView();
-//            new CombinationPresenter(model.getRiddle(), combinationView);
-//            again.setGraphic(combinationView);
         } else {
-            again.setTitle("The board is full!");
             again.setHeaderText("The board is full!");
-//            again.setGraphic(new ImageView("images/duim.png"));
-//            again.setHeaderText("You found it in " + model.getNumberOfGuessesDone() + " moves...");
         }
         again.setContentText("Do you want to play again?");
         again.showAndWait();
@@ -216,35 +209,35 @@ public class MainScreenPresenter {
         }
     }
 
-    protected void blokkenBoxEventHandlers() {
-        for (int i = 0; i < view.getBlokkenBoxView().ROW_SIZE; i++) {
-            for (int j = 0; j < view.getBlokkenBoxView().COL_SIZE; j++) {
+    protected void piecesEventHandlers() {
+        for (int i = 0; i < view.getPiecesView().ROW_SIZE; i++) {
+            for (int j = 0; j < view.getPiecesView().COL_SIZE; j++) {
                 final int row = i;
                 final int col = j;
-                view.getBlokkenBoxView().getCircles()[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                view.getPiecesView().getCircles()[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         Piece piece = new Piece();
-                        Circle circle = view.getBlokkenBoxView().getCircles()[row][col];
+                        Circle circle = view.getPiecesView().getCircles()[row][col];
                         piece.setShape(Piece.Shape.ROUND);
-                        if (circle.getFill() == view.getBlokkenBoxView().DEFAULT_COLOR  && circle.toString().length() < 70) {
+                        if (circle.getFill() == view.getPiecesView().DEFAULT_COLOR  && circle.toString().length() < 70) {
                             // consume event when clicked on preselected pieces
                             mouseEvent.consume();
-                        } else if (circle.getStroke() == view.getBlokkenBoxView().DEFAULT_COLOR  && circle.toString().length() > 70) {mouseEvent.consume(); }else {
+                        } else if (circle.getStroke() == view.getPiecesView().DEFAULT_COLOR  && circle.toString().length() > 70) {mouseEvent.consume(); }else {
                             if (circle.toString().length()>70){
                                 piece.setFilling(Piece.Filling.EMPTY);
-                                piece.setSize((circle.getRadius() == view.getBlokkenBoxView().BIG_SIZE_EMPTY? Piece.Size.BIG : Piece.Size.SMALL));
-                                piece.setColor(circle.getStroke() == view.getBlokkenBoxView().BlUE_COLOR? Piece.Color.BLACK : Piece.Color.WHITE);
+                                piece.setSize((circle.getRadius() == view.getPiecesView().BIG_SIZE_EMPTY? Piece.Size.BIG : Piece.Size.SMALL));
+                                piece.setColor(circle.getStroke() == view.getPiecesView().BlUE_COLOR? Piece.Color.BLACK : Piece.Color.WHITE);
                             } else {
                                 piece.setFilling(Piece.Filling.FULL);
-                                piece.setSize((circle.getRadius() == view.getBlokkenBoxView().BIG_SIZE? Piece.Size.BIG : Piece.Size.SMALL));
-                                piece.setColor(circle.getFill() == view.getBlokkenBoxView().BlUE_COLOR? Piece.Color.BLACK : Piece.Color.WHITE);
+                                piece.setSize((circle.getRadius() == view.getPiecesView().BIG_SIZE? Piece.Size.BIG : Piece.Size.SMALL));
+                                piece.setColor(circle.getFill() == view.getPiecesView().BlUE_COLOR? Piece.Color.BLACK : Piece.Color.WHITE);
                             }
 
                             try {
                                 model.choosePiece(piece);
-                                updateBlokkenBoxView();
-                                updateTurnView();
+                                updatePiecesView();
+                                updateTurnStatusView();
 
                             } catch (QuartoException | IOException exception){
                                 final Alert noBlokChosen = new Alert(Alert.AlertType.INFORMATION);
@@ -258,34 +251,34 @@ public class MainScreenPresenter {
 
                     }
                 });
-                view.getBlokkenBoxView().getRectangles()[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                view.getPiecesView().getRectangles()[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         Piece piece = new Piece();
-                        Rectangle rectangle = view.getBlokkenBoxView().getRectangles()[row][col];
+                        Rectangle rectangle = view.getPiecesView().getRectangles()[row][col];
                         piece.setShape(Piece.Shape.SQUARE);
-                        if (rectangle.getFill() == view.getBlokkenBoxView().DEFAULT_COLOR && rectangle.toString().length() < 70 ) {
+                        if (rectangle.getFill() == view.getPiecesView().DEFAULT_COLOR && rectangle.toString().length() < 70 ) {
                             // consume event when clicked on preselected pieces
                             mouseEvent.consume();
-                        } else if (rectangle.getStroke() == view.getBlokkenBoxView().DEFAULT_COLOR && rectangle.toString().length() > 70 ) {
+                        } else if (rectangle.getStroke() == view.getPiecesView().DEFAULT_COLOR && rectangle.toString().length() > 70 ) {
                             // consume event when clicked on preselected pieces
                             mouseEvent.consume();
 
                         } else {
                             if (rectangle.toString().length()>70){
                                 piece.setFilling(Piece.Filling.EMPTY);
-                                piece.setSize((rectangle.getWidth() == view.getBlokkenBoxView().BIG_SIZE_EMPTY*2? Piece.Size.BIG : Piece.Size.SMALL));
-                                piece.setColor(rectangle.getStroke() == view.getBlokkenBoxView().BlUE_COLOR? Piece.Color.BLACK : Piece.Color.WHITE);
+                                piece.setSize((rectangle.getWidth() == view.getPiecesView().BIG_SIZE_EMPTY*2? Piece.Size.BIG : Piece.Size.SMALL));
+                                piece.setColor(rectangle.getStroke() == view.getPiecesView().BlUE_COLOR? Piece.Color.BLACK : Piece.Color.WHITE);
                             } else {
                                 piece.setFilling(Piece.Filling.FULL);
-                                piece.setSize((rectangle.getWidth() == view.getBlokkenBoxView().BIG_SIZE*2? Piece.Size.BIG : Piece.Size.SMALL));
-                                piece.setColor(rectangle.getFill() == view.getBlokkenBoxView().BlUE_COLOR? Piece.Color.BLACK : Piece.Color.WHITE);
+                                piece.setSize((rectangle.getWidth() == view.getPiecesView().BIG_SIZE*2? Piece.Size.BIG : Piece.Size.SMALL));
+                                piece.setColor(rectangle.getFill() == view.getPiecesView().BlUE_COLOR? Piece.Color.BLACK : Piece.Color.WHITE);
                             }
 
                             try {
                                 model.choosePiece(piece);
-                                updateBlokkenBoxView();
-                                updateTurnView();
+                                updatePiecesView();
+                                updateTurnStatusView();
 
                             } catch (QuartoException | IOException exception){
                                 final Alert noBlokChosen = new Alert(Alert.AlertType.INFORMATION);
@@ -306,10 +299,10 @@ public class MainScreenPresenter {
         }
     }
 
-    protected void speelBordEventHandlers() {
+    protected void playboardEventHandlers() {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                view.getSpeelBordView().getNodeByRowColumnIndex(i,j).setOnMouseClicked(new EventHandler<MouseEvent>() {
+                view.getPlayboardView().getNodeByRowColumnIndex(i,j).setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
 
@@ -318,8 +311,8 @@ public class MainScreenPresenter {
                         try {
 
                             model.placePiece(new Position(rowIndex,colIndex));
-                            updateSpeelBordView(rowIndex, colIndex);
-                            updateTurnView();
+                            updatePlayboardView(rowIndex, colIndex);
+                            updateTurnStatusView();
                             model.setChosenPiece(null);
                             view.setNode(model.getChosenPiece());
 

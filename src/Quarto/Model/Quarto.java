@@ -126,7 +126,7 @@ public class Quarto {
 
     public void placePiece(Position position) throws QuartoException, IOException {
         if (this.chosenPiece == null) {
-            throw new QuartoException("There has been no block selected.");
+            throw new QuartoException("Select piece first.");
         } else {
             board.addPiece(chosenPiece, position);
             if (animation){
@@ -138,7 +138,7 @@ public class Quarto {
                  gameFinished = true;
                  if (animation) {
                      if (board.isFull()) {
-                     this.animationFileHandler.addAction("gamefinished"+"|"+"vol");
+                     this.animationFileHandler.addAction("gamefinished"+"|"+"full");
                      } else {
                      this.animationFileHandler.addAction("gamefinished"+"|"+"won");
                      }
@@ -215,7 +215,6 @@ public class Quarto {
 
     public void setPlayerForAnimation() throws IOException, QuartoException {
         animationFileHandler.cteateActions();
-//        System.out.println(animationFileHandler.getAction().length());
         String action = animationFileHandler.getAction();
         String player1FromAnimation = action.split("\\|")[1];
         String player2FromAnimation = action.split("\\|")[2];

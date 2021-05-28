@@ -12,13 +12,11 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
-public class SpeelBordView extends GridPane {
+public class PlayboardView extends GridPane {
 
 
     public final javafx.scene.paint.Color BlUE_COLOR = javafx.scene.paint.Color.DODGERBLUE;
     public final javafx.scene.paint.Color RED_COLOR = javafx.scene.paint.Color.ORANGERED;
-//    public final Color EMPTY_COLOR_RED = Color.TRANSPARENT;
-//    public final Color EMPTY_COLOR_BLUE = Color.TRANSPARENT;
     public final javafx.scene.paint.Color DEFAULT_COLOR = javafx.scene.paint.Color.TRANSPARENT;
     public final int BIG_SIZE = 30;
     public final int BIG_SIZE_EMPTY = 25;
@@ -31,7 +29,7 @@ public class SpeelBordView extends GridPane {
 
 
 
-    public SpeelBordView() {
+    public PlayboardView() {
         initialiseNodes();
         layoutNodes();
     }
@@ -63,22 +61,20 @@ public class SpeelBordView extends GridPane {
     }
 
     public void layoutNodes() {
-        layoutSpeelBord();
-
-
+        layoutPlayboard();
         this.setGridLinesVisible(true);
         setVgap(20);
         setHgap(20);
+
         this.setAlignment(Pos.CENTER);
         this.setBorder(new Border(new BorderImage(new Image("/images/Melamine-wood-005.png"),BorderWidths.DEFAULT,new Insets(2),BorderWidths.DEFAULT, true,BorderRepeat.REPEAT, BorderRepeat.REPEAT)));
         this.getRowConstraints().addAll(rowConstraints,rowConstraints,rowConstraints,rowConstraints);
         this.getColumnConstraints().addAll(columnConstraints,columnConstraints,columnConstraints,columnConstraints);
 
-
     }
 
 
-    public void layoutSpeelBord() {
+    public void layoutPlayboard() {
         for (int row = 0;row < 4 ; row++) {
             for (int col = 0; col < 4; col++) {
                 Circle greyCicle = new Circle(BIG_SIZE, DEFAULT_COLOR);
@@ -88,18 +84,18 @@ public class SpeelBordView extends GridPane {
         }
     }
 
-    public void voegBlokToe(int rowIndex, int colIndex, Piece gekozenPiece) {
+    public void addPiece(int rowIndex, int colIndex, Piece chosenPiece) {
         this.removeNodeByRowColumnIndex(rowIndex, colIndex);
-        if (gekozenPiece.getShape().equals(Piece.Shape.ROUND)){
+        if (chosenPiece.getShape().equals(Piece.Shape.ROUND)){
             Circle circle = new Circle();
-            if (gekozenPiece.getColor().equals(Piece.Color.WHITE)){
-                if (gekozenPiece.getFilling().equals(Piece.Filling.FULL)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
+            if (chosenPiece.getColor().equals(Piece.Color.WHITE)){
+                if (chosenPiece.getFilling().equals(Piece.Filling.FULL)&& chosenPiece.getSize().equals(Piece.Size.BIG)){
                     circle.setRadius(BIG_SIZE);
                     circle.setFill(RED_COLOR);
-                } else if (gekozenPiece.getFilling().equals(Piece.Filling.FULL) && gekozenPiece.getSize().equals(Piece.Size.SMALL)){
+                } else if (chosenPiece.getFilling().equals(Piece.Filling.FULL) && chosenPiece.getSize().equals(Piece.Size.SMALL)){
                    circle.setRadius(SMALL_SIZE);
                     circle.setFill(RED_COLOR);
-                } else if (gekozenPiece.getFilling().equals(Piece.Filling.EMPTY)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
+                } else if (chosenPiece.getFilling().equals(Piece.Filling.EMPTY)&& chosenPiece.getSize().equals(Piece.Size.BIG)){
                     circle.setRadius(BIG_SIZE_EMPTY);
                     circle.setStroke(RED_COLOR);
                     circle.setFill(DEFAULT_COLOR);
@@ -111,13 +107,13 @@ public class SpeelBordView extends GridPane {
                     circle.setStrokeWidth(STROKE_WIDTH_SMALL);
                 }
             } else {
-                if (gekozenPiece.getFilling().equals(Piece.Filling.FULL)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
+                if (chosenPiece.getFilling().equals(Piece.Filling.FULL)&& chosenPiece.getSize().equals(Piece.Size.BIG)){
                     circle.setRadius(BIG_SIZE);
                     circle.setFill(BlUE_COLOR);
-                } else if (gekozenPiece.getFilling().equals(Piece.Filling.FULL) && gekozenPiece.getSize().equals(Piece.Size.SMALL)){
+                } else if (chosenPiece.getFilling().equals(Piece.Filling.FULL) && chosenPiece.getSize().equals(Piece.Size.SMALL)){
                     circle.setRadius(SMALL_SIZE);
                     circle.setFill(BlUE_COLOR);
-                } else if (gekozenPiece.getFilling().equals(Piece.Filling.EMPTY)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
+                } else if (chosenPiece.getFilling().equals(Piece.Filling.EMPTY)&& chosenPiece.getSize().equals(Piece.Size.BIG)){
                     circle.setRadius(BIG_SIZE_EMPTY);
                     circle.setStroke(BlUE_COLOR);
                     circle.setFill(DEFAULT_COLOR);
@@ -131,18 +127,18 @@ public class SpeelBordView extends GridPane {
             }
             this.add(circle,colIndex,rowIndex);
             GridPane.setConstraints(circle, colIndex, rowIndex, 1, 1, HPos.CENTER, VPos.CENTER, Priority.NEVER, Priority.NEVER);
-        } else if (gekozenPiece.getShape().equals(Piece.Shape.SQUARE)){
+        } else if (chosenPiece.getShape().equals(Piece.Shape.SQUARE)){
             Rectangle rectangle = new Rectangle();
-            if (gekozenPiece.getColor().equals(Piece.Color.WHITE)){
-                if (gekozenPiece.getFilling().equals(Piece.Filling.FULL)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
+            if (chosenPiece.getColor().equals(Piece.Color.WHITE)){
+                if (chosenPiece.getFilling().equals(Piece.Filling.FULL)&& chosenPiece.getSize().equals(Piece.Size.BIG)){
                    rectangle.setFill(RED_COLOR);
                    rectangle.setWidth(BIG_SIZE*2);
                    rectangle.setHeight(BIG_SIZE*2);
-                } else if (gekozenPiece.getFilling().equals(Piece.Filling.FULL) && gekozenPiece.getSize().equals(Piece.Size.SMALL)){
+                } else if (chosenPiece.getFilling().equals(Piece.Filling.FULL) && chosenPiece.getSize().equals(Piece.Size.SMALL)){
                     rectangle.setHeight(SMALL_SIZE*2);
                     rectangle.setWidth(SMALL_SIZE*2);
                     rectangle.setFill(RED_COLOR);
-                } else if (gekozenPiece.getFilling().equals(Piece.Filling.EMPTY)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
+                } else if (chosenPiece.getFilling().equals(Piece.Filling.EMPTY)&& chosenPiece.getSize().equals(Piece.Size.BIG)){
                     rectangle.setWidth(BIG_SIZE_EMPTY*2);
                     rectangle.setHeight(BIG_SIZE_EMPTY*2);
                     rectangle.setStroke(RED_COLOR);
@@ -156,15 +152,15 @@ public class SpeelBordView extends GridPane {
                     rectangle.setStrokeWidth(STROKE_WIDTH_SMALL);
                 }
             } else {
-                if (gekozenPiece.getFilling().equals(Piece.Filling.FULL)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
+                if (chosenPiece.getFilling().equals(Piece.Filling.FULL)&& chosenPiece.getSize().equals(Piece.Size.BIG)){
                     rectangle.setFill(BlUE_COLOR);
                     rectangle.setWidth(BIG_SIZE*2);
                     rectangle.setHeight(BIG_SIZE*2);
-                } else if (gekozenPiece.getFilling().equals(Piece.Filling.FULL) && gekozenPiece.getSize().equals(Piece.Size.SMALL)){
+                } else if (chosenPiece.getFilling().equals(Piece.Filling.FULL) && chosenPiece.getSize().equals(Piece.Size.SMALL)){
                     rectangle.setHeight(SMALL_SIZE*2);
                     rectangle.setWidth(SMALL_SIZE*2);
                     rectangle.setFill(BlUE_COLOR);
-                } else if (gekozenPiece.getFilling().equals(Piece.Filling.EMPTY)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
+                } else if (chosenPiece.getFilling().equals(Piece.Filling.EMPTY)&& chosenPiece.getSize().equals(Piece.Size.BIG)){
                     rectangle.setWidth(BIG_SIZE_EMPTY*2);
                     rectangle.setHeight(BIG_SIZE_EMPTY*2);
                     rectangle.setStroke(BlUE_COLOR);

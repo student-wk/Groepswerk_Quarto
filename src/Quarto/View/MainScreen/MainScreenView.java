@@ -21,10 +21,10 @@ public class MainScreenView extends BorderPane  {
     private MenuItem aboutMI;
     private MenuItem infoMI;
     private UISettings uiSettings;
-    private Node gekozenBlok;
+    private Node chosenPiece;
 
-    private SpeelBordView speelBordView;
-    private BlokkenBoxView blokkenBoxView;
+    private PlayboardView playboardView;
+    private PiecesView piecesView;
     private Label turnLabel;
     private Label pieceChosenLabel;
 
@@ -46,8 +46,8 @@ public class MainScreenView extends BorderPane  {
         this.lastGameMI = new MenuItem("Last Game");
         this.aboutMI = new MenuItem("About");
         this.infoMI = new MenuItem("Info");
-        this.speelBordView = new SpeelBordView();
-        this.blokkenBoxView = new BlokkenBoxView();
+        this.playboardView = new PlayboardView();
+        this.piecesView = new PiecesView();
 
         this.turnLabel = new Label();
         this.turnLabel.setMaxWidth(200);
@@ -67,105 +67,105 @@ public class MainScreenView extends BorderPane  {
         this.infoGridpane.getRowConstraints().addAll(new RowConstraints(60), new RowConstraints(60));
         this.infoGridpane.getColumnConstraints().addAll(new ColumnConstraints(200), new ColumnConstraints(200));
 
-        this.gekozenBlok = new Circle(speelBordView.BIG_SIZE,speelBordView.DEFAULT_COLOR);
+        this.chosenPiece = new Circle(playboardView.BIG_SIZE, playboardView.DEFAULT_COLOR);
     }
 
 
-    public void setNode(Piece gekozenPiece) {
-        infoGridpane.getChildren().remove(this.gekozenBlok);
-        if (gekozenPiece == null) {
-            this.gekozenBlok = new Circle(speelBordView.BIG_SIZE,speelBordView.DEFAULT_COLOR);
-        } else if (gekozenPiece.getShape().equals(Piece.Shape.ROUND)){
+    public void setNode(Piece chosenPiece) {
+        infoGridpane.getChildren().remove(this.chosenPiece);
+        if (chosenPiece == null) {
+            this.chosenPiece = new Circle(playboardView.BIG_SIZE, playboardView.DEFAULT_COLOR);
+        } else if (chosenPiece.getShape().equals(Piece.Shape.ROUND)){
             Circle circle = new Circle();
-            if (gekozenPiece.getColor().equals(Piece.Color.WHITE)){
-                if (gekozenPiece.getFilling().equals(Piece.Filling.FULL)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
-                    circle.setRadius(speelBordView.BIG_SIZE);
-                    circle.setFill(speelBordView.RED_COLOR);
-                } else if (gekozenPiece.getFilling().equals(Piece.Filling.FULL) && gekozenPiece.getSize().equals(Piece.Size.SMALL)){
-                    circle.setRadius(speelBordView.SMALL_SIZE);
-                    circle.setFill(speelBordView.RED_COLOR);
-                } else if (gekozenPiece.getFilling().equals(Piece.Filling.EMPTY)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
-                    circle.setRadius(speelBordView.BIG_SIZE_EMPTY);
-                    circle.setStroke(speelBordView.RED_COLOR);
-                    circle.setFill(speelBordView.DEFAULT_COLOR);
-                    circle.setStrokeWidth(speelBordView.STROKE_WIDTH_BIG);
+            if (chosenPiece.getColor().equals(Piece.Color.WHITE)){
+                if (chosenPiece.getFilling().equals(Piece.Filling.FULL)&& chosenPiece.getSize().equals(Piece.Size.BIG)){
+                    circle.setRadius(playboardView.BIG_SIZE);
+                    circle.setFill(playboardView.RED_COLOR);
+                } else if (chosenPiece.getFilling().equals(Piece.Filling.FULL) && chosenPiece.getSize().equals(Piece.Size.SMALL)){
+                    circle.setRadius(playboardView.SMALL_SIZE);
+                    circle.setFill(playboardView.RED_COLOR);
+                } else if (chosenPiece.getFilling().equals(Piece.Filling.EMPTY)&& chosenPiece.getSize().equals(Piece.Size.BIG)){
+                    circle.setRadius(playboardView.BIG_SIZE_EMPTY);
+                    circle.setStroke(playboardView.RED_COLOR);
+                    circle.setFill(playboardView.DEFAULT_COLOR);
+                    circle.setStrokeWidth(playboardView.STROKE_WIDTH_BIG);
                 } else {
-                    circle.setRadius(speelBordView.SMALL_SIZE_EMPTY);
-                    circle.setStroke(speelBordView.RED_COLOR);
-                    circle.setFill(speelBordView.DEFAULT_COLOR);
-                    circle.setStrokeWidth(speelBordView.STROKE_WIDTH_SMALL);
+                    circle.setRadius(playboardView.SMALL_SIZE_EMPTY);
+                    circle.setStroke(playboardView.RED_COLOR);
+                    circle.setFill(playboardView.DEFAULT_COLOR);
+                    circle.setStrokeWidth(playboardView.STROKE_WIDTH_SMALL);
                 }
             } else {
-                if (gekozenPiece.getFilling().equals(Piece.Filling.FULL)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
-                    circle.setRadius(speelBordView.BIG_SIZE);
-                    circle.setFill(speelBordView.BlUE_COLOR);
-                } else if (gekozenPiece.getFilling().equals(Piece.Filling.FULL) && gekozenPiece.getSize().equals(Piece.Size.SMALL)){
-                    circle.setRadius(speelBordView.SMALL_SIZE);
-                    circle.setFill(speelBordView.BlUE_COLOR);
-                } else if (gekozenPiece.getFilling().equals(Piece.Filling.EMPTY)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
-                    circle.setRadius(speelBordView.BIG_SIZE_EMPTY);
-                    circle.setStroke(speelBordView.BlUE_COLOR);
-                    circle.setFill(speelBordView.DEFAULT_COLOR);
-                    circle.setStrokeWidth(speelBordView.STROKE_WIDTH_BIG);
+                if (chosenPiece.getFilling().equals(Piece.Filling.FULL)&& chosenPiece.getSize().equals(Piece.Size.BIG)){
+                    circle.setRadius(playboardView.BIG_SIZE);
+                    circle.setFill(playboardView.BlUE_COLOR);
+                } else if (chosenPiece.getFilling().equals(Piece.Filling.FULL) && chosenPiece.getSize().equals(Piece.Size.SMALL)){
+                    circle.setRadius(playboardView.SMALL_SIZE);
+                    circle.setFill(playboardView.BlUE_COLOR);
+                } else if (chosenPiece.getFilling().equals(Piece.Filling.EMPTY)&& chosenPiece.getSize().equals(Piece.Size.BIG)){
+                    circle.setRadius(playboardView.BIG_SIZE_EMPTY);
+                    circle.setStroke(playboardView.BlUE_COLOR);
+                    circle.setFill(playboardView.DEFAULT_COLOR);
+                    circle.setStrokeWidth(playboardView.STROKE_WIDTH_BIG);
                 } else {
-                    circle.setRadius(speelBordView.SMALL_SIZE_EMPTY);
-                    circle.setStroke(speelBordView.BlUE_COLOR);
-                    circle.setFill(speelBordView.DEFAULT_COLOR);
-                    circle.setStrokeWidth(speelBordView.STROKE_WIDTH_SMALL);
+                    circle.setRadius(playboardView.SMALL_SIZE_EMPTY);
+                    circle.setStroke(playboardView.BlUE_COLOR);
+                    circle.setFill(playboardView.DEFAULT_COLOR);
+                    circle.setStrokeWidth(playboardView.STROKE_WIDTH_SMALL);
                 }
             }
-            this.gekozenBlok= circle;
+            this.chosenPiece = circle;
         } else {
             Rectangle rectangle = new Rectangle();
-            if (gekozenPiece.getColor().equals(Piece.Color.WHITE)){
-                if (gekozenPiece.getFilling().equals(Piece.Filling.FULL)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
-                    rectangle.setFill(speelBordView.RED_COLOR);
-                    rectangle.setWidth(speelBordView.BIG_SIZE*2);
-                    rectangle.setHeight(speelBordView.BIG_SIZE*2);
-                } else if (gekozenPiece.getFilling().equals(Piece.Filling.FULL) && gekozenPiece.getSize().equals(Piece.Size.SMALL)){
-                    rectangle.setHeight(speelBordView.SMALL_SIZE*2);
-                    rectangle.setWidth(speelBordView.SMALL_SIZE*2);
-                    rectangle.setFill(speelBordView.RED_COLOR);
-                } else if (gekozenPiece.getFilling().equals(Piece.Filling.EMPTY)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
-                    rectangle.setWidth(speelBordView.BIG_SIZE_EMPTY*2);
-                    rectangle.setHeight(speelBordView.BIG_SIZE_EMPTY*2);
-                    rectangle.setStroke(speelBordView.RED_COLOR);
-                    rectangle.setFill(speelBordView.DEFAULT_COLOR);
-                    rectangle.setStrokeWidth(speelBordView.STROKE_WIDTH_BIG);
+            if (chosenPiece.getColor().equals(Piece.Color.WHITE)){
+                if (chosenPiece.getFilling().equals(Piece.Filling.FULL)&& chosenPiece.getSize().equals(Piece.Size.BIG)){
+                    rectangle.setFill(playboardView.RED_COLOR);
+                    rectangle.setWidth(playboardView.BIG_SIZE*2);
+                    rectangle.setHeight(playboardView.BIG_SIZE*2);
+                } else if (chosenPiece.getFilling().equals(Piece.Filling.FULL) && chosenPiece.getSize().equals(Piece.Size.SMALL)){
+                    rectangle.setHeight(playboardView.SMALL_SIZE*2);
+                    rectangle.setWidth(playboardView.SMALL_SIZE*2);
+                    rectangle.setFill(playboardView.RED_COLOR);
+                } else if (chosenPiece.getFilling().equals(Piece.Filling.EMPTY)&& chosenPiece.getSize().equals(Piece.Size.BIG)){
+                    rectangle.setWidth(playboardView.BIG_SIZE_EMPTY*2);
+                    rectangle.setHeight(playboardView.BIG_SIZE_EMPTY*2);
+                    rectangle.setStroke(playboardView.RED_COLOR);
+                    rectangle.setFill(playboardView.DEFAULT_COLOR);
+                    rectangle.setStrokeWidth(playboardView.STROKE_WIDTH_BIG);
                 } else {
-                    rectangle.setWidth(speelBordView.SMALL_SIZE_EMPTY*2);
-                    rectangle.setHeight(speelBordView.SMALL_SIZE_EMPTY*2);
-                    rectangle.setStroke(speelBordView.RED_COLOR);
-                    rectangle.setFill(speelBordView.DEFAULT_COLOR);
-                    rectangle.setStrokeWidth(speelBordView.STROKE_WIDTH_SMALL);
+                    rectangle.setWidth(playboardView.SMALL_SIZE_EMPTY*2);
+                    rectangle.setHeight(playboardView.SMALL_SIZE_EMPTY*2);
+                    rectangle.setStroke(playboardView.RED_COLOR);
+                    rectangle.setFill(playboardView.DEFAULT_COLOR);
+                    rectangle.setStrokeWidth(playboardView.STROKE_WIDTH_SMALL);
                 }
             } else {
-                if (gekozenPiece.getFilling().equals(Piece.Filling.FULL)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
-                    rectangle.setFill(speelBordView.BlUE_COLOR);
-                    rectangle.setWidth(speelBordView.BIG_SIZE*2);
-                    rectangle.setHeight(speelBordView.BIG_SIZE*2);
-                } else if (gekozenPiece.getFilling().equals(Piece.Filling.FULL) && gekozenPiece.getSize().equals(Piece.Size.SMALL)){
-                    rectangle.setHeight(speelBordView.SMALL_SIZE*2);
-                    rectangle.setWidth(speelBordView.SMALL_SIZE*2);
-                    rectangle.setFill(speelBordView.BlUE_COLOR);
-                } else if (gekozenPiece.getFilling().equals(Piece.Filling.EMPTY)&& gekozenPiece.getSize().equals(Piece.Size.BIG)){
-                    rectangle.setWidth(speelBordView.BIG_SIZE_EMPTY*2);
-                    rectangle.setHeight(speelBordView.BIG_SIZE_EMPTY*2);
-                    rectangle.setStroke(speelBordView.BlUE_COLOR);
-                    rectangle.setFill(speelBordView.DEFAULT_COLOR);
-                    rectangle.setStrokeWidth(speelBordView.STROKE_WIDTH_BIG);
+                if (chosenPiece.getFilling().equals(Piece.Filling.FULL)&& chosenPiece.getSize().equals(Piece.Size.BIG)){
+                    rectangle.setFill(playboardView.BlUE_COLOR);
+                    rectangle.setWidth(playboardView.BIG_SIZE*2);
+                    rectangle.setHeight(playboardView.BIG_SIZE*2);
+                } else if (chosenPiece.getFilling().equals(Piece.Filling.FULL) && chosenPiece.getSize().equals(Piece.Size.SMALL)){
+                    rectangle.setHeight(playboardView.SMALL_SIZE*2);
+                    rectangle.setWidth(playboardView.SMALL_SIZE*2);
+                    rectangle.setFill(playboardView.BlUE_COLOR);
+                } else if (chosenPiece.getFilling().equals(Piece.Filling.EMPTY)&& chosenPiece.getSize().equals(Piece.Size.BIG)){
+                    rectangle.setWidth(playboardView.BIG_SIZE_EMPTY*2);
+                    rectangle.setHeight(playboardView.BIG_SIZE_EMPTY*2);
+                    rectangle.setStroke(playboardView.BlUE_COLOR);
+                    rectangle.setFill(playboardView.DEFAULT_COLOR);
+                    rectangle.setStrokeWidth(playboardView.STROKE_WIDTH_BIG);
                 } else {
-                    rectangle.setWidth(speelBordView.SMALL_SIZE_EMPTY*2);
-                    rectangle.setHeight(speelBordView.SMALL_SIZE_EMPTY*2);
-                    rectangle.setStroke(speelBordView.BlUE_COLOR);
-                    rectangle.setFill(speelBordView.DEFAULT_COLOR);
-                    rectangle.setStrokeWidth(speelBordView.STROKE_WIDTH_SMALL);
+                    rectangle.setWidth(playboardView.SMALL_SIZE_EMPTY*2);
+                    rectangle.setHeight(playboardView.SMALL_SIZE_EMPTY*2);
+                    rectangle.setStroke(playboardView.BlUE_COLOR);
+                    rectangle.setFill(playboardView.DEFAULT_COLOR);
+                    rectangle.setStrokeWidth(playboardView.STROKE_WIDTH_SMALL);
                 }
             }
-            this.gekozenBlok= rectangle;
+            this.chosenPiece = rectangle;
         }
-        infoGridpane.add(this.gekozenBlok, infoGridpaneColIndex,1);
-        GridPane.setConstraints(this.gekozenBlok, infoGridpaneColIndex, 1, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
+        infoGridpane.add(this.chosenPiece, infoGridpaneColIndex,1);
+        GridPane.setConstraints(this.chosenPiece, infoGridpaneColIndex, 1, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
 
     }
 
@@ -175,9 +175,9 @@ public class MainScreenView extends BorderPane  {
         Menu menuHelp = new Menu("Help",null, aboutMI, infoMI);
         MenuBar menuBar = new MenuBar(menuFile,menuHelp);
         setTop(menuBar);
-        setRight(speelBordView);
-        setLeft(blokkenBoxView);
-        setMargin(blokkenBoxView, new Insets(10));
+        setRight(playboardView);
+        setLeft(piecesView);
+        setMargin(piecesView, new Insets(10));
 
         setBottom(infoGridpane);
 
@@ -185,8 +185,8 @@ public class MainScreenView extends BorderPane  {
         GridPane.setConstraints(turnLabel, 0, 0, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
         infoGridpane.add(pieceChosenLabel, infoGridpaneColIndex,0);
         GridPane.setConstraints(pieceChosenLabel, infoGridpaneColIndex, 0, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
-        infoGridpane.add(this.gekozenBlok, infoGridpaneColIndex,1);
-        GridPane.setConstraints(this.gekozenBlok, infoGridpaneColIndex, 1, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
+        infoGridpane.add(this.chosenPiece, infoGridpaneColIndex,1);
+        GridPane.setConstraints(this.chosenPiece, infoGridpaneColIndex, 1, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
 
         infoGridpane.setGridLinesVisible(true);
         infoGridpane.setBorder(new Border(new BorderStroke(javafx.scene.paint.Color.BLACK, BorderStrokeStyle.SOLID, null, BorderWidths.DEFAULT)));
@@ -196,12 +196,12 @@ public class MainScreenView extends BorderPane  {
         return turnLabel;
     }
 
-    public BlokkenBoxView getBlokkenBoxView() {
-        return blokkenBoxView;
+    public PiecesView getPiecesView() {
+        return piecesView;
     }
 
-    public SpeelBordView getSpeelBordView() {
-        return speelBordView;
+    public PlayboardView getPlayboardView() {
+        return playboardView;
     }
 
     MenuItem getExitItem() {return exitMI;}

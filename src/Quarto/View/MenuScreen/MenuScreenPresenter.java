@@ -43,13 +43,13 @@ public class MenuScreenPresenter {
     }
 
     private void EventHandlers() {
-        nieuwSpelHandler();
+        newGameHandler();
         rankingHandler();
         lastGameHandler();
         afsluitenHandler();
     }
 
-    private void nieuwSpelHandler() {
+    private void newGameHandler() {
         view.getNieuwSpel().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {

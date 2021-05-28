@@ -10,6 +10,11 @@ import java.util.Objects;
  */
 public class Piece {
 
+    private Size size;
+    private Color color;
+    private Shape shape;
+    private Filling filling;
+
     public enum Size {
         SMALL, BIG;
         @Override
@@ -38,11 +43,6 @@ public class Piece {
             return name().toLowerCase();
         }
     }
-
-    private Size size;
-    private Color color;
-    private Shape shape;
-    private Filling filling;
 
 
     public Piece(){

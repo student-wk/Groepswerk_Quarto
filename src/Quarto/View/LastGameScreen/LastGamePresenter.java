@@ -49,10 +49,8 @@ public class LastGamePresenter extends MainScreenPresenter {
                 Duration.millis(100), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                String actiontoprint = model.getAnimationFileHandler().getAction();
-                String[] action = actiontoprint.split("\\|");
-                System.out.println(model.getAnimationFileHandler().getCount());
-                System.out.println(quatroTimeline.getCycleCount());
+                String actiontoprintrint = model.getAnimationFileHandler().getAction();
+                String[] action = actiontoprintrint.split("\\|");
                 switch (action[0]) {
                     case "piece":
                         if (quatroTimeline.getCycleCount() == model.getAnimationFileHandler().getActions().size()-1){
@@ -60,14 +58,10 @@ public class LastGamePresenter extends MainScreenPresenter {
                         }
                         try {
                             model.choosePiece(actionToPiece(action));
-                            updateBlokkenBoxView();
-                            updateTurnView();
+                            updatePiecesView();
+                            updateTurnStatusView();
                         } catch (QuartoException | IOException exception) {
                             exception.printStackTrace();
-//                            final Alert noBlokChosen = new Alert(Alert.AlertType.INFORMATION);
-//                            noBlokChosen.setTitle("Place a piece on the playbord.");
-//                            noBlokChosen.setContentText(exception.getMessage());
-//                            noBlokChosen.show();
                         }
                         break;
                     case "position":
@@ -78,24 +72,22 @@ public class LastGamePresenter extends MainScreenPresenter {
                         int colIndex = Integer.parseUnsignedInt(action[2]);
                         try {
                             model.placePiece(new Position(rowIndex, colIndex));
-                            System.out.println(model.getBoard().toString());
-                            updateSpeelBordView(rowIndex, colIndex);
-                            updateTurnView();
+                            updatePlayboardView(rowIndex, colIndex);
+                            updateTurnStatusView();
                             model.setChosenPiece(null);
                             view.setNode(model.getChosenPiece());
                         } catch (QuartoException | IOException e) {
-                            final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
-                            noBlokChosen.setTitle("You cannot close the application yet.");
-                            noBlokChosen.setContentText(e.getMessage());
-                            noBlokChosen.show();
+                            final Alert noPieceChosen = new Alert(Alert.AlertType.ERROR);
+                            noPieceChosen.setTitle("You cannot close the application yet.");
+                            noPieceChosen.setContentText(e.getMessage());
+                            noPieceChosen.show();
                         }
                         break;
                     case "gamefinished":
                         gameStatus = GameStatus.GAME_FINISHED;
                         break;
                 }
-                System.out.println(actiontoprint);
-                System.out.println(gameStatus);
+
             }
         }));
         quatroTimeline.setOnFinished(finished -> {
@@ -111,14 +103,11 @@ public class LastGamePresenter extends MainScreenPresenter {
 
     }
 
-
     public void addEventHandlers() {
         view.getPlayAnimation().setOnAction(actionEvent -> {
-            System.out.println(quatroTimeline.getStatus());
             if (quatroTimeline.getStatus().equals(Animation.Status.STOPPED)) {
                 if (gameStatus.equals(GameStatus.GAME_FINISHED) || gameStatus.equals(GameStatus.INCOMPLETE)){
-                    System.out.println("entered resetPlay");
-                    resetPlaz();
+                    resetPlay();
                     quatroTimeline.play();
                 } else {
                     quatroTimeline.play();
@@ -131,8 +120,7 @@ public class LastGamePresenter extends MainScreenPresenter {
         });
     }
 
-    private void resetPlaz() {
-        System.out.println("start replay");
+    private void resetPlay() {
         this.gameStatus = GameStatus.NOT_SET;
         model.reset();
         view.initialiseNodes();
@@ -144,14 +132,13 @@ public class LastGamePresenter extends MainScreenPresenter {
 
 
     @Override
-    protected void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException, IOException {
-        view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getChosenPiece());
+    protected void updatePlayboardView(int rowIndex, int colIndex) throws QuartoException, IOException {
+        view.getPlayboardView().addPiece(rowIndex, colIndex, model.getChosenPiece());
     }
 
     //
     @Override
     protected void showFinishedDialog() throws QuartoException, IOException {
-
         Alert gameFinished = new Alert(Alert.AlertType.CONFIRMATION);
         gameFinished.setTitle("Game Finished");
         gameFinished.setContentText("Press Replay Button to replay");
@@ -159,7 +146,7 @@ public class LastGamePresenter extends MainScreenPresenter {
             if (model.getBoard().hasCombination()) {
                 gameFinished.setHeaderText(model.getAllPlayers().getActivePlayer().getName() + " won");
             } else {
-                gameFinished.setHeaderText("Playbord is full!");
+                gameFinished.setHeaderText("Playboard is full!");
             }
         } else if (gameStatus.equals(GameStatus.INCOMPLETE)){
             gameFinished.setHeaderText("Game not completed");
@@ -198,11 +185,11 @@ public class LastGamePresenter extends MainScreenPresenter {
 
 
     @Override
-    protected void blokkenBoxEventHandlers() {
+    protected void piecesEventHandlers() {
     }
 
     @Override
-    protected void speelBordEventHandlers() {
+    protected void playboardEventHandlers() {
     }
 
 

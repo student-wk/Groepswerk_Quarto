@@ -12,13 +12,10 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
-// Willem: naam klasse veranderd naar BlokkenBoxView
 
-public class BlokkenBoxView extends GridPane {
+public class PiecesView extends GridPane {
     public final javafx.scene.paint.Color BlUE_COLOR = javafx.scene.paint.Color.DODGERBLUE;
     public final javafx.scene.paint.Color RED_COLOR = javafx.scene.paint.Color.ORANGERED;
-//    public final Color EMPTY_COLOR_RED = Color.TRANSPARENT;
-//    public final Color EMPTY_COLOR_BLUE = Color.TRANSPARENT;
     public final javafx.scene.paint.Color DEFAULT_COLOR = javafx.scene.paint.Color.TRANSPARENT;
     public final int BIG_SIZE = 30;
     public final int BIG_SIZE_EMPTY = 25;
@@ -37,7 +34,7 @@ public class BlokkenBoxView extends GridPane {
     private Circle [][] circles;
     private Rectangle[][] rectangles;
 
-    public BlokkenBoxView() {
+    public PiecesView() {
         circles = new Circle[ROW_SIZE][COL_SIZE];
         rectangles = new Rectangle[ROW_SIZE][COL_SIZE];
         initialiseNodes();
@@ -61,14 +58,13 @@ public class BlokkenBoxView extends GridPane {
             }
         }
         /*
-        * In deze methodes worden de afbeeldingen van de cirkels en vierkanten aangemaakt en in de cirkel array of de
-        * vierkant array geplaatst.
+        * In this method the images of the circles and squares are created and placed in corresponding arrays.
         * */
         for (Piece.Size size : Piece.Size.values()) {
             for (Piece.Color color : Piece.Color.values()) {
                 for (Piece.Shape shape : Piece.Shape.values()) {
                     for (Piece.Filling filling : Piece.Filling.values()) {
-                        Piece piece = new Piece(size, color, shape, filling); //Er wordt voor iedere blok in het model hier een blok aangemaakt.
+                        Piece piece = new Piece(size, color, shape, filling); //For each piece not on the playBord in the model an image properties of arrays are set.
                         if (piece.getShape().equals(Piece.Shape.ROUND)){
                             if (piece.getColor().equals(Piece.Color.WHITE)){
                                 int colIndex = 0; // Dit deel van de methode gaat alleen over de eerste kolom.
@@ -180,7 +176,7 @@ public class BlokkenBoxView extends GridPane {
         }
     }
     /*
-    * De afbeeldingen van de blokken worden op de juiste plaats van de gridpane geplaatst.
+    * The images of the pieces are placed in the corresponding position in the gridpane.
     * */
     public void layoutNodes() {
         this.setGridLinesVisible(false);
