@@ -41,10 +41,10 @@ public class StartScreenPresenter {
                     // // do nothing, if toURL-conversion fails, program can continue
                 }
                 menuScreenView.getScene().getWindow().sizeToScene();
-                menuScreenView.getScene().getWindow().setX(view.getLayoutX());
-                menuScreenView.getScene().getWindow().setY(view.getLayoutY());
-                menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 25);
-                menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 50);
+                menuScreenView.getScene().getWindow().setX(uiSettings.getResX()/3);
+                menuScreenView.getScene().getWindow().setY(uiSettings.getResY()/4);
+                menuScreenView.getScene().getWindow().setHeight(5 * uiSettings.getResY() / 10);
+                menuScreenView.getScene().getWindow().setWidth(3 * uiSettings.getResX() / 10);
                 menuScreenPresenter.windowsHandler();
             }
         });

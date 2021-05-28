@@ -138,10 +138,10 @@ public class RankingPresenter {
                     // // do nothing, if toURL-conversion fails, program can continue
                 }
                 menuScreenView.getScene().getWindow().sizeToScene();
-                menuScreenView.getScene().getWindow().setX(uiSettings.getResX() / 20);
-                menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
-                menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
-                menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
+                menuScreenView.getScene().getWindow().setX(uiSettings.getResX()/3);
+                menuScreenView.getScene().getWindow().setY(uiSettings.getResY()/4);
+                menuScreenView.getScene().getWindow().setHeight(5 * uiSettings.getResY() / 10);
+                menuScreenView.getScene().getWindow().setWidth(3 * uiSettings.getResX() / 10);
                 menuScreenPresenter.windowsHandler();
             }
         });
@@ -158,10 +158,10 @@ public class RankingPresenter {
                     // // do nothing, if toURL-conversion fails, program can continue
                 }
                 lastGameView.getScene().getWindow().sizeToScene();
-                lastGameView.getScene().getWindow().setX(uiSettings.getResX()/20);
-                lastGameView.getScene().getWindow().setY(uiSettings.getResY()/20);
-                lastGameView.getScene().getWindow().setHeight(9 * uiSettings.getResY()/10);
-                lastGameView.getScene().getWindow().setWidth(9 * uiSettings.getResX()/10);
+                lastGameView.getScene().getWindow().setX(uiSettings.getResX()/4);
+                lastGameView.getScene().getWindow().setY(uiSettings.getResY()/4);
+                lastGameView.getScene().getWindow().setHeight(6 * uiSettings.getResY() / 10);
+                lastGameView.getScene().getWindow().setWidth(9 * uiSettings.getResY() / 10);
                 lastGamePresenter.windowsHandler();
             }
         });
