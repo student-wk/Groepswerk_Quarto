@@ -49,6 +49,8 @@ public class MenuScreenPresenter {
         closeHandler();
     }
 
+
+
     private void newGameHandler() {
         view.getNewGame().setOnAction(new EventHandler<ActionEvent>() {
             @Override

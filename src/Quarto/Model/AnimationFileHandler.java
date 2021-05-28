@@ -7,6 +7,16 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class AnimationFileHandler is used to read and write actions to and from a bin file in order to play an animation of the previous game played.
+ * the AnimationFileHandler is controlled by a Quarto Model.
+ * When a game is played the Quaro model accceses methods of the AnimationFileHandler to write to animation.bin
+ * When a an animation is of a previous game is played, the quarto model again acces methods of the AnimationFileHandler to read strings of actions from the animation.bin file to animate.
+ *
+ * @author Delawar Jalat
+ * @version 1.0 24-4-2021 14:26
+ */
+
 public class AnimationFileHandler {
     private final static Path ANIMATIONFILE = Paths.get("resources"+ File.separator+"animation"+ File.separator+"animation.bin");
     public List<String> actions;
