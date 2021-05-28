@@ -1,8 +1,8 @@
 package Quarto.View.LastGameScreen;
 
-import Quarto.Model.Blok;
-import Quarto.Model.Blok.*;
-import Quarto.Model.Positie;
+import Quarto.Model.Piece.*;
+import Quarto.Model.Piece;
+import Quarto.Model.Position;
 import Quarto.Model.Quarto;
 import Quarto.Model.QuartoException;
 import Quarto.View.MainScreen.MainScreenPresenter;
@@ -15,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceDialog;
 import javafx.util.Duration;
+// for commit
 
 
 import java.io.IOException;
@@ -54,33 +55,35 @@ public class LastGamePresenter extends MainScreenPresenter {
                 System.out.println(model.getAnimationFileHandler().getCOUNT());
                 System.out.println(quatroTimeline.getCycleCount());
                 switch (action[0]) {
-                    case "blok":
+                    case "piece":
                         if (quatroTimeline.getCycleCount() == model.getAnimationFileHandler().getActions().size()-1){
                             gameStatus = GameStatus.INCOMPLETE;
                         }
                         try {
-                            model.kiesBlok(actionToBlok(action));
+                            model.choosePiece(actionToPiece(action));
                             updateBlokkenBoxView();
                             updateTurnView();
                         } catch (QuartoException | IOException exception) {
-                            final Alert noBlokChosen = new Alert(Alert.AlertType.INFORMATION);
-                            noBlokChosen.setTitle("Place a piece on the playbord.");
-                            noBlokChosen.setContentText(exception.getMessage());
-                            noBlokChosen.show();
+                            exception.printStackTrace();
+//                            final Alert noBlokChosen = new Alert(Alert.AlertType.INFORMATION);
+//                            noBlokChosen.setTitle("Place a piece on the playbord.");
+//                            noBlokChosen.setContentText(exception.getMessage());
+//                            noBlokChosen.show();
                         }
                         break;
-                    case "positie":
+                    case "position":
                         if (quatroTimeline.getCycleCount() == model.getAnimationFileHandler().getActions().size()-1){
                             gameStatus = GameStatus.INCOMPLETE;
                         }
                         int rowIndex = Integer.parseUnsignedInt(action[1]);
                         int colIndex = Integer.parseUnsignedInt(action[2]);
                         try {
-                            model.plaatsBlok(new Positie(rowIndex, colIndex));
+                            model.placePiece(new Position(rowIndex, colIndex));
+                            System.out.println(model.getBoard().toString());
                             updateSpeelBordView(rowIndex, colIndex);
                             updateTurnView();
-                            model.setGekozenBlok(null);
-                            view.setNode(model.getGekozenBlok());
+                            model.setChosenPiece(null);
+                            view.setNode(model.getChosenPiece());
                         } catch (QuartoException | IOException e) {
                             final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
                             noBlokChosen.setTitle("You cannot close the application yet.");
@@ -114,13 +117,13 @@ public class LastGamePresenter extends MainScreenPresenter {
         view.getPlayAnimation().setOnAction(actionEvent -> {
             System.out.println(quatroTimeline.getStatus());
             if (quatroTimeline.getStatus().equals(Animation.Status.STOPPED)) {
-               if (gameStatus.equals(GameStatus.GAME_FINISHED) || gameStatus.equals(GameStatus.INCOMPLETE)){
-                   System.out.println("entered resetPlay");
-                   resetPlaz();
-                   quatroTimeline.play();
-               } else {
-                   quatroTimeline.play();
-               }
+                if (gameStatus.equals(GameStatus.GAME_FINISHED) || gameStatus.equals(GameStatus.INCOMPLETE)){
+                    System.out.println("entered resetPlay");
+                    resetPlaz();
+                    quatroTimeline.play();
+                } else {
+                    quatroTimeline.play();
+                }
             } else if (quatroTimeline.getStatus().equals(Animation.Status.PAUSED)) {
                 quatroTimeline.play();
             } else {
@@ -143,7 +146,7 @@ public class LastGamePresenter extends MainScreenPresenter {
 
     @Override
     protected void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException, IOException {
-        view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getGekozenBlok());
+        view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getChosenPiece());
     }
 
     //
@@ -154,8 +157,8 @@ public class LastGamePresenter extends MainScreenPresenter {
         gameFinished.setTitle("Game Finished");
         gameFinished.setContentText("Press Replay Button to replay");
         if (gameStatus.equals(GameStatus.GAME_FINISHED)){
-            if (model.getSpeelbord().heeftCombinatie()) {
-                gameFinished.setHeaderText(model.getAlleSpelers().getActieveSpeler().getNaam() + " won");
+            if (model.getBoard().hasCombination()) {
+                gameFinished.setHeaderText(model.getAllPlayers().getActivePlayer().getName() + " won");
             } else {
                 gameFinished.setHeaderText("Playbord is full!");
             }
@@ -166,33 +169,34 @@ public class LastGamePresenter extends MainScreenPresenter {
         view.getPlayAnimation().setText("Replay?");
     }
 
-    public Blok actionToBlok (String[] action) {
-        Blok blok = new Blok();
-        if (action[1].equals("groot")){
-            blok.setGrootte(Grootte.GROOT);
+    public Piece actionToPiece (String[] action) {
+        Piece piece = new Piece();
+        if (action[1].equals("big")){
+            piece.setSize(Size.BIG);
         }else {
-            blok.setGrootte(Grootte.KLEIN);
+            piece.setSize(Size.SMALL);
         }
 
-        if (action[2].equals("wit")){
-            blok.setKleur(Kleur.WIT);
+        if (action[2].equals("white")){
+            piece.setColor(Color.WHITE);
         }else {
-            blok.setKleur(Kleur.ZWART);
+            piece.setColor(Color.BLACK);
         }
 
-        if (action[3].equals("rond")){
-            blok.setVorm(Vorm.ROND);
+        if (action[3].equals("round")){
+            piece.setShape(Shape.ROUND);
         }else {
-            blok.setVorm(Vorm.VIERKANT);
+            piece.setShape(Shape.SQUARE);
         }
 
-        if (action[4].equals("hol")){
-            blok.setVulling(Vulling.HOL);
+        if (action[4].equals("empty")){
+            piece.setFilling(Filling.EMPTY);
         }else {
-            blok.setVulling(Vulling.VOL);
+            piece.setFilling(Filling.FULL);
         }
-        return blok;
+        return piece;
     }
+
 
     @Override
     protected void blokkenBoxEventHandlers() {
