@@ -39,7 +39,7 @@ public class Board {
 
     public void addPiece(Piece piece, Position position) throws QuartoException {
         if (isEmpty(position) == false) {
-            throw new QuartoException("Positie is niet vrij.");
+            throw new QuartoException("The position is not empty");
         } else {
             boardArray[position.getRow()][position.getColumn()] = piece;
         }

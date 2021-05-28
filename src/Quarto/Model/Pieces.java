@@ -38,7 +38,6 @@ public class Pieces {
 /**
  * This method deletes a piece from pieceSet.
  *
- *
  * @param piece the specific piece you want to delete.
 * */
 

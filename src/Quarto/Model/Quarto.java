@@ -54,7 +54,7 @@ public class Quarto {
     }
 
     /**
-     *
+     * This constructor is used when pressing new game in the main menu.
      * */
 
     public Quarto(Player player1, Player player2) throws QuartoException, IOException {
@@ -67,7 +67,7 @@ public class Quarto {
     }
 
     /**
-     *
+     * This method initializes the two players for the game.
      * */
 
     public  void setPlayers(String speler1, String speler2) throws QuartoException, IOException {
@@ -81,7 +81,7 @@ public class Quarto {
     }
 
     /**
-     *
+     * This method chooses the player who can do the first move.
      * */
 
     public void choosePlayer() throws IOException {
@@ -94,12 +94,9 @@ public class Quarto {
     }
 
     /**
-     *
+     * This method is used to pick a piece from pieces.
      * */
 
-    /*
-* Geeft telkens een specifieke blok aan gekozenBlok.
-* */
     public void choosePiece(Piece piece) throws QuartoException, IOException {
 
         if (chosenPiece != null) {
@@ -117,12 +114,8 @@ public class Quarto {
     }
 
     /**
-     *
+     * This method places a piece on the board.
      * */
-
-    /*
-* Plaatst blok op speelBord.
-* */
 
     public void placePiece(Position position) throws QuartoException, IOException {
         if (this.chosenPiece == null) {
@@ -150,23 +143,19 @@ public class Quarto {
     }
 
     /**
-     *
+     * Checks if the game is finished.
      * */
 
     public boolean gameFinished() {
         return (board.isFull() || board.hasCombination());
     }
 
-    /**
-     *
-     * */
-
     public boolean isGameFinished() {
         return gameFinished;
     }
 
     /**
-     *
+     * This method updates the ranking.
      * */
 
     public void updateRanking() throws QuartoException {

@@ -39,7 +39,7 @@ public class AnimationFileHandler {
         try (DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(String.valueOf(ANIMATIONFILE),true)))){
             dataOutputStream.writeUTF(action);
         } catch (IOException ioException){
-            ioException.printStackTrace();
+            throw new IOException("Error using animation source file");
         }
     }
 

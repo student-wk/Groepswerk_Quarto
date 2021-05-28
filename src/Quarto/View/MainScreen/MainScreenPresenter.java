@@ -233,7 +233,6 @@ public class MainScreenPresenter {
                                 piece.setSize((circle.getRadius() == view.getPiecesView().BIG_SIZE? Piece.Size.BIG : Piece.Size.SMALL));
                                 piece.setColor(circle.getFill() == view.getPiecesView().BlUE_COLOR? Piece.Color.BLACK : Piece.Color.WHITE);
                             }
-
                             try {
                                 model.choosePiece(piece);
                                 updatePiecesView();
@@ -247,8 +246,6 @@ public class MainScreenPresenter {
                                 mouseEvent.consume();
                             }
                         }
-
-
                     }
                 });
                 view.getPiecesView().getRectangles()[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -274,7 +271,6 @@ public class MainScreenPresenter {
                                 piece.setSize((rectangle.getWidth() == view.getPiecesView().BIG_SIZE*2? Piece.Size.BIG : Piece.Size.SMALL));
                                 piece.setColor(rectangle.getFill() == view.getPiecesView().BlUE_COLOR? Piece.Color.BLACK : Piece.Color.WHITE);
                             }
-
                             try {
                                 model.choosePiece(piece);
                                 updatePiecesView();
@@ -288,11 +284,6 @@ public class MainScreenPresenter {
                                 mouseEvent.consume();
                             }
                         }
-
-
-
-
-
                     }
                 });
             }
@@ -309,20 +300,24 @@ public class MainScreenPresenter {
                         int rowIndex = GridPane.getRowIndex((Node) mouseEvent.getSource());
                         int colIndex = GridPane.getColumnIndex((Node) mouseEvent.getSource());
                         try {
-
                             model.placePiece(new Position(rowIndex,colIndex));
                             updatePlayboardView(rowIndex, colIndex);
                             updateTurnStatusView();
                             model.setChosenPiece(null);
                             view.setNode(model.getChosenPiece());
 
-                        } catch (QuartoException | IOException e) {
-                            final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
-                            noBlokChosen.setTitle("You cannot close the application yet.");
-                            noBlokChosen.setContentText(e.getMessage());
-                            noBlokChosen.showAndWait();
+                        } catch (QuartoException e) {
+                            final Alert pieceException = new Alert(Alert.AlertType.ERROR);
+                            pieceException.setTitle("Error while using piece");
+                            pieceException.setContentText(e.getMessage());
+                            pieceException.showAndWait();
                             mouseEvent.consume();
-
+                        } catch (IOException e) {
+                            final Alert animationException = new Alert(Alert.AlertType.ERROR);
+                            animationException.setTitle("Animation Error");
+                            animationException.setContentText(e.getMessage());
+                            animationException.showAndWait();
+                            mouseEvent.consume();
                         }
                     }
                 });
@@ -477,7 +472,7 @@ public class MainScreenPresenter {
         final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
         stopWindow.setHeaderText("You are about to close the application");
         stopWindow.setContentText("Are you sure, unsaved prgress will be lost");
-        stopWindow.setTitle("WAARSCHUWING!");
+        stopWindow.setTitle("WARNING!");
         stopWindow.getButtonTypes().clear();
         ButtonType noButton = new ButtonType("NO");
         ButtonType yesButton = new ButtonType("YES");
