@@ -25,6 +25,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 
@@ -52,7 +53,7 @@ public class RankingPresenter {
     private void updateView() {
         try {
             this.playerRanking.scoreFile2List();
-        } catch (QuartoException e) {
+        } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Unable to show ranking");
             alert.setContentText(e.getMessage());
@@ -114,7 +115,7 @@ public class RankingPresenter {
                     alert.setContentText("Open ranking again to view the updated ranking.");
                     alert.showAndWait();
 
-                } catch (QuartoException e) {
+                } catch (IOException e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Unable to clear ranking in source file");
                     alert.setContentText(e.getMessage());

@@ -123,7 +123,6 @@ public class Quarto {
             if (animation){
                 this.animationFileHandler.addAction(position.toString());
             }
-
             flipAction = false;
              if (gameFinished()) {
                  gameFinished = true;
@@ -156,7 +155,7 @@ public class Quarto {
      * This method updates the ranking.
      * */
 
-    public void updateRanking() throws QuartoException {
+    public void updateRanking() throws IOException {
         if (this.board.hasCombination()) {
             this.playerRanking.addScoreWinningPlayer(this.allPLayers.getActivePlayer());
             this.playerRanking.addScoreLosingPlayer(this.allPLayers.getNonActivePlayer());
@@ -180,11 +179,6 @@ public class Quarto {
     }
 
     public Piece getChosenPiece() {
-//        if (gekozenBlok == null) {
-//            throw new IllegalStateException("Er is geen blok geselecteerd.");
-//        } else {
-//            return gekozenBlok;
-//        }
         return chosenPiece;
     }
 
