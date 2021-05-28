@@ -99,8 +99,8 @@ public class NamesPresenter {
     public void handleCloseEvent(Event event) {
         final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
         stopWindow.setHeaderText("You are about to close the application");
-        stopWindow.setContentText("Are you sure, unsaved prgress will be lost");
-        stopWindow.setTitle("WAARSCHUWING!");
+        stopWindow.setContentText("Are you sure, unsaved progress will be lost");
+        stopWindow.setTitle("Warning!");
         stopWindow.getButtonTypes().clear();
         ButtonType noButton = new ButtonType("NO");
         ButtonType yesButton = new ButtonType("YES");

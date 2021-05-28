@@ -46,11 +46,11 @@ public class MenuScreenPresenter {
         newGameHandler();
         rankingHandler();
         lastGameHandler();
-        afsluitenHandler();
+        closeHandler();
     }
 
     private void newGameHandler() {
-        view.getNieuwSpel().setOnAction(new EventHandler<ActionEvent>() {
+        view.getNewGame().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 NamesView namesView = new NamesView(uiSettings);
@@ -98,7 +98,7 @@ public class MenuScreenPresenter {
     }
 
     private void lastGameHandler() {
-        view.getToonLaatsteSpel().setOnAction(new EventHandler<ActionEvent>() {
+        view.getShowLastGame().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 model = new Quarto(Boolean.FALSE);
@@ -128,8 +128,8 @@ public class MenuScreenPresenter {
         });
     }
 
-    private void afsluitenHandler() {
-        view.getAfsluiten().setOnAction(new EventHandler<ActionEvent>() {
+    private void closeHandler() {
+        view.getClose().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 handleCloseEvent(actionEvent);

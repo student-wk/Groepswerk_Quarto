@@ -2,7 +2,6 @@ package Quarto.View.RankingScreen;
 
 import Quarto.View.UISettings;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -24,7 +23,7 @@ public class RankingView extends BorderPane {
     private MenuItem aboutMI;
     private MenuItem infoMI;
 
-    private Button terug;
+    private Button back;
     private Button resetRanking;
     private BarChart<String,Number> barChart;
 
@@ -45,7 +44,7 @@ public class RankingView extends BorderPane {
         this.aboutMI = new MenuItem("About");
         this.infoMI = new MenuItem("Info");
 
-        this.terug = new Button("Back");
+        this.back = new Button("Back");
         this.resetRanking = new Button("Reset Ranking");
 
         final CategoryAxis xAxis = new CategoryAxis();
@@ -65,7 +64,7 @@ public class RankingView extends BorderPane {
         MenuBar menuBar = new MenuBar(menuFile,menuHelp);
         setTop(menuBar);
 
-        this.setBottom(terug);
+        this.setBottom(back);
         this.setRight(resetRanking);
         RankingView.setMargin(this.resetRanking, new Insets(10));
         this.barChart.setTitle("Top 10 Ranking");
@@ -80,8 +79,8 @@ public class RankingView extends BorderPane {
 
     MenuItem getInfoItem() {return infoMI;}
 
-    public Button getTerug() {
-        return terug;
+    public Button getBack() {
+        return back;
     }
 
     public Button getResetRanking() {

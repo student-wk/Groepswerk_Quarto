@@ -75,21 +75,17 @@ public class RankingPresenter {
         alert.setTitle("Unable to show ranking");
         alert.setContentText("There are no rankings logged yet, please play a game first");
         alert.showAndWait();
-
-
-        // nog zorgen dat hij in dit geval trg naar het menu gaat. DEZE EXCEPTION GAAT OOK AF WNR DE RANKING WEL WERKT
-
         }
     }
 
     private void eventHandlers() {
         addMenuEventHandlers();
-        terugHandler();
+        backHandler();
         resetRankingHandler();
     }
 
-    private void terugHandler() {
-        rankingView.getTerug().setOnAction(new EventHandler<ActionEvent>() {
+    private void backHandler() {
+        rankingView.getBack().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 MenuScreenView menuScreenView = new MenuScreenView(uiSettings);

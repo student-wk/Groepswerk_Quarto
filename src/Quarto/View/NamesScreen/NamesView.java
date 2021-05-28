@@ -14,7 +14,6 @@ public class NamesView extends BorderPane {
     private GridPane gridPane;
     private Label player1Label;
     private Label player2Label;
-    private Button oneVoneButton;
     private Button startButton;
     private UISettings uiSettings;
 
@@ -33,7 +32,6 @@ public class NamesView extends BorderPane {
         this.player1Label = new Label("Name player 1");
         this.player2Label = new Label("Name player 2");
 
-        this.oneVoneButton = new Button("One VS One");
         this.startButton = new Button("Start");
 
         this.player1ComboBox = new ComboBox<>();

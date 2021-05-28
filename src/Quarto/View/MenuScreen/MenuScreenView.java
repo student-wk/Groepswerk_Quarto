@@ -13,10 +13,10 @@ import javafx.scene.layout.VBox;
 public class MenuScreenView extends VBox {
 
     private UISettings uiSettings;
-    private Button nieuwSpel;
+    private Button newGame;
     private Button ranking;
-    private Button toonLaatsteSpel;
-    private Button afsluiten;
+    private Button showLastGame;
+    private Button close;
 
     public MenuScreenView(UISettings uiSettings) {
         this.uiSettings = uiSettings;
@@ -25,21 +25,21 @@ public class MenuScreenView extends VBox {
     }
 
     private void initialiseNodes() {
-        this.nieuwSpel = new Button("Nieuw Spel");
+        this.newGame = new Button("New game");
         this.ranking = new Button("Ranking");
-        this.toonLaatsteSpel = new Button("Laatste Spel");
-        this.afsluiten = new Button("Afsluiten");
+        this.showLastGame = new Button("Show last game");
+        this.close = new Button("Exit");
     }
 
     private void layoutNodes() {
         this.setSpacing(20);
         this.setPadding(new Insets(100));
-        this.getChildren().addAll(nieuwSpel,ranking,toonLaatsteSpel,afsluiten);
+        this.getChildren().addAll(newGame,ranking, showLastGame, close);
         this.setAlignment(Pos.CENTER);
-        this.nieuwSpel.setPrefSize(150, 20);
+        this.newGame.setPrefSize(150, 20);
         this.ranking.setPrefSize(150, 20);
-        this.toonLaatsteSpel.setPrefSize(150, 20);
-        this.afsluiten.setPrefSize(150, 20);
+        this.showLastGame.setPrefSize(150, 20);
+        this.close.setPrefSize(150, 20);
 
     }
 
@@ -47,19 +47,19 @@ public class MenuScreenView extends VBox {
         return uiSettings;
     }
 
-    public Button getNieuwSpel() {
-        return nieuwSpel;
+    public Button getNewGame() {
+        return newGame;
     }
 
     public Button getRanking() {
         return ranking;
     }
 
-    public Button getToonLaatsteSpel() {
-        return toonLaatsteSpel;
+    public Button getShowLastGame() {
+        return showLastGame;
     }
 
-    public Button getAfsluiten() {
-        return afsluiten;
+    public Button getClose() {
+        return close;
     }
 }
