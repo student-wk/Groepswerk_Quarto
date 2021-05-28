@@ -41,7 +41,7 @@ public class NamesPresenter {
     private void updateListNames() {
         try {
             this.ranking.scoreFile2List();
-        } catch (QuartoException e) {
+        } catch (IOException e) {
             final Alert enterPlayerNames = new Alert(Alert.AlertType.ERROR);
             enterPlayerNames.setTitle("Error using sourcefile");
             enterPlayerNames.setContentText(e.getMessage());

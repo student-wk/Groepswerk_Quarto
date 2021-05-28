@@ -312,7 +312,7 @@ public class MainScreenPresenter {
                             mouseEvent.consume();
                         } catch (IOException e) {
                             final Alert animationException = new Alert(Alert.AlertType.ERROR);
-                            animationException.setTitle("Animation Error");
+                            animationException.setTitle("Error with source file");
                             animationException.setContentText(e.getMessage());
                             animationException.showAndWait();
                             mouseEvent.consume();
@@ -491,7 +491,7 @@ public class MainScreenPresenter {
         final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
         stopWindow.setTitle("WARNING!");
         stopWindow.setHeaderText("You are about to close the application");
-        stopWindow.setContentText("Are you sure, unsaved prgress will be lost");
+        stopWindow.setContentText("Are you sure, unsaved progress will be lost");
         stopWindow.getButtonTypes().clear();
         ButtonType noButton = new ButtonType("NO");
         ButtonType yesButton = new ButtonType("YES");

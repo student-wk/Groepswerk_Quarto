@@ -19,7 +19,7 @@ public class PlayerFileHandler {
      * @return An arraylist with player objects, sorted by their ranking.
      * */
 
-    public static ArrayList<Player> binFile2List(String fileName) throws QuartoException {
+    public static ArrayList<Player> binFile2List(String fileName) throws IOException {
         ArrayList<Player> list = new ArrayList<>();
         try (DataInputStream is = new DataInputStream(new BufferedInputStream(new FileInputStream(fileName)))) {
             try {
@@ -31,12 +31,12 @@ public class PlayerFileHandler {
                 }
             } catch (EOFException e1) {
             } catch (IOException e2) {
-                throw new QuartoException("Error while reading source file " + fileName, e2);
+                throw new IOException("Error while reading source file " + fileName, e2);
             }
             Collections.sort(list);
             return list;
         } catch (IOException e3) {
-            throw new QuartoException("The source file " + fileName + " can't be opened",e3);
+            throw new IOException("The source file " + fileName + " can't be opened",e3);
         }
     }
 
@@ -46,14 +46,14 @@ public class PlayerFileHandler {
      * @throws QuartoException if it can't write to the source file.
     * */
 
-    public static void list2BinFile(ArrayList<Player> list, String fileName) throws QuartoException {
+    public static void list2BinFile(ArrayList<Player> list, String fileName) throws IOException {
         try (DataOutputStream os = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)))) {
             for (Player player : list) {
                 os.writeUTF(player.getName());
                 os.writeInt(player.getScore());
             }
         } catch (IOException e) {
-            throw new QuartoException("Error while writing to source file" + fileName, e);
+            throw new IOException("Error while writing to source file" + fileName, e);
         }
     }
 

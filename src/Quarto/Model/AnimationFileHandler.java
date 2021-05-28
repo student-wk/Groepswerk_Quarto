@@ -101,10 +101,6 @@ public class AnimationFileHandler {
 
     }
 
-    public  int getCount() {
-        return count;
-    }
-
     public static void setCount(int count) {
         AnimationFileHandler.count = count;
     }

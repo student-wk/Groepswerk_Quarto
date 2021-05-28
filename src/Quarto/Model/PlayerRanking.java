@@ -1,5 +1,6 @@
 package Quarto.Model;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -36,7 +37,7 @@ public class PlayerRanking {
      * @throws QuartoException of methods binFile2List and list2BinFile.
      * */
 
-    public void addScoreWinningPlayer(Player player) throws QuartoException {
+    public void addScoreWinningPlayer(Player player) throws IOException {
         String naam = player.getName();
         int score;
 
@@ -68,7 +69,7 @@ public class PlayerRanking {
      * @throws QuartoException of methods binFile2List and list2BinFile.
      * */
 
-    public void addScoreLosingPlayer(Player player) throws QuartoException {
+    public void addScoreLosingPlayer(Player player) throws IOException {
         String naam = player.getName();
         int score;
 
@@ -97,7 +98,7 @@ public class PlayerRanking {
      * @throws QuartoException of the method binFile2List.
      * */
 
-    public void scoreFile2List() throws QuartoException {
+    public void scoreFile2List() throws IOException {
         ArrayList<Player> highScoresRanking = PlayerFileHandler.binFile2List(HIGHSCORE_FILE);
         this.highScoresRanking = highScoresRanking;
     }
@@ -108,7 +109,7 @@ public class PlayerRanking {
      * @throws QuartoException of the method list2BinFile.
      * */
 
-    public void clearRankingFile() throws QuartoException {
+    public void clearRankingFile() throws IOException {
         this.highScoresRanking.clear();
         PlayerFileHandler.list2BinFile(this.highScoresRanking,HIGHSCORE_FILE);
     }
