@@ -181,6 +181,7 @@ public class LastGamePresenter extends MainScreenPresenter {
         return piece;
     }
 
+    //
 
     @Override
     protected void piecesEventHandlers() {
