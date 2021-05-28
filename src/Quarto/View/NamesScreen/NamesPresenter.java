@@ -64,9 +64,9 @@ public class NamesPresenter {
                     MainScreenView mainScreenView = new MainScreenView(uiSettings);
                     MainScreenPresenter mainScreenPresenter = new MainScreenPresenter(model, mainScreenView, uiSettings);
                     view.getScene().setRoot(mainScreenView);
-                try {
+                    try {
                     mainScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-                } catch (MalformedURLException ex) {
+                    } catch (MalformedURLException ex) {
                     // // do nothing, if toURL-conversion fails, program can continue
                 }
                 mainScreenView.getScene().getWindow().sizeToScene();

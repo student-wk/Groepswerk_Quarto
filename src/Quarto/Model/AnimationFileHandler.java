@@ -33,14 +33,14 @@ public class AnimationFileHandler {
             try (DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(String.valueOf(ANIMATIONFILE),true)))){
             dataOutputStream.writeUTF(initialAction);
             } catch (IOException ioException){
-            ioException.printStackTrace();
+                throw new IOException("Error using animation source file");
             }
         } else {
             Files.createFile(ANIMATIONFILE);
             try (DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(String.valueOf(ANIMATIONFILE),true)))){
             dataOutputStream.writeUTF(initialAction);
             } catch (IOException ioException){
-                ioException.printStackTrace();
+                throw new IOException("Error using animation source file");
             }
         }
     }
@@ -50,17 +50,6 @@ public class AnimationFileHandler {
             dataOutputStream.writeUTF(action);
         } catch (IOException ioException){
             throw new IOException("Error using animation source file");
-        }
-    }
-
-    public void printout() {
-        List<String> list = new ArrayList<>();
-        try (DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(new FileInputStream(String.valueOf(ANIMATIONFILE))))){
-            while (dataInputStream.available() > 0) {
-                System.out.println(dataInputStream.readUTF());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

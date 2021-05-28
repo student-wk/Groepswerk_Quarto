@@ -88,6 +88,7 @@ public class Quarto {
     public void choosePlayer() throws IOException {
         int indexChosenPlayer = allPLayers.choosePlayerIndex();
         if (animation) {
+
             this.animationFileHandler.initiateFile("oneVone" + "|" + allPLayers.getPlayer1().getName()
                     + "|" + allPLayers.getPlayer2().getName() + "|" + indexChosenPlayer);
         }
@@ -133,7 +134,6 @@ public class Quarto {
                      } else {
                      this.animationFileHandler.addAction("gamefinished"+"|"+"won");
                      }
-                     animationFileHandler.printout();
                  }
                  updateRanking();
              }

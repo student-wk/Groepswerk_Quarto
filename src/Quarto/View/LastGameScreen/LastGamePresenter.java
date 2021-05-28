@@ -122,7 +122,7 @@ public class LastGamePresenter extends MainScreenPresenter {
                 gameFinished.setHeaderText("Playboard  full!");
             }
         } else if (gameStatus.equals(GameStatus.INCOMPLETE)){
-            gameFinished.setHeaderText("Previous game session closed have way during game!");
+            gameFinished.setHeaderText("Previous game session closed half way during game!");
         }
         gameFinished.show();
         view.getPlayAnimation().setText("Replay?");
