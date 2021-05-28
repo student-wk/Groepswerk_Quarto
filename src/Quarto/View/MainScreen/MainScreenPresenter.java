@@ -337,7 +337,7 @@ public class MainScreenPresenter {
                     event.consume();
                 }
                 else if (returnToMainMenu.getResult().equals(ButtonType.OK)){
-                    model.reset();
+                    model = new Quarto();
                     MenuScreenView menuScreenView = new MenuScreenView(uiSettings);
                     MenuScreenPresenter menuScreenPresenter = new MenuScreenPresenter(model, menuScreenView, uiSettings);
                     view.getScene().setRoot(menuScreenView);
