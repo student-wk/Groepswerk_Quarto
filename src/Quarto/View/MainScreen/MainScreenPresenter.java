@@ -14,6 +14,7 @@ import javafx.application.Platform;
 import javafx.event.*;
 import javafx.scene.*;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.image.Image;
@@ -47,9 +48,6 @@ public class MainScreenPresenter {
         updateTurnStatusView();
     }
 
-//    private void updateView() {
-//        updatePiecesView();
-//    }
 
     protected void updateTurnStatusView(){
         String action = (model.isFlipAction()?"Place a piece!":"Pick a piece!");
@@ -330,20 +328,32 @@ public class MainScreenPresenter {
             @Override
             public void handle(ActionEvent event) {
                 Alert returnToMainMenu = new Alert(Alert.AlertType.CONFIRMATION);
-                MenuScreenView menuScreenView = new MenuScreenView(uiSettings);
-                MenuScreenPresenter menuScreenPresenter = new MenuScreenPresenter(model, menuScreenView, uiSettings);
-                view.getScene().setRoot(menuScreenView);
-                try {
-                    menuScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-                } catch (MalformedURLException ex) {
-                    // // do nothing, if toURL-conversion fails, program can continue
+                returnToMainMenu.setTitle("Warning!");
+                returnToMainMenu.setHeaderText("Current game session will be closed");
+                returnToMainMenu.setHeaderText("Are you sure you want return to Main Menu?");
+                System.out.println(returnToMainMenu.getButtonTypes());
+                returnToMainMenu.showAndWait();
+                if (returnToMainMenu.getResult().equals(ButtonType.CLOSE)) {
+                    event.consume();
                 }
-                menuScreenView.getScene().getWindow().sizeToScene();
-                menuScreenView.getScene().getWindow().setX(uiSettings.getResX() / 20);
-                menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
-                menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
-                menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
-                menuScreenPresenter.windowsHandler();
+                else if (returnToMainMenu.getResult().equals(ButtonType.OK)){
+                    model.reset();
+                    MenuScreenView menuScreenView = new MenuScreenView(uiSettings);
+                    MenuScreenPresenter menuScreenPresenter = new MenuScreenPresenter(model, menuScreenView, uiSettings);
+                    view.getScene().setRoot(menuScreenView);
+                    try {
+                        menuScreenView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+                    } catch (MalformedURLException ex) {
+                        // // do nothing, if toURL-conversion fails, program can continue
+                        menuScreenView.getScene().getWindow().sizeToScene();
+                        menuScreenView.getScene().getWindow().setX(uiSettings.getResX() / 20);
+                        menuScreenView.getScene().getWindow().setY(uiSettings.getResY() / 20);
+                        menuScreenView.getScene().getWindow().setHeight(9 * uiSettings.getResY() / 10);
+                        menuScreenView.getScene().getWindow().setWidth(9 * uiSettings.getResX() / 10);
+                        menuScreenPresenter.windowsHandler();
+                    }
+                }
+
             }
         });
         view.getRankingItem().setOnAction(new EventHandler<ActionEvent>() {
@@ -370,8 +380,15 @@ public class MainScreenPresenter {
         view.getLastGameItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                model = new Quarto(Boolean.FALSE);
+                try {
+                    model.setPlayerForAnimation();
+                } catch (IOException ioException) {
+                    System.out.println("Something went wrong with setting player for animation");
+                } catch (QuartoException exception) {
+                    exception.printStackTrace();
+                }
                 LastGameView lastGameView = new LastGameView(uiSettings);
-                model = new Quarto(false);
                 LastGamePresenter lastGamePresenter = new LastGamePresenter(model,lastGameView,uiSettings);
                 view.getScene().setRoot(lastGameView);
                 lastGameView.getScene().getWindow().sizeToScene();

@@ -35,6 +35,7 @@ public class Quarto {
     public void reset(){
         this.pieces = new Pieces();
         this.board = new Board();
+        this.setChosenPiece(null);
         AnimationFileHandler.setCount(1);
     }
 

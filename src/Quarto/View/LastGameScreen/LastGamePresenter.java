@@ -117,10 +117,10 @@ public class LastGamePresenter extends MainScreenPresenter {
             if (model.getBoard().hasCombination()) {
                 gameFinished.setHeaderText(model.getAllPlayers().getActivePlayer().getName() + " won");
             } else {
-                gameFinished.setHeaderText("Playboard is full!");
+                gameFinished.setHeaderText("Playboard  full!");
             }
         } else if (gameStatus.equals(GameStatus.INCOMPLETE)){
-            gameFinished.setHeaderText("Game not completed");
+            gameFinished.setHeaderText("Previous game session closed have way during game!");
         }
         gameFinished.show();
         view.getPlayAnimation().setText("Replay?");
