@@ -1,6 +1,6 @@
 package Quarto.View.MainScreen;
 
-import Quarto.Model.Blok;
+import Quarto.Model.Piece;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
@@ -9,18 +9,17 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 // Willem: naam klasse veranderd naar BlokkenBoxView
 
 public class BlokkenBoxView extends GridPane {
-    public final Color BlUE_COLOR = Color.DODGERBLUE;
-    public final Color RED_COLOR = Color.ORANGERED;
+    public final javafx.scene.paint.Color BlUE_COLOR = javafx.scene.paint.Color.DODGERBLUE;
+    public final javafx.scene.paint.Color RED_COLOR = javafx.scene.paint.Color.ORANGERED;
 //    public final Color EMPTY_COLOR_RED = Color.TRANSPARENT;
 //    public final Color EMPTY_COLOR_BLUE = Color.TRANSPARENT;
-    public final Color DEFAULT_COLOR = Color.TRANSPARENT;
+    public final javafx.scene.paint.Color DEFAULT_COLOR = javafx.scene.paint.Color.TRANSPARENT;
     public final int BIG_SIZE = 30;
     public final int BIG_SIZE_EMPTY = 25;
     public final int STROKE_WIDTH_BIG = 10;
@@ -46,7 +45,7 @@ public class BlokkenBoxView extends GridPane {
         ds = new DropShadow();
         ds.setOffsetY(9.0f);
         ds.setOffsetX(9.0f);
-        ds.setColor(Color.BLACK);
+        ds.setColor(javafx.scene.paint.Color.BLACK);
     }
 
     public void initialiseNodes() {
@@ -55,34 +54,34 @@ public class BlokkenBoxView extends GridPane {
         * */
         for (int i = 0; i < ROW_SIZE; i++) {
             for (int j = 0; j < COL_SIZE; j++) {
-                circles[i][j] = new Circle(BIG_SIZE, Color.GRAY);
+                circles[i][j] = new Circle(BIG_SIZE, javafx.scene.paint.Color.GRAY);
                 circles[i][j].setEffect(ds);
 
-                rectangles[i][j] = new Rectangle(2*BIG_SIZE, 2*BIG_SIZE,Color.GRAY);
+                rectangles[i][j] = new Rectangle(2*BIG_SIZE, 2*BIG_SIZE, javafx.scene.paint.Color.GRAY);
             }
         }
         /*
         * In deze methodes worden de afbeeldingen van de cirkels en vierkanten aangemaakt en in de cirkel array of de
         * vierkant array geplaatst.
         * */
-        for (Blok.Grootte grootte : Blok.Grootte.values()) {
-            for (Blok.Kleur kleur : Blok.Kleur.values()) {
-                for (Blok.Vorm vorm : Blok.Vorm.values()) {
-                    for (Blok.Vulling vulling : Blok.Vulling.values()) {
-                        Blok blok = new Blok(grootte,kleur,vorm,vulling); //Er wordt voor iedere blok in het model hier een blok aangemaakt.
-                        if (blok.getVorm().equals(Blok.Vorm.ROND)){
-                            if (blok.getKleur().equals(Blok.Kleur.WIT)){
+        for (Piece.Size size : Piece.Size.values()) {
+            for (Piece.Color color : Piece.Color.values()) {
+                for (Piece.Shape shape : Piece.Shape.values()) {
+                    for (Piece.Filling filling : Piece.Filling.values()) {
+                        Piece piece = new Piece(size, color, shape, filling); //Er wordt voor iedere blok in het model hier een blok aangemaakt.
+                        if (piece.getShape().equals(Piece.Shape.ROUND)){
+                            if (piece.getColor().equals(Piece.Color.WHITE)){
                                 int colIndex = 0; // Dit deel van de methode gaat alleen over de eerste kolom.
                                 int rowIndex;
-                                if (blok.getVulling().equals(Blok.Vulling.VOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
+                                if (piece.getFilling().equals(Piece.Filling.FULL)&& piece.getSize().equals(Piece.Size.BIG)){
                                     rowIndex = 0; // De volle, grote, witte cirkelafbeeldingen komen in de eerste rij terecht.
                                     circles[rowIndex][colIndex].setFill(RED_COLOR);
 
-                                } else if (blok.getVulling().equals(Blok.Vulling.VOL) && blok.getGrootte().equals(Blok.Grootte.KLEIN)){
+                                } else if (piece.getFilling().equals(Piece.Filling.FULL) && piece.getSize().equals(Piece.Size.SMALL)){
                                     rowIndex = 1; // De volle, kleine, witte cirkelafbeeldingen komen in de tweede rij terecht.
                                     circles[rowIndex][colIndex].setRadius(SMALL_SIZE);
                                     circles[rowIndex][colIndex].setFill(RED_COLOR);
-                                } else if (blok.getVulling().equals(Blok.Vulling.HOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
+                                } else if (piece.getFilling().equals(Piece.Filling.EMPTY)&& piece.getSize().equals(Piece.Size.BIG)){
                                     rowIndex = 2; // De holle, grote, witte cirkelafbeeldingen komen in de derde rij terecht.
                                     circles[rowIndex][colIndex].setRadius(BIG_SIZE_EMPTY);
                                     circles[rowIndex][colIndex].setStroke(RED_COLOR);
@@ -98,15 +97,15 @@ public class BlokkenBoxView extends GridPane {
                             } else {
                                 int colIndex = 1;
                                 int rowIndex;
-                                if (blok.getVulling().equals(Blok.Vulling.VOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
+                                if (piece.getFilling().equals(Piece.Filling.FULL)&& piece.getSize().equals(Piece.Size.BIG)){
                                     rowIndex = 0;
                                     circles[rowIndex][colIndex].setFill(BlUE_COLOR);
 
-                                } else if (blok.getVulling().equals(Blok.Vulling.VOL) && blok.getGrootte().equals(Blok.Grootte.KLEIN)){
+                                } else if (piece.getFilling().equals(Piece.Filling.FULL) && piece.getSize().equals(Piece.Size.SMALL)){
                                     rowIndex = 1;
                                     circles[rowIndex][colIndex].setRadius(SMALL_SIZE);
                                     circles[rowIndex][colIndex].setFill(BlUE_COLOR);
-                                } else if (blok.getVulling().equals(Blok.Vulling.HOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
+                                } else if (piece.getFilling().equals(Piece.Filling.EMPTY)&& piece.getSize().equals(Piece.Size.BIG)){
                                     rowIndex = 2;
                                     circles[rowIndex][colIndex].setRadius(BIG_SIZE_EMPTY);
                                     circles[rowIndex][colIndex].setStroke(BlUE_COLOR);
@@ -120,19 +119,19 @@ public class BlokkenBoxView extends GridPane {
                                     circles[rowIndex][colIndex].setStrokeWidth(STROKE_WIDTH_SMALL);
                                 }
                             }
-                        } else if (blok.getVorm().equals(Blok.Vorm.VIERKANT)){
-                            if (blok.getKleur().equals(Blok.Kleur.WIT)){
+                        } else if (piece.getShape().equals(Piece.Shape.SQUARE)){
+                            if (piece.getColor().equals(Piece.Color.WHITE)){
                                 int colIndex = 0;
                                 int rowIndex;
-                                if (blok.getVulling().equals(Blok.Vulling.VOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
+                                if (piece.getFilling().equals(Piece.Filling.FULL)&& piece.getSize().equals(Piece.Size.BIG)){
                                     rowIndex = 0;
                                     rectangles[rowIndex][colIndex].setFill(RED_COLOR);
-                                } else if (blok.getVulling().equals(Blok.Vulling.VOL) && blok.getGrootte().equals(Blok.Grootte.KLEIN)){
+                                } else if (piece.getFilling().equals(Piece.Filling.FULL) && piece.getSize().equals(Piece.Size.SMALL)){
                                     rowIndex = 1;
                                     rectangles[rowIndex][colIndex].setHeight(SMALL_SIZE*2);
                                     rectangles[rowIndex][colIndex].setWidth(SMALL_SIZE*2);
                                     rectangles[rowIndex][colIndex].setFill(RED_COLOR);
-                                } else if (blok.getVulling().equals(Blok.Vulling.HOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
+                                } else if (piece.getFilling().equals(Piece.Filling.EMPTY)&& piece.getSize().equals(Piece.Size.BIG)){
                                     rowIndex = 2;
                                     rectangles[rowIndex][colIndex].setWidth(BIG_SIZE_EMPTY*2);
                                     rectangles[rowIndex][colIndex].setHeight(BIG_SIZE_EMPTY*2);
@@ -150,15 +149,15 @@ public class BlokkenBoxView extends GridPane {
                             } else {
                                 int colIndex = 1;
                                 int rowIndex;
-                                if (blok.getVulling().equals(Blok.Vulling.VOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
+                                if (piece.getFilling().equals(Piece.Filling.FULL)&& piece.getSize().equals(Piece.Size.BIG)){
                                     rowIndex = 0;
                                     rectangles[rowIndex][colIndex].setFill(BlUE_COLOR);
-                                } else if (blok.getVulling().equals(Blok.Vulling.VOL) && blok.getGrootte().equals(Blok.Grootte.KLEIN)){
+                                } else if (piece.getFilling().equals(Piece.Filling.FULL) && piece.getSize().equals(Piece.Size.SMALL)){
                                     rowIndex = 1;
                                     rectangles[rowIndex][colIndex].setHeight(SMALL_SIZE*2);
                                     rectangles[rowIndex][colIndex].setWidth(SMALL_SIZE*2);
                                     rectangles[rowIndex][colIndex].setFill(BlUE_COLOR);
-                                } else if (blok.getVulling().equals(Blok.Vulling.HOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
+                                } else if (piece.getFilling().equals(Piece.Filling.EMPTY)&& piece.getSize().equals(Piece.Size.BIG)){
                                     rowIndex = 2;
                                     rectangles[rowIndex][colIndex].setWidth(BIG_SIZE_EMPTY*2);
                                     rectangles[rowIndex][colIndex].setHeight(BIG_SIZE_EMPTY*2);

@@ -22,7 +22,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.*;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -54,7 +53,7 @@ public class MainScreenPresenter {
 
     protected void updateTurnView(){
         String action = (model.isFlipAction()?"Place a piece!":"Pick a piece!");
-        view.getTurnLabel().setText(model.getAlleSpelers().getActieveSpeler().getNaam() + ": " + action );
+        view.getTurnLabel().setText(model.getAllPlayers().getActivePlayer().getName() + ": " + action );
     }
 
     /*
@@ -63,25 +62,25 @@ public class MainScreenPresenter {
      * */
 
     protected void updateBlokkenBoxView() {
-        view.setNode(model.getGekozenBlok());
-        for (Blok.Grootte grootte : Blok.Grootte.values()) {
-            for (Blok.Kleur kleur : Blok.Kleur.values()) {
-                for (Blok.Vorm vorm : Blok.Vorm.values()) {
-                    for (Blok.Vulling vulling : Blok.Vulling.values()) {
-                        Blok blok = new Blok(grootte,kleur,vorm,vulling);
-                        if (!model.getBlokkenBox().getBlokkenSet().contains(blok)) {
-                            if (blok.getVorm().equals(Blok.Vorm.ROND)){
-                                if (blok.getKleur().equals(Blok.Kleur.WIT)){
+        view.setNode(model.getChosenPiece());
+        for (Piece.Size size : Piece.Size.values()) {
+            for (Piece.Color color : Piece.Color.values()) {
+                for (Piece.Shape shape : Piece.Shape.values()) {
+                    for (Piece.Filling filling : Piece.Filling.values()) {
+                        Piece piece = new Piece(size, color, shape, filling);
+                        if (!model.getPieces().getPieceSet().contains(piece)) {
+                            if (piece.getShape().equals(Piece.Shape.ROUND)){
+                                if (piece.getColor().equals(Piece.Color.WHITE)){
                                     int colIndex = 0;
                                     int rowIndex;
-                                    if (blok.getVulling().equals(Blok.Vulling.VOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
+                                    if (piece.getFilling().equals(Piece.Filling.FULL)&& piece.getSize().equals(Piece.Size.BIG)){
                                         rowIndex = 0;
                                         view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                    } else if (blok.getVulling().equals(Blok.Vulling.VOL) && blok.getGrootte().equals(Blok.Grootte.KLEIN)){
+                                    } else if (piece.getFilling().equals(Piece.Filling.FULL) && piece.getSize().equals(Piece.Size.SMALL)){
                                         rowIndex = 1;
                                         view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxView().BIG_SIZE);
                                         view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                    } else if (blok.getVulling().equals(Blok.Vulling.HOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
+                                    } else if (piece.getFilling().equals(Piece.Filling.EMPTY)&& piece.getSize().equals(Piece.Size.BIG)){
                                         rowIndex = 2;
                                         view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxView().BIG_SIZE);
                                         view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxView().DEFAULT_COLOR);
@@ -97,14 +96,14 @@ public class MainScreenPresenter {
                                 } else {
                                     int colIndex = 1;
                                     int rowIndex;
-                                    if (blok.getVulling().equals(Blok.Vulling.VOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
+                                    if (piece.getFilling().equals(Piece.Filling.FULL)&& piece.getSize().equals(Piece.Size.BIG)){
                                         rowIndex = 0;
                                         view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                    } else if (blok.getVulling().equals(Blok.Vulling.VOL) && blok.getGrootte().equals(Blok.Grootte.KLEIN)){
+                                    } else if (piece.getFilling().equals(Piece.Filling.FULL) && piece.getSize().equals(Piece.Size.SMALL)){
                                         rowIndex = 1;
                                         view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxView().BIG_SIZE);
                                         view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                    } else if (blok.getVulling().equals(Blok.Vulling.HOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
+                                    } else if (piece.getFilling().equals(Piece.Filling.EMPTY)&& piece.getSize().equals(Piece.Size.BIG)){
                                         rowIndex = 2;
                                         view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setRadius(view.getBlokkenBoxView().BIG_SIZE);
                                         view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setStroke(view.getBlokkenBoxView().DEFAULT_COLOR);
@@ -118,19 +117,19 @@ public class MainScreenPresenter {
                                         view.getBlokkenBoxView().getCircles()[rowIndex][colIndex].setStrokeWidth(0);
                                     }
                                 }
-                            } else if (blok.getVorm().equals(Blok.Vorm.VIERKANT)){
-                                if (blok.getKleur().equals(Blok.Kleur.WIT)){
+                            } else if (piece.getShape().equals(Piece.Shape.SQUARE)){
+                                if (piece.getColor().equals(Piece.Color.WHITE)){
                                     int colIndex = 0;
                                     int rowIndex;
-                                    if (blok.getVulling().equals(Blok.Vulling.VOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
+                                    if (piece.getFilling().equals(Piece.Filling.FULL)&& piece.getSize().equals(Piece.Size.BIG)){
                                         rowIndex = 0;
                                         view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                    } else if (blok.getVulling().equals(Blok.Vulling.VOL) && blok.getGrootte().equals(Blok.Grootte.KLEIN)){
+                                    } else if (piece.getFilling().equals(Piece.Filling.FULL) && piece.getSize().equals(Piece.Size.SMALL)){
                                         rowIndex = 1;
                                         view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxView().BIG_SIZE*2);
                                         view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxView().BIG_SIZE*2);
                                         view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                    } else if (blok.getVulling().equals(Blok.Vulling.HOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
+                                    } else if (piece.getFilling().equals(Piece.Filling.EMPTY)&& piece.getSize().equals(Piece.Size.BIG)){
                                         rowIndex = 2;
                                         view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxView().BIG_SIZE*2);
                                         view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxView().BIG_SIZE*2);
@@ -148,15 +147,15 @@ public class MainScreenPresenter {
                                 } else {
                                     int colIndex = 1;
                                     int rowIndex;
-                                    if (blok.getVulling().equals(Blok.Vulling.VOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
+                                    if (piece.getFilling().equals(Piece.Filling.FULL)&& piece.getSize().equals(Piece.Size.BIG)){
                                         rowIndex = 0;
                                         view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                    } else if (blok.getVulling().equals(Blok.Vulling.VOL) && blok.getGrootte().equals(Blok.Grootte.KLEIN)){
+                                    } else if (piece.getFilling().equals(Piece.Filling.FULL) && piece.getSize().equals(Piece.Size.SMALL)){
                                         rowIndex = 1;
                                         view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxView().BIG_SIZE*2);
                                         view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxView().BIG_SIZE*2);
                                         view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setFill(view.getBlokkenBoxView().DEFAULT_COLOR);
-                                    } else if (blok.getVulling().equals(Blok.Vulling.HOL)&& blok.getGrootte().equals(Blok.Grootte.GROOT)){
+                                    } else if (piece.getFilling().equals(Piece.Filling.EMPTY)&& piece.getSize().equals(Piece.Size.BIG)){
                                         rowIndex = 2;
                                         view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setWidth(view.getBlokkenBoxView().BIG_SIZE*2);
                                         view.getBlokkenBoxView().getRectangles()[rowIndex][colIndex].setHeight(view.getBlokkenBoxView().BIG_SIZE*2);
@@ -182,34 +181,34 @@ public class MainScreenPresenter {
     }
 
     protected void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException, IOException {
-        view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getGekozenBlok());
+        view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getChosenPiece());
         if (model.isGameFinished()){showFinishedDialog(); }
     }
 
     protected void showFinishedDialog() throws QuartoException, IOException {
 //        Log.debug("showing finished");
         if (!model.isGameFinished()) return;
-        ChoiceDialog<String> again = new ChoiceDialog<String>("Ok", "Ok", "Nope");
-        if (model.getSpeelbord().heeftCombinatie()) {
-            again.setTitle(model.getAlleSpelers().getActieveSpeler().getNaam() + " has won!");
-            again.setHeaderText(model.getAlleSpelers().getActieveSpeler().getNaam() + " has won");
+        ChoiceDialog<String> again = new ChoiceDialog<String>("Ok", "Yes", "No");
+        if (model.getBoard().hasCombination()) {
+            again.setTitle(model.getAllPlayers().getActivePlayer().getName() + " has won!");
+            again.setHeaderText(model.getAllPlayers().getActivePlayer().getName() + " has won!");
 //            CombinationView combinationView = new CombinationView();
 //            new CombinationPresenter(model.getRiddle(), combinationView);
 //            again.setGraphic(combinationView);
         } else {
-            again.setTitle("Playbord is full!");
-            again.setHeaderText("Playbord is full!");
+            again.setTitle("The board is full!");
+            again.setHeaderText("The board is full!");
 //            again.setGraphic(new ImageView("images/duim.png"));
 //            again.setHeaderText("You found it in " + model.getNumberOfGuessesDone() + " moves...");
         }
-        again.setContentText("You wanna play again?");
+        again.setContentText("Do you want to play again?");
         again.showAndWait();
         String result = again.getResult();
-        if (result == null || result.equals("Nope")) {
+        if (result == null || result.equals("No")) {
             Platform.exit();
         } else {
-            this.model = new Quarto(model.getAlleSpelers().getSpeler1(), model.getAlleSpelers().getSpeler2());
-            model.kieSpeler();
+            this.model = new Quarto(model.getAllPlayers().getPlayer1(), model.getAllPlayers().getPlayer2());
+            model.choosePlayer();
 
             MainScreenView newView = new MainScreenView(uiSettings);
             view.getScene().setRoot(newView);
@@ -225,25 +224,25 @@ public class MainScreenPresenter {
                 view.getBlokkenBoxView().getCircles()[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        Blok blok = new Blok();
+                        Piece piece = new Piece();
                         Circle circle = view.getBlokkenBoxView().getCircles()[row][col];
-                        blok.setVorm(Blok.Vorm.ROND);
+                        piece.setShape(Piece.Shape.ROUND);
                         if (circle.getFill() == view.getBlokkenBoxView().DEFAULT_COLOR  && circle.toString().length() < 70) {
                             // consume event when clicked on preselected pieces
                             mouseEvent.consume();
                         } else if (circle.getStroke() == view.getBlokkenBoxView().DEFAULT_COLOR  && circle.toString().length() > 70) {mouseEvent.consume(); }else {
                             if (circle.toString().length()>70){
-                                blok.setVulling(Blok.Vulling.HOL);
-                                blok.setGrootte((circle.getRadius() == view.getBlokkenBoxView().BIG_SIZE_EMPTY? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                                blok.setKleur(circle.getStroke() == view.getBlokkenBoxView().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                                piece.setFilling(Piece.Filling.EMPTY);
+                                piece.setSize((circle.getRadius() == view.getBlokkenBoxView().BIG_SIZE_EMPTY? Piece.Size.BIG : Piece.Size.SMALL));
+                                piece.setColor(circle.getStroke() == view.getBlokkenBoxView().BlUE_COLOR? Piece.Color.BLACK : Piece.Color.WHITE);
                             } else {
-                                blok.setVulling(Blok.Vulling.VOL);
-                                blok.setGrootte((circle.getRadius() == view.getBlokkenBoxView().BIG_SIZE? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                                blok.setKleur(circle.getFill() == view.getBlokkenBoxView().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                                piece.setFilling(Piece.Filling.FULL);
+                                piece.setSize((circle.getRadius() == view.getBlokkenBoxView().BIG_SIZE? Piece.Size.BIG : Piece.Size.SMALL));
+                                piece.setColor(circle.getFill() == view.getBlokkenBoxView().BlUE_COLOR? Piece.Color.BLACK : Piece.Color.WHITE);
                             }
 
                             try {
-                                model.kiesBlok(blok);
+                                model.choosePiece(piece);
                                 updateBlokkenBoxView();
                                 updateTurnView();
 
@@ -262,9 +261,9 @@ public class MainScreenPresenter {
                 view.getBlokkenBoxView().getRectangles()[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        Blok blok = new Blok();
+                        Piece piece = new Piece();
                         Rectangle rectangle = view.getBlokkenBoxView().getRectangles()[row][col];
-                        blok.setVorm(Blok.Vorm.VIERKANT);
+                        piece.setShape(Piece.Shape.SQUARE);
                         if (rectangle.getFill() == view.getBlokkenBoxView().DEFAULT_COLOR && rectangle.toString().length() < 70 ) {
                             // consume event when clicked on preselected pieces
                             mouseEvent.consume();
@@ -274,17 +273,17 @@ public class MainScreenPresenter {
 
                         } else {
                             if (rectangle.toString().length()>70){
-                                blok.setVulling(Blok.Vulling.HOL);
-                                blok.setGrootte((rectangle.getWidth() == view.getBlokkenBoxView().BIG_SIZE_EMPTY*2? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                                blok.setKleur(rectangle.getStroke() == view.getBlokkenBoxView().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                                piece.setFilling(Piece.Filling.EMPTY);
+                                piece.setSize((rectangle.getWidth() == view.getBlokkenBoxView().BIG_SIZE_EMPTY*2? Piece.Size.BIG : Piece.Size.SMALL));
+                                piece.setColor(rectangle.getStroke() == view.getBlokkenBoxView().BlUE_COLOR? Piece.Color.BLACK : Piece.Color.WHITE);
                             } else {
-                                blok.setVulling(Blok.Vulling.VOL);
-                                blok.setGrootte((rectangle.getWidth() == view.getBlokkenBoxView().BIG_SIZE*2? Blok.Grootte.GROOT : Blok.Grootte.KLEIN));
-                                blok.setKleur(rectangle.getFill() == view.getBlokkenBoxView().BlUE_COLOR? Blok.Kleur.ZWART: Blok.Kleur.WIT);
+                                piece.setFilling(Piece.Filling.FULL);
+                                piece.setSize((rectangle.getWidth() == view.getBlokkenBoxView().BIG_SIZE*2? Piece.Size.BIG : Piece.Size.SMALL));
+                                piece.setColor(rectangle.getFill() == view.getBlokkenBoxView().BlUE_COLOR? Piece.Color.BLACK : Piece.Color.WHITE);
                             }
 
                             try {
-                                model.kiesBlok(blok);
+                                model.choosePiece(piece);
                                 updateBlokkenBoxView();
                                 updateTurnView();
 
@@ -318,11 +317,11 @@ public class MainScreenPresenter {
                         int colIndex = GridPane.getColumnIndex((Node) mouseEvent.getSource());
                         try {
 
-                            model.plaatsBlok(new Positie(rowIndex,colIndex));
+                            model.placePiece(new Position(rowIndex,colIndex));
                             updateSpeelBordView(rowIndex, colIndex);
                             updateTurnView();
-                            model.setGekozenBlok(null);
-                            view.setNode(model.getGekozenBlok());
+                            model.setChosenPiece(null);
+                            view.setNode(model.getChosenPiece());
 
                         } catch (QuartoException | IOException e) {
                             final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
@@ -336,10 +335,6 @@ public class MainScreenPresenter {
                 });
             }
         }
-    }
-
-    public MainScreenView getView() {
-        return view;
     }
 
     public void addMenuEventHandlers(){
@@ -366,8 +361,8 @@ public class MainScreenPresenter {
             @Override
             public void handle(ActionEvent actionEvent) {
                 RankingView rankingView = new RankingView();
-                SpelerRanking spelerRanking = new SpelerRanking();
-                RankingPresenter rankingPresenter = new RankingPresenter(model,rankingView,uiSettings,spelerRanking);
+                PlayerRanking playerRanking = new PlayerRanking();
+                RankingPresenter rankingPresenter = new RankingPresenter(model,rankingView,uiSettings, playerRanking);
                 view.getScene().setRoot(rankingView);
                 rankingView.getScene().getWindow().sizeToScene();
                 try {
@@ -501,6 +496,10 @@ public class MainScreenPresenter {
         else {
             view.getScene().getWindow().hide();
         }
+    }
+
+    public MainScreenView getView() {
+        return view;
     }
 
     public Quarto getModel() {

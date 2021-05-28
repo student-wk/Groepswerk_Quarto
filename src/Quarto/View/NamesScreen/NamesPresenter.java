@@ -2,8 +2,8 @@ package Quarto.View.NamesScreen;
 
 import Quarto.Model.Quarto;
 import Quarto.Model.QuartoException;
-import Quarto.Model.Speler;
-import Quarto.Model.SpelerRanking;
+import Quarto.Model.Player;
+import Quarto.Model.PlayerRanking;
 import Quarto.View.MainScreen.MainScreenPresenter;
 import Quarto.View.MainScreen.MainScreenView;
 import Quarto.View.UISettings;
@@ -21,10 +21,10 @@ public class NamesPresenter {
     private Quarto model;
     private NamesView view;
     private UISettings uiSettings;
-    private SpelerRanking ranking;
+    private PlayerRanking ranking;
 
 
-    public NamesPresenter(Quarto model, NamesView view, UISettings uiSettings, SpelerRanking ranking) {
+    public NamesPresenter(Quarto model, NamesView view, UISettings uiSettings, PlayerRanking ranking) {
         this.model = model;
         this.view = view;
         this.uiSettings = uiSettings;
@@ -47,9 +47,9 @@ public class NamesPresenter {
             enterPlayerNames.setContentText(e.getMessage());
             enterPlayerNames.showAndWait();
         }
-        for (Speler speler :
+        for (Player player :
                 ranking.getHighScoresRanking()) {
-            view.getListNames().add(speler.getNaam());
+            view.getListNames().add(player.getName());
         }
         Collections.sort(view.getListNames());
     }
@@ -60,7 +60,7 @@ public class NamesPresenter {
             public void handle(ActionEvent actionEvent) {
                 try {
                     model.setPlayers(view.getPlayer1ComboBox().getValue(), view.getPlayer2ComboBox().getValue());
-                    model.kieSpeler();
+                    model.choosePlayer();
 
                     MainScreenView mainScreenView = new MainScreenView(uiSettings);
                     MainScreenPresenter mainScreenPresenter = new MainScreenPresenter(model, mainScreenView, uiSettings);

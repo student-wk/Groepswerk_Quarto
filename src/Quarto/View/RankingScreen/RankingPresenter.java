@@ -2,8 +2,8 @@ package Quarto.View.RankingScreen;
 
 import Quarto.Model.Quarto;
 import Quarto.Model.QuartoException;
-import Quarto.Model.Speler;
-import Quarto.Model.SpelerRanking;
+import Quarto.Model.Player;
+import Quarto.Model.PlayerRanking;
 import Quarto.View.AboutScreen.AboutScreenPresenter;
 import Quarto.View.AboutScreen.AboutScreenView;
 import Quarto.View.InfoScreen.InfoScreenPresenter;
@@ -38,13 +38,13 @@ public class RankingPresenter {
     private RankingView rankingView;
     private UISettings uiSettings;
 
-    private SpelerRanking spelerRanking;
+    private PlayerRanking playerRanking;
 
-    public RankingPresenter(Quarto model,RankingView rankingView, UISettings uiSettings, SpelerRanking spelerRanking) {
+    public RankingPresenter(Quarto model,RankingView rankingView, UISettings uiSettings, PlayerRanking playerRanking) {
         this.model = model;
         this.rankingView = rankingView;
         this.uiSettings = uiSettings;
-        this.spelerRanking = spelerRanking;
+        this.playerRanking = playerRanking;
         updateView();
         eventHandlers();
     }
@@ -55,20 +55,20 @@ public class RankingPresenter {
 
     private void updateView() {
         try {
-            this.spelerRanking.scoreFile2List();
+            this.playerRanking.scoreFile2List();
         } catch (QuartoException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Unable to show ranking");
             alert.setContentText(e.getMessage());
             alert.showAndWait();        }
         try {
-            int lengte = spelerRanking.getHighScoresRanking().size();
+            int lengte = playerRanking.getHighScoresRanking().size();
             if (lengte>10) {
                 lengte = 10;
             }
             for (int i = 0; i < lengte; i++) {
-                Speler speler = spelerRanking.getHighScoresRanking().get(i);
-                this.rankingView.getSeries().getData().add(new XYChart.Data(speler.getNaam(), speler.getScore()));
+                Player player = playerRanking.getHighScoresRanking().get(i);
+                this.rankingView.getSeries().getData().add(new XYChart.Data(player.getName(), player.getScore()));
             }
         } catch (IndexOutOfBoundsException e) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -115,7 +115,7 @@ public class RankingPresenter {
             @Override
             public void handle(ActionEvent actionEvent) {
                 try {
-                    model.getSpelerRanking().clearRankingFile();
+                    model.getPlayerRanking().clearRankingFile();
                     updateView();
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Reset Ranking");
