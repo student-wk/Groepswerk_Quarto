@@ -90,7 +90,6 @@ public class Quarto {
             this.animationFileHandler.initiateFile("oneVone" + "|" + allPLayers.getPlayer1().getName()
                     + "|" + allPLayers.getPlayer2().getName() + "|" + indexChosenPlayer);
         }
-        System.out.println("Active Player: "+ this.getAllPlayers().getActivePlayer());
     }
 
     /**
@@ -111,7 +110,6 @@ public class Quarto {
             if (animation){
                 this.animationFileHandler.addAction(piece.toString());
             }
-            System.out.println("active player: "+ this.getAllPlayers().getActivePlayer());
             flipAction = true;
         }
     }

@@ -375,6 +375,7 @@ public class MainScreenPresenter {
             @Override
             public void handle(ActionEvent actionEvent) {
                 LastGameView lastGameView = new LastGameView(uiSettings);
+                model = new Quarto(false);
                 LastGamePresenter lastGamePresenter = new LastGamePresenter(model,lastGameView,uiSettings);
                 view.getScene().setRoot(lastGameView);
                 lastGameView.getScene().getWindow().sizeToScene();

@@ -110,7 +110,7 @@ public class LastGamePresenter extends MainScreenPresenter {
 
     @Override
     protected void showFinishedDialog()  {
-        Alert gameFinished = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert gameFinished = new Alert(Alert.AlertType.INFORMATION);
         gameFinished.setTitle("Game Finished");
         gameFinished.setContentText("Press \"Replay Button\" to replay");
         if (gameStatus.equals(GameStatus.GAME_FINISHED)){
