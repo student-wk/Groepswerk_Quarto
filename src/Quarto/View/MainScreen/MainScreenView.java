@@ -41,7 +41,7 @@ public class MainScreenView extends BorderPane  {
         layoutNodes();
     }
 
-    private void initialiseNodes() {
+    protected void initialiseNodes() {
         this.exitMI = new MenuItem("Exit");
         this.settingsMI = new MenuItem("Main Menu");
         this.rankingMI = new MenuItem("Ranking");
@@ -172,7 +172,7 @@ public class MainScreenView extends BorderPane  {
     }
 
 
-    private void layoutNodes() {
+    protected void layoutNodes() {
         Menu menuFile = new Menu("File",null, settingsMI,rankingMI,lastGameMI, new SeparatorMenuItem(),exitMI);
         Menu menuHelp = new Menu("Help",null, aboutMI, infoMI);
         MenuBar menuBar = new MenuBar(menuFile,menuHelp);

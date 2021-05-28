@@ -31,7 +31,11 @@ public class MainScreenPresenter {
 
     protected Quarto model;
     protected MainScreenView view;
-    private UISettings uiSettings;
+    protected UISettings uiSettings;
+
+    public UISettings getUiSettings() {
+        return uiSettings;
+    }
 
     public MainScreenPresenter(Quarto model, MainScreenView view, UISettings uiSettings) {
         this.model = model;

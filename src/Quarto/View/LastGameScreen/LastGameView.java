@@ -13,20 +13,29 @@ public class LastGameView extends MainScreenView {
 
     public LastGameView(UISettings uiSettings) {
         super(uiSettings);
-        intialiseNodes();
+        initialiseNodes();
         layoutNodes();
     }
 
-    public void intialiseNodes(){
+    @Override
+    protected void initialiseNodes() {
+        super.initialiseNodes();
         playAnimation = new Button("Play Animation");
     }
 
-    public void layoutNodes(){
+
+    @Override
+    protected void layoutNodes() {
+        super.layoutNodes();
         super.getInfoGridpane().add(this.playAnimation, 2,0);
         GridPane.setConstraints(this.playAnimation, 2, 0, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
     }
 
     public Button getPlayAnimation() {
         return playAnimation;
+    }
+
+    public void setPlayAnimation(String playAnimation) {
+        this.playAnimation.setText(playAnimation);
     }
 }

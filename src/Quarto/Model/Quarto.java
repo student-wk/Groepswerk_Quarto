@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Quarto {
-    private final BlokkenBox blokkenBox;
-    private final Speelbord speelbord;
+    private BlokkenBox blokkenBox;
+    private Speelbord speelbord;
     private Blok gekozenBlok;
     private AlleSpelers alleSpelers;
     private boolean gameFinished;
@@ -13,7 +13,7 @@ public class Quarto {
     private Boolean animation = true;
 
     private SpelerRanking spelerRanking;
-    private AnimationFileHandler animationFileHandler;
+    private final AnimationFileHandler animationFileHandler;
 
 
     public Quarto() {
@@ -21,7 +21,7 @@ public class Quarto {
         this.speelbord = new Speelbord();
         this.gekozenBlok = null;
         this.spelerRanking = new SpelerRanking();
-        animationFileHandler = new AnimationFileHandler();
+        this.animationFileHandler = new AnimationFileHandler();
     }
 
     public Quarto(Boolean doNotAnimate) {
@@ -30,7 +30,7 @@ public class Quarto {
         this.gekozenBlok = null;
         this.spelerRanking = new SpelerRanking();
         this.animation = doNotAnimate;
-        animationFileHandler = new AnimationFileHandler();
+        this.animationFileHandler = new AnimationFileHandler();
     }
 
     public Quarto(Speler player1, Speler player2) throws QuartoException, IOException {
@@ -40,6 +40,12 @@ public class Quarto {
         this.gekozenBlok = null;
         this.spelerRanking = new SpelerRanking();
         animationFileHandler = new AnimationFileHandler();
+    }
+
+    public void reset(){
+        this.blokkenBox = new BlokkenBox();
+        this.speelbord = new Speelbord();
+        AnimationFileHandler.setCOUNT(1);
     }
 
     public boolean isGameFinished() {
@@ -170,15 +176,13 @@ public class Quarto {
 
     public void setPlayerForAnimation() throws IOException, QuartoException {
         animationFileHandler.cteateActions();
-//        System.out.println(animationFileHandler.getAction().length());
         String action = animationFileHandler.getAction();
         String player1FromAnimation = action.split("\\|")[1];
         String player2FromAnimation = action.split("\\|")[2];
         this.setPlayers(player1FromAnimation,player2FromAnimation);
         this.alleSpelers.setActieveSpeler(Integer.parseInt(action.split("\\|")[3]));
+        System.out.println("succesful set players"+ player1FromAnimation + player2FromAnimation);
     }
-
-
 
     public AnimationFileHandler getAnimationFileHandler() {
         return animationFileHandler;

@@ -12,12 +12,10 @@ import java.util.StringJoiner;
 public class AnimationFileHandler {
     private final static Path ANIMATIONFILE = Paths.get("resources"+ File.separator+"animation"+ File.separator+"animation.bin");
     public List<String> actions;
-    private static int COUNT = 0;
-
-
+    public static int COUNT;
 
     public AnimationFileHandler()  {
-
+        COUNT = 0;
     }
 
     public void initiateFile(String initialAction) throws IOException {
@@ -37,7 +35,6 @@ public class AnimationFileHandler {
                 ioException.printStackTrace();
             }
         }
-
     }
 
     public void addAction(String action) throws IOException {
@@ -90,20 +87,22 @@ public class AnimationFileHandler {
     }
 
     public String getAction(){
-//        System.out.println(actions.get(0));
+        if (COUNT == actions.size()){
+            COUNT = 0;
+        }
         return actions.get(COUNT++);
 
-//        String action = null;
-//        try (DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(new FileInputStream(String.valueOf(ANIMATIONFILE))))){
-////            while (dataInputStream.available() > 0) {
-////                action = dataInputStream.readUTF();
-////            }
-//            action = dataInputStream.readUTF();
-//
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return action;
+    }
+
+    public  int getCOUNT() {
+        return COUNT;
+    }
+
+    public static void setCOUNT(int COUNT) {
+        AnimationFileHandler.COUNT = COUNT;
+    }
+
+    public List<String> getActions() {
+        return actions;
     }
 }

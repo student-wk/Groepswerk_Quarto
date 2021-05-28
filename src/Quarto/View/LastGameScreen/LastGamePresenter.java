@@ -10,7 +10,6 @@ import Quarto.View.UISettings;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
@@ -22,24 +21,21 @@ import java.io.IOException;
 
 public class LastGamePresenter extends MainScreenPresenter {
     private LastGameView view;
-    private Quarto model;
+    private GameStatus gameStatus;
+//    private ChoiceDialog<String> again;
 
     private Timeline quatroTimeline;
 
-
+    public enum GameStatus{
+        GAME_FINISHED, INCOMPLETE, NOT_SET
+    }
 
     public LastGamePresenter(Quarto model, LastGameView view, UISettings uiSettings) {
         super(model, view, uiSettings);
         this.view = view;
-        this.model = model;
+        this.gameStatus = GameStatus.NOT_SET;
         addEventHandlers();
         setupTimeline();
-        updateView();
-    }
-
-
-    public void updateView() {
-
     }
 
     private void setupTimeline() {
@@ -48,7 +44,6 @@ public class LastGamePresenter extends MainScreenPresenter {
         updateAnimation();
     }
 
-
     private void updateAnimation() {
         quatroTimeline.getKeyFrames().add(new KeyFrame(
                 Duration.millis(100), new EventHandler<ActionEvent>() {
@@ -56,55 +51,95 @@ public class LastGamePresenter extends MainScreenPresenter {
             public void handle(ActionEvent event) {
                 String actiontoprint = model.getAnimationFileHandler().getAction();
                 String[] action = actiontoprint.split("\\|");
-                if (action[0].equals("blok")){
-                    try {
-                        model.kiesBlok(actionToBlok(action));
-                    } catch (QuartoException | IOException exception) {
-                        exception.printStackTrace();
-                    } finally {
-                        LastGamePresenter.super.updateBlokkenBoxView();
-                        LastGamePresenter.super.updateTurnView();
-                    }
-                } else if (action[0].equals("positie")){
-                    int rowIndex = Integer.parseUnsignedInt(action[1]);
-                    int colIndex = Integer.parseUnsignedInt(action[2]);
-                    try {
-
-                        model.plaatsBlok(new Positie(rowIndex,colIndex));
-                        updateSpeelBordView(rowIndex, colIndex);
-                        updateTurnView();
-                        model.setGekozenBlok(null);
-                        view.setNode(model.getGekozenBlok());
-
-                    } catch (QuartoException | IOException e) {
-                        final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
-                        noBlokChosen.setTitle("You cannot close the application yet.");
-                        noBlokChosen.setContentText(e.getMessage());
-                        noBlokChosen.showAndWait();
-
-                    }
-
-                } else if (action[0].equals("gamefinished")){
-                    if (model.isGameFinished()){
-                        System.out.println("now show dialog");
-                        try {
-                            showFinishedDialog();
-                        } catch (QuartoException exception) {
-                            exception.printStackTrace();
-                        } catch (IOException ioException) {
-                            ioException.printStackTrace();
+                System.out.println(model.getAnimationFileHandler().getCOUNT());
+                System.out.println(quatroTimeline.getCycleCount());
+                switch (action[0]) {
+                    case "blok":
+                        if (quatroTimeline.getCycleCount() == model.getAnimationFileHandler().getActions().size()-1){
+                            gameStatus = GameStatus.INCOMPLETE;
                         }
-                    }
-
-                    quatroTimeline.stop();
+                        try {
+                            model.kiesBlok(actionToBlok(action));
+                            updateBlokkenBoxView();
+                            updateTurnView();
+                        } catch (QuartoException | IOException exception) {
+                            final Alert noBlokChosen = new Alert(Alert.AlertType.INFORMATION);
+                            noBlokChosen.setTitle("Place a piece on the playbord.");
+                            noBlokChosen.setContentText(exception.getMessage());
+                            noBlokChosen.show();
+                        }
+                        break;
+                    case "positie":
+                        if (quatroTimeline.getCycleCount() == model.getAnimationFileHandler().getActions().size()-1){
+                            gameStatus = GameStatus.INCOMPLETE;
+                        }
+                        int rowIndex = Integer.parseUnsignedInt(action[1]);
+                        int colIndex = Integer.parseUnsignedInt(action[2]);
+                        try {
+                            model.plaatsBlok(new Positie(rowIndex, colIndex));
+                            updateSpeelBordView(rowIndex, colIndex);
+                            updateTurnView();
+                            model.setGekozenBlok(null);
+                            view.setNode(model.getGekozenBlok());
+                        } catch (QuartoException | IOException e) {
+                            final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
+                            noBlokChosen.setTitle("You cannot close the application yet.");
+                            noBlokChosen.setContentText(e.getMessage());
+                            noBlokChosen.show();
+                        }
+                        break;
+                    case "gamefinished":
+                        gameStatus = GameStatus.GAME_FINISHED;
+                        break;
                 }
-
                 System.out.println(actiontoprint);
-
+                System.out.println(gameStatus);
             }
         }));
+        quatroTimeline.setOnFinished(finished -> {
+            try {
+                showFinishedDialog();
+                quatroTimeline.stop();
+            } catch (QuartoException exception) {
+                exception.printStackTrace();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
 
     }
+
+
+    public void addEventHandlers() {
+        view.getPlayAnimation().setOnAction(actionEvent -> {
+            System.out.println(quatroTimeline.getStatus());
+            if (quatroTimeline.getStatus().equals(Animation.Status.STOPPED)) {
+               if (gameStatus.equals(GameStatus.GAME_FINISHED) || gameStatus.equals(GameStatus.INCOMPLETE)){
+                   System.out.println("entered resetPlay");
+                   resetPlaz();
+                   quatroTimeline.play();
+               } else {
+                   quatroTimeline.play();
+               }
+            } else if (quatroTimeline.getStatus().equals(Animation.Status.PAUSED)) {
+                quatroTimeline.play();
+            } else {
+                quatroTimeline.pause();
+            }
+        });
+    }
+
+    private void resetPlaz() {
+        System.out.println("start replay");
+        this.gameStatus = GameStatus.NOT_SET;
+        model.reset();
+        view.initialiseNodes();
+        view.setPlayAnimation("Replay");
+        view.layoutNodes();
+        addEventHandlers();
+    }
+
+
 
     @Override
     protected void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException, IOException {
@@ -113,37 +148,21 @@ public class LastGamePresenter extends MainScreenPresenter {
 
     @Override
     protected void showFinishedDialog() throws QuartoException, IOException {
-//        Log.debug("showing finished");
-        if (!model.isGameFinished()) return;
-        Alert gameFinished = new Alert(Alert.AlertType.INFORMATION);
 
-//        ChoiceDialog<String> again = new ChoiceDialog<String>("Ok", "Ok", "Nope");
-        if (model.getSpeelbord().heeftCombinatie()) {
-            gameFinished.setTitle( "Game finished!");
-            gameFinished.setContentText(model.getAlleSpelers().getActieveSpeler().getNaam() + " won");
-        } else {
-            gameFinished.setTitle("Game finished!");
-            gameFinished.setContentText("Playbord is full!");
+        Alert gameFinished = new Alert(Alert.AlertType.CONFIRMATION);
+        gameFinished.setTitle("Game Finished");
+        gameFinished.setContentText("Press Replay Button to replay");
+        if (gameStatus.equals(GameStatus.GAME_FINISHED)){
+            if (model.getSpeelbord().heeftCombinatie()) {
+                gameFinished.setHeaderText(model.getAlleSpelers().getActieveSpeler().getNaam() + " won");
+            } else {
+                gameFinished.setHeaderText("Playbord is full!");
+            }
+        } else if (gameStatus.equals(GameStatus.INCOMPLETE)){
+            gameFinished.setHeaderText("Game not completed");
         }
         gameFinished.show();
-
-
-//        String result = again.getResult();
-//        if (result == null || result.equals("Nope")) {
-//            Platform.exit();
-//        } else {
-//            model = new Quarto(Boolean.FALSE);
-//            try {
-//                model.setPlayerForAnimation();
-//            } catch (IOException ioException) {
-//                System.out.println("something went wrong with setting player for animation");
-//            } catch (QuartoException exception) {
-//                exception.printStackTrace();
-//            }
-////            MainScreenView newView = new MainScreenView(uiSettings);
-////            view.getScene().setRoot(newView);
-////            new MainScreenPresenter(model, newView, uiSettings);
-//        }
+        view.getPlayAnimation().setText("Replay?");
     }
 
     public Blok actionToBlok (String[] action) {
@@ -182,18 +201,5 @@ public class LastGamePresenter extends MainScreenPresenter {
     protected void speelBordEventHandlers() {
     }
 
-    public void addEventHandlers() {
-        view.getPlayAnimation().setOnAction(actionEvent -> {
-            System.out.println(quatroTimeline.getStatus());
-            if (quatroTimeline.getStatus().equals(Animation.Status.STOPPED)) {
-                quatroTimeline.play();
-            } else if (quatroTimeline.getStatus().equals(Animation.Status.PAUSED)) {
-                quatroTimeline.play();
-            } else {
-                quatroTimeline.pause();
 
-            }
-            System.out.println(quatroTimeline.getStatus().name());
-        });
-    }
 }
