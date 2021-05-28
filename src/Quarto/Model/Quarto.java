@@ -2,6 +2,12 @@ package Quarto.Model;
 
 import java.io.IOException;
 
+/**
+ * This class is the main class of the code in the model and it brings the code of the other classes together.
+ *
+ * It also contains code to write information to the animation source file.
+ * */
+
 public class Quarto {
     private final Pieces pieces;
     private final Board board;
@@ -14,6 +20,10 @@ public class Quarto {
     private AnimationFileHandler animationFileHandler;
 
 
+    /**
+     * This constructor is used at the start of the program.
+     * */
+
     public Quarto() {
         this.pieces = new Pieces();
         this.board = new Board();
@@ -21,6 +31,12 @@ public class Quarto {
         this.playerRanking = new PlayerRanking();
         animationFileHandler = new AnimationFileHandler();
     }
+
+    /**
+     * This constructor is used when playing the replay of the last game.
+     *
+     * @param doNotAnimate
+     * */
 
     public Quarto(Boolean doNotAnimate) {
         this.pieces = new Pieces();
@@ -31,6 +47,10 @@ public class Quarto {
         animationFileHandler = new AnimationFileHandler();
     }
 
+    /**
+     *
+     * */
+
     public Quarto(Player player1, Player player2) throws QuartoException, IOException {
         this.setPlayers(player1.getName(), player2.getName());
         this.pieces = new Pieces();
@@ -40,9 +60,9 @@ public class Quarto {
         animationFileHandler = new AnimationFileHandler();
     }
 
-    public boolean isGameFinished() {
-        return gameFinished;
-    }
+    /**
+     *
+     * */
 
     public  void setPlayers(String speler1, String speler2) throws QuartoException, IOException {
         if (speler1.isEmpty() || speler2.isEmpty()) {
@@ -54,11 +74,26 @@ public class Quarto {
         }
     }
 
+    /**
+     *
+     * */
+
+    public void choosePlayer() throws IOException {
+        int indexChosenPlayer = allPLayers.choosePlayerIndex();
+        if (animation) {
+            this.animationFileHandler.initiateFile("oneVone" + "|" + allPLayers.getPlayer1().getName()
+                    + "|" + allPLayers.getPlayer2().getName() + "|" + indexChosenPlayer);
+        }
+        System.out.println("Active Player: "+ this.getAllPlayers().getActivePlayer());
+    }
+
+    /**
+     *
+     * */
 
     /*
 * Geeft telkens een specifieke blok aan gekozenBlok.
 * */
-
     public void choosePiece(Piece piece) throws QuartoException, IOException {
 
         if (chosenPiece != null) {
@@ -74,6 +109,10 @@ public class Quarto {
             flipAction = true;
         }
     }
+
+    /**
+     *
+     * */
 
     /*
 * Plaatst blok op speelBord.
@@ -103,15 +142,32 @@ public class Quarto {
              }
         }
     }
+
+    /**
+     *
+     * */
+
+    public boolean gameFinished() {
+        return (board.isFull() || board.hasCombination());
+    }
+
+    /**
+     *
+     * */
+
+    public boolean isGameFinished() {
+        return gameFinished;
+    }
+
+    /**
+     *
+     * */
+
     public void updateRanking() throws QuartoException {
         if (this.board.hasCombination()) {
             this.playerRanking.addScoreWinningPlayer(this.allPLayers.getActivePlayer());
             this.playerRanking.addScoreLosingPlayer(this.allPLayers.getNonActivePlayer());
         }
-    }
-
-    public boolean gameFinished() {
-        return (board.isFull() || board.hasCombination());
     }
 
     public boolean isFlipAction() {
@@ -143,13 +199,8 @@ public class Quarto {
         return playerRanking;
     }
 
-    public void choosePlayer() throws IOException {
-        int indexChosenPlayer = allPLayers.choosePlayerIndex();
-        if (animation) {
-            this.animationFileHandler.initiateFile("oneVone" + "|" + allPLayers.getPlayer1().getName()
-                    + "|" + allPLayers.getPlayer2().getName() + "|" + indexChosenPlayer);
-        }
-        System.out.println("Active Player: "+ this.getAllPlayers().getActivePlayer());
+    public AnimationFileHandler getAnimationFileHandler() {
+        return animationFileHandler;
     }
 
     public void setChosenPiece(Piece chosenPiece) {
@@ -164,9 +215,5 @@ public class Quarto {
         String player2FromAnimation = action.split("\\|")[2];
         this.setPlayers(player1FromAnimation,player2FromAnimation);
         this.allPLayers.setActivePlayer(Integer.parseInt(action.split("\\|")[3]));
-    }
-
-    public AnimationFileHandler getAnimationFileHandler() {
-        return animationFileHandler;
     }
 }

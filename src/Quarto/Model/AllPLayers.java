@@ -16,20 +16,26 @@ public class AllPLayers {
     private final int random = new Random().nextInt(2) + 1;
 
     /**
-    *
+     * The constructor contains the two Players and who is the active player.
+     * The active player still has to be initialised.
+     *
+     * @param player1
+     * @param player2
     * */
+
     public AllPLayers(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
         activePlayer = null;
     }
 
-/**
- *
- * * This method picks an int 1 or 2
- *
- * @return int index
-* */
+    /**
+     * This method chooses the starting active player in the beginning of the game.
+     * It does this at random.
+     * It also returns an index of that active player to store in the animation source file.
+     *
+     * @return int index which is used in the animation source file.
+    **/
 
     public int choosePlayerIndex() {
         int index;
@@ -43,14 +49,13 @@ public class AllPLayers {
         return index;
     }
 
-/**
- * This method switches the active player.
- *
- * @return Player activePlayer
- * */
+    /**
+     * This method switches the active player.
+     *
+     * @return Player activePlayer
+     * */
 
     public Player alternate() {
-
         if (activePlayer == player1) {
             activePlayer = player2;
         } else if (activePlayer == player2){
