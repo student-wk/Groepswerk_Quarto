@@ -5,17 +5,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.StringJoiner;
 
 public class AnimationFileHandler {
     private final static Path ANIMATIONFILE = Paths.get("resources"+ File.separator+"animation"+ File.separator+"animation.bin");
     public List<String> actions;
-    public static int COUNT;
+    public static int count;
 
     public AnimationFileHandler()  {
-        COUNT = 0;
+        count = 0;
     }
 
     public void initiateFile(String initialAction) throws IOException {
@@ -51,7 +49,6 @@ public class AnimationFileHandler {
             while (dataInputStream.available() > 0) {
                 System.out.println(dataInputStream.readUTF());
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -87,19 +84,19 @@ public class AnimationFileHandler {
     }
 
     public String getAction(){
-        if (COUNT == actions.size()){
-            COUNT = 0;
+        if (count == actions.size()){
+            count = 0;
         }
-        return actions.get(COUNT++);
+        return actions.get(count++);
 
     }
 
-    public  int getCOUNT() {
-        return COUNT;
+    public  int getCount() {
+        return count;
     }
 
-    public static void setCOUNT(int COUNT) {
-        AnimationFileHandler.COUNT = COUNT;
+    public static void setCount(int count) {
+        AnimationFileHandler.count = count;
     }
 
     public List<String> getActions() {

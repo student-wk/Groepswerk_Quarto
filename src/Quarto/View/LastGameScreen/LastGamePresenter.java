@@ -13,7 +13,6 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceDialog;
 import javafx.util.Duration;
 // for commit
 
@@ -52,7 +51,7 @@ public class LastGamePresenter extends MainScreenPresenter {
             public void handle(ActionEvent event) {
                 String actiontoprint = model.getAnimationFileHandler().getAction();
                 String[] action = actiontoprint.split("\\|");
-                System.out.println(model.getAnimationFileHandler().getCOUNT());
+                System.out.println(model.getAnimationFileHandler().getCount());
                 System.out.println(quatroTimeline.getCycleCount());
                 switch (action[0]) {
                     case "piece":
