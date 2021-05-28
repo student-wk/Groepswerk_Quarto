@@ -146,6 +146,7 @@ public class LastGamePresenter extends MainScreenPresenter {
         view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getGekozenBlok());
     }
 
+    //
     @Override
     protected void showFinishedDialog() throws QuartoException, IOException {
 
