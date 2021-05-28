@@ -329,6 +329,7 @@ public class MainScreenPresenter {
         view.getSettingsItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                Alert returnToMainMenu = new Alert(Alert.AlertType.CONFIRMATION);
                 MenuScreenView menuScreenView = new MenuScreenView(uiSettings);
                 MenuScreenPresenter menuScreenPresenter = new MenuScreenPresenter(model, menuScreenView, uiSettings);
                 view.getScene().setRoot(menuScreenView);
@@ -471,9 +472,9 @@ public class MainScreenPresenter {
 
     public void handleCloseEvent(Event event){
         final Alert stopWindow = new Alert(Alert.AlertType.CONFIRMATION);
+        stopWindow.setTitle("WARNING!");
         stopWindow.setHeaderText("You are about to close the application");
         stopWindow.setContentText("Are you sure, unsaved prgress will be lost");
-        stopWindow.setTitle("WARNING!");
         stopWindow.getButtonTypes().clear();
         ButtonType noButton = new ButtonType("NO");
         ButtonType yesButton = new ButtonType("YES");
