@@ -187,8 +187,6 @@ public class MainScreenView extends BorderPane  {
         GridPane.setConstraints(pieceChosenLabel, infoGridpaneColIndex, 0, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
         infoGridpane.add(this.chosenPiece, infoGridpaneColIndex,1);
         GridPane.setConstraints(this.chosenPiece, infoGridpaneColIndex, 1, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS);
-
-        infoGridpane.setGridLinesVisible(true);
         infoGridpane.setBorder(new Border(new BorderStroke(javafx.scene.paint.Color.BLACK, BorderStrokeStyle.SOLID, null, BorderWidths.DEFAULT)));
     }
 

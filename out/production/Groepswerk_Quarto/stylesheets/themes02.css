@@ -1,5 +1,6 @@
 * {
-    -fx-font-family: monospace;
+    -fx-font-family: Bahnschrift SemiLight Condensed;
+    -fx-font-size: 18;
 }
 
 .light {
@@ -22,6 +23,8 @@
     -fx-border-radius: 5px;
     -fx-background-image: url('../images/Melamine-wood-001.png');
     -fx-background-size: cover;
+
+    -fx-font-family: "";
 }
 
 .radio-button {
@@ -32,3 +35,22 @@
     -fx-text-fill: #ff0000;
 }
 .body
+
+.button {
+    /*-fx-background-image: url('../images/Melamine-wood-003.png');*/
+    -fx-background-color: #DEB887;
+}
+
+.combo-box {
+    -fx-background-color: #DEB887;
+}
+
+.menu-bar {
+    -fx-background-color: #DEB887;
+
+}
+
+.label {
+    -fx-background-color: #DEB887;
+}
+
