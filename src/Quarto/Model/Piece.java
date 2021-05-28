@@ -49,14 +49,10 @@ public class Piece {
     }
 
     public Piece(Size size, Color color, Shape shape, Filling filling) {
-        if ((size != null) && (color != null) && (shape != null) && (filling != null)) {
-            this.size = size;
-            this.color = color;
-            this.shape = shape;
-            this.filling = filling;
-        } else {
-            throw new IllegalArgumentException("The piece is created incorrectly");
-        }
+        this.size = size;
+        this.color = color;
+        this.shape = shape;
+        this.filling = filling;
     }
 
     public Size getSize() {
