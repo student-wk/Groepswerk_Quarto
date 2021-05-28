@@ -9,8 +9,8 @@ import java.io.IOException;
  * */
 
 public class Quarto {
-    private final Pieces pieces;
-    private final Board board;
+    private Pieces pieces;
+    private Board board;
     private Piece chosenPiece;
     private AllPLayers allPLayers;
     private boolean gameFinished;
@@ -30,6 +30,12 @@ public class Quarto {
         this.chosenPiece = null;
         this.playerRanking = new PlayerRanking();
         animationFileHandler = new AnimationFileHandler();
+    }
+
+    public void reset(){
+        this.pieces = new Pieces();
+        this.board = new Board();
+        AnimationFileHandler.setCOUNT(1);
     }
 
     /**

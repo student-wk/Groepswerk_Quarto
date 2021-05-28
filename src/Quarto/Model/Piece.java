@@ -106,6 +106,6 @@ public class Piece {
 
     @Override
     public String toString() {
-        return ("blok" + "|" + size + "|" + color + "|" + shape + "|" + filling);
+        return ("piece" + "|" + size + "|" + color + "|" + shape + "|" + filling);
     }
 }
