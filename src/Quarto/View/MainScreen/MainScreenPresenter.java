@@ -49,7 +49,7 @@ public class MainScreenPresenter {
 
     protected void updateTurnView(){
         String action = (model.isFlipAction()?"Place a piece!":"Pick a piece!");
-        view.getTurnLabel().setText(model.getAlleSpelers().getActivePlayer().getName() + ": " + action );
+        view.getTurnLabel().setText(model.getAllPlayers().getActivePlayer().getName() + ": " + action );
     }
 
     /*
@@ -58,13 +58,13 @@ public class MainScreenPresenter {
      * */
 
     protected void updateBlokkenBoxView() {
-        view.setNode(model.getGekozenBlok());
+        view.setNode(model.getChosenPiece());
         for (Piece.Size size : Piece.Size.values()) {
             for (Piece.Color color : Piece.Color.values()) {
                 for (Piece.Shape shape : Piece.Shape.values()) {
                     for (Piece.Filling filling : Piece.Filling.values()) {
                         Piece piece = new Piece(size, color, shape, filling);
-                        if (!model.getBlokkenBox().getPieceSet().contains(piece)) {
+                        if (!model.getPieces().getPieceSet().contains(piece)) {
                             if (piece.getShape().equals(Piece.Shape.ROUND)){
                                 if (piece.getColor().equals(Piece.Color.WHITE)){
                                     int colIndex = 0;
@@ -177,7 +177,7 @@ public class MainScreenPresenter {
     }
 
     protected void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException, IOException {
-        view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getGekozenBlok());
+        view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getChosenPiece());
         if (model.isGameFinished()){showFinishedDialog(); }
     }
 
@@ -185,9 +185,9 @@ public class MainScreenPresenter {
 //        Log.debug("showing finished");
         if (!model.isGameFinished()) return;
         ChoiceDialog<String> again = new ChoiceDialog<String>("Ok", "Yes", "No");
-        if (model.getSpeelbord().hasCombination()) {
-            again.setTitle(model.getAlleSpelers().getActivePlayer().getName() + " has won!");
-            again.setHeaderText(model.getAlleSpelers().getActivePlayer().getName() + " has won!");
+        if (model.getBoard().hasCombination()) {
+            again.setTitle(model.getAllPlayers().getActivePlayer().getName() + " has won!");
+            again.setHeaderText(model.getAllPlayers().getActivePlayer().getName() + " has won!");
 //            CombinationView combinationView = new CombinationView();
 //            new CombinationPresenter(model.getRiddle(), combinationView);
 //            again.setGraphic(combinationView);
@@ -203,8 +203,8 @@ public class MainScreenPresenter {
         if (result == null || result.equals("No")) {
             Platform.exit();
         } else {
-            this.model = new Quarto(model.getAlleSpelers().getPlayer1(), model.getAlleSpelers().getPlayer2());
-            model.kieSpeler();
+            this.model = new Quarto(model.getAllPlayers().getPlayer1(), model.getAllPlayers().getPlayer2());
+            model.choosePlayer();
 
             MainScreenView newView = new MainScreenView(uiSettings);
             view.getScene().setRoot(newView);
@@ -238,7 +238,7 @@ public class MainScreenPresenter {
                             }
 
                             try {
-                                model.kiesBlok(piece);
+                                model.choosePiece(piece);
                                 updateBlokkenBoxView();
                                 updateTurnView();
 
@@ -279,7 +279,7 @@ public class MainScreenPresenter {
                             }
 
                             try {
-                                model.kiesBlok(piece);
+                                model.choosePiece(piece);
                                 updateBlokkenBoxView();
                                 updateTurnView();
 
@@ -313,11 +313,11 @@ public class MainScreenPresenter {
                         int colIndex = GridPane.getColumnIndex((Node) mouseEvent.getSource());
                         try {
 
-                            model.plaatsBlok(new Position(rowIndex,colIndex));
+                            model.placePiece(new Position(rowIndex,colIndex));
                             updateSpeelBordView(rowIndex, colIndex);
                             updateTurnView();
-                            model.setGekozenBlok(null);
-                            view.setNode(model.getGekozenBlok());
+                            model.setChosenPiece(null);
+                            view.setNode(model.getChosenPiece());
 
                         } catch (QuartoException | IOException e) {
                             final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);

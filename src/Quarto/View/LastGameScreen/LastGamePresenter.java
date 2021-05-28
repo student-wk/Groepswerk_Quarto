@@ -11,11 +11,9 @@ import Quarto.View.UISettings;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceDialog;
 import javafx.util.Duration;
 
 
@@ -59,7 +57,7 @@ public class LastGamePresenter extends MainScreenPresenter {
                 String[] action = actiontoprint.split("\\|");
                 if (action[0].equals("blok")){
                     try {
-                        model.kiesBlok(actionToBlok(action));
+                        model.choosePiece(actionToBlok(action));
                     } catch (QuartoException | IOException exception) {
                         exception.printStackTrace();
                     } finally {
@@ -71,11 +69,11 @@ public class LastGamePresenter extends MainScreenPresenter {
                     int colIndex = Integer.parseUnsignedInt(action[2]);
                     try {
 
-                        model.plaatsBlok(new Position(rowIndex,colIndex));
+                        model.placePiece(new Position(rowIndex,colIndex));
                         updateSpeelBordView(rowIndex, colIndex);
                         updateTurnView();
-                        model.setGekozenBlok(null);
-                        view.setNode(model.getGekozenBlok());
+                        model.setChosenPiece(null);
+                        view.setNode(model.getChosenPiece());
 
                     } catch (QuartoException | IOException e) {
                         final Alert noBlokChosen = new Alert(Alert.AlertType.ERROR);
@@ -109,7 +107,7 @@ public class LastGamePresenter extends MainScreenPresenter {
 
     @Override
     protected void updateSpeelBordView(int rowIndex, int colIndex) throws QuartoException, IOException {
-        view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getGekozenBlok());
+        view.getSpeelBordView().voegBlokToe(rowIndex, colIndex, model.getChosenPiece());
     }
 
     @Override
@@ -119,9 +117,9 @@ public class LastGamePresenter extends MainScreenPresenter {
         Alert gameFinished = new Alert(Alert.AlertType.INFORMATION);
 
 //        ChoiceDialog<String> again = new ChoiceDialog<String>("Ok", "Ok", "Nope");
-        if (model.getSpeelbord().hasCombination()) {
+        if (model.getBoard().hasCombination()) {
             gameFinished.setTitle( "Game finished!");
-            gameFinished.setContentText(model.getAlleSpelers().getActivePlayer().getName() + " won");
+            gameFinished.setContentText(model.getAllPlayers().getActivePlayer().getName() + " won");
         } else {
             gameFinished.setTitle("Game finished!");
             gameFinished.setContentText("Playbord is full!");

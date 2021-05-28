@@ -115,7 +115,7 @@ public class RankingPresenter {
             @Override
             public void handle(ActionEvent actionEvent) {
                 try {
-                    model.getSpelerRanking().clearRankingFile();
+                    model.getPlayerRanking().clearRankingFile();
                     updateView();
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Reset Ranking");

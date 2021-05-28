@@ -60,7 +60,7 @@ public class NamesPresenter {
             public void handle(ActionEvent actionEvent) {
                 try {
                     model.setPlayers(view.getPlayer1ComboBox().getValue(), view.getPlayer2ComboBox().getValue());
-                    model.kieSpeler();
+                    model.choosePlayer();
 
                     MainScreenView mainScreenView = new MainScreenView(uiSettings);
                     MainScreenPresenter mainScreenPresenter = new MainScreenPresenter(model, mainScreenView, uiSettings);

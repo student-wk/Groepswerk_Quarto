@@ -59,7 +59,7 @@ public class Quarto {
 * Geeft telkens een specifieke blok aan gekozenBlok.
 * */
 
-    public void kiesBlok(Piece piece) throws QuartoException, IOException {
+    public void choosePiece(Piece piece) throws QuartoException, IOException {
 
         if (chosenPiece != null) {
             throw new QuartoException("A piece has already been chosen.");
@@ -70,7 +70,7 @@ public class Quarto {
             if (animation){
                 this.animationFileHandler.addAction(piece.toString());
             }
-            System.out.println("active player: "+ this.getAlleSpelers().getActivePlayer());
+            System.out.println("active player: "+ this.getAllPlayers().getActivePlayer());
             flipAction = true;
         }
     }
@@ -79,9 +79,9 @@ public class Quarto {
 * Plaatst blok op speelBord.
 * */
 
-    public void plaatsBlok(Position position) throws QuartoException, IOException {
+    public void placePiece(Position position) throws QuartoException, IOException {
         if (this.chosenPiece == null) {
-            throw new QuartoException("Er is geen blok geselecteerd.");
+            throw new QuartoException("There has been no block selected.");
         } else {
             board.addPiece(chosenPiece, position);
             if (animation){
@@ -89,7 +89,7 @@ public class Quarto {
             }
 
             flipAction = false;
-             if (spelGedaan()) {
+             if (gameFinished()) {
                  gameFinished = true;
                  if (animation) {
                      if (board.isFull()) {
@@ -110,7 +110,7 @@ public class Quarto {
         }
     }
 
-    public boolean spelGedaan() {
+    public boolean gameFinished() {
         return (board.isFull() || board.hasCombination());
     }
 
@@ -118,19 +118,19 @@ public class Quarto {
         return flipAction;
     }
 
-    public AllPLayers getAlleSpelers() {
+    public AllPLayers getAllPlayers() {
         return allPLayers;
     }
 
-    public Pieces getBlokkenBox() {
+    public Pieces getPieces() {
         return pieces;
     }
 
-    public Board getSpeelbord() {
+    public Board getBoard() {
         return board;
     }
 
-    public Piece getGekozenBlok() {
+    public Piece getChosenPiece() {
 //        if (gekozenBlok == null) {
 //            throw new IllegalStateException("Er is geen blok geselecteerd.");
 //        } else {
@@ -139,21 +139,21 @@ public class Quarto {
         return chosenPiece;
     }
 
-    public PlayerRanking getSpelerRanking() {
+    public PlayerRanking getPlayerRanking() {
         return playerRanking;
     }
 
-    public void kieSpeler() throws IOException {
+    public void choosePlayer() throws IOException {
         int indexChosenPlayer = allPLayers.choosePlayerIndex();
         if (animation) {
             this.animationFileHandler.initiateFile("oneVone" + "|" + allPLayers.getPlayer1().getName()
                     + "|" + allPLayers.getPlayer2().getName() + "|" + indexChosenPlayer);
         }
-        System.out.println("Active Player: "+ this.getAlleSpelers().getActivePlayer());
+        System.out.println("Active Player: "+ this.getAllPlayers().getActivePlayer());
     }
 
-    public void setGekozenBlok(Piece gekozenPiece) {
-        this.chosenPiece = gekozenPiece;
+    public void setChosenPiece(Piece chosenPiece) {
+        this.chosenPiece = chosenPiece;
     }
 
     public void setPlayerForAnimation() throws IOException, QuartoException {

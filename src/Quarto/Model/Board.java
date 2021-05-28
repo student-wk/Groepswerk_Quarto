@@ -76,17 +76,12 @@ public class Board {
 
     public boolean hasCombination() { return (rowColumn() || diagonal());}
 
-/*
-* De combo methodes worden hier samengevoegd en op alle mogelijke manieren diagonaal overlopen. Als er een combo van 4
-* is (grootte-1) dan is de boolean true. RijIncrement en KolomIncrement is eigenlijk telkens rij +1 en kolom +1.
-* diagonaal() en rijKolom() komen samen in heeftCombinatie().
-* */
-
     /**
-    * This method checks if there is a diagonal winning combination.
+     * This method checks if there is a diagonal winning combination.
+     * It is part of the method hasCombination().
      *
-     * @return true if there is a diagonal combination.
-    * */
+     * @return true if there is a diagonal combination of 4 pieces with the same property.
+     * */
 
     public boolean diagonal() {
         int size = boardArray.length;
@@ -101,16 +96,12 @@ public class Board {
 
     }
 
-/*
-* Gaat alle rijen en kolomen af op zoek naar een winnende combo.
-* diagonaal() en rijKolom() komen samen in heeftCombinatie().
-* */
-
     /**
+     * This method checks if there is a row or column with a winning combination.
+     * It is part of the method hasCombination().
      *
-     *
-     *
-    * */
+     * @return true if there is a combination of 4 pieces with the same property.
+     * */
 
     public boolean rowColumn() {
         int i = 0;
@@ -131,13 +122,17 @@ public class Board {
         return hasWon;
     }
 
-    /*
-    * De combo methodes zijn een onderdeel van de diagonaal en rijKolom methode. De methode zoekt naar een combinatie
-    * en checkt daarbij of de loop binnen het bord blijft, of er een position leeg is en of de opeenvolgende blokken
-    * dezelfde eigenschap hebben (bv dezelfde kleur).
-    * De methode geeft een int met de hoogste combo terug.
-    * */
-
+    /**
+     * This method returns a combination of pieces of the same color.
+     * The method checks if the combination stays within the length of the board, if a position is empty and if subsequent pieces have the same color.
+     * This method is part of the rowColumn() and diagonal() methods.
+     *
+     * @param row the starting row of a possible combination.
+     * @param column the starting column of a possible combination.
+     * @param rowIncrement the next row of a possible combination.
+     * @param columnIncrement the next column of a possible combination.
+     * @return an int which is the combination of consecutive pieces of the same color.
+     **/
 
     public int colorCombo(int row, int column, int rowIncrement, int columnIncrement) {
         int combo = 0;
@@ -153,19 +148,43 @@ public class Board {
         return combo;
     }
 
-    public int shapeCombo(int row, int column, int rowIncrement, int ColumnIncrement) {
+    /**
+     * This method returns a combination of pieces of the same shape.
+     * The method checks if the combination stays within the length of the board, if a position is empty and if subsequent pieces have the same shape.
+     * This method is part of the rowColumn() and diagonal() methods.
+     *
+     * @param row the starting row of a possible combination.
+     * @param column the starting column of a possible combination.
+     * @param rowIncrement the next row of a possible combination.
+     * @param columnIncrement the next column of a possible combination.
+     * @return an int which is the combination of consecutive pieces of the same shape.
+     **/
+
+    public int shapeCombo(int row, int column, int rowIncrement, int columnIncrement) {
         int combo = 0;
         int a = rowIncrement;
-        int b = ColumnIncrement;
-        while ((rowIncrement < boardArray.length) && (ColumnIncrement < boardArray.length)
-            && (empty(row, column, rowIncrement, ColumnIncrement)) && (boardArray[row][column].getShape())
-            == boardArray[row + rowIncrement][column + ColumnIncrement].getShape()) {
+        int b = columnIncrement;
+        while ((rowIncrement < boardArray.length) && (columnIncrement < boardArray.length)
+            && (empty(row, column, rowIncrement, columnIncrement)) && (boardArray[row][column].getShape())
+            == boardArray[row + rowIncrement][column + columnIncrement].getShape()) {
             combo++;
             rowIncrement = rowIncrement + a;
-            ColumnIncrement = ColumnIncrement +b;
+            columnIncrement = columnIncrement +b;
         }
         return combo;
     }
+
+    /**
+     * This method returns a combination of pieces of the same size.
+     * The method checks if the combination stays within the length of the board, if a position is empty and if subsequent pieces have the same size.
+     * This method is part of the rowColumn() and diagonal() methods.
+     *
+     * @param row the starting row of a possible combination.
+     * @param column the starting column of a possible combination.
+     * @param rowIncrement the next row of a possible combination.
+     * @param columnIncrement the next column of a possible combination.
+     * @return an int which is the combination of consecutive pieces of the same size.
+     **/
 
     public int sizeCombo(int row, int column, int rowIncrement, int columnIncrement) {
         int combo = 0;
@@ -181,6 +200,18 @@ public class Board {
         return combo;
     }
 
+    /**
+     * This method returns a combination of pieces of the same filling.
+     * The method checks if the combination stays within the length of the board, if a position is empty and if subsequent pieces have the same filling.
+     * This method is part of the rowColumn() and diagonal() methods.
+     *
+     * @param row the starting row of a possible combination.
+     * @param column the starting column of a possible combination.
+     * @param rowIncrement the next row of a possible combination.
+     * @param columnIncrement the next column of a possible combination.
+     * @return an int which is the combination of consecutive pieces of the same filling.
+     **/
+
     public int fillingCombo(int row, int column, int rowIncrement, int columnIncrement) {
         int combo = 0;
         int a = rowIncrement;
@@ -195,15 +226,15 @@ public class Board {
         return combo;
     }
 
-
     /**
      * This method is part of the colorCombo, shapeCombo, sizeCombo and fillingCombo methods.
-     * This metod checks if
+     * This metod checks if the starting position of a possible winning combo and each increment of that position is empty or not.
      *
-     * @return
-     *
-     * Onderdeel van Combo methodes. Gebruikt isLeeg methode om te controleren of er blokken aanwezig zijn om een combo
-     * te vormen.
+     * @param row the starting row of a possible combination.
+     * @param column the starting column of a possible combination.
+     * @param rowIncrement the next row of a possible combination.
+     * @param columnIncrement the next column of a possible combination.
+     * @return true if not empty.
      * */
 
     public boolean empty(int row, int column, int rowIncrement, int columnIncrement) {
