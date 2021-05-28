@@ -106,26 +106,29 @@ public class MenuScreenPresenter {
                 model = new Quarto(Boolean.FALSE);
                 try {
                     model.setPlayerForAnimation();
-                } catch (IOException ioException) {
-                    System.out.println("Something went wrong with setting player for animation");
-                } catch (QuartoException exception) {
-                    exception.printStackTrace();
+                    LastGameView lastGameView = new LastGameView(uiSettings);
+                    LastGamePresenter lastGamePresenter = new LastGamePresenter(model,lastGameView,uiSettings);
+                    view.getScene().setRoot(lastGameView);
+                    lastGameView.getScene().getWindow().sizeToScene();
+                    try {
+                        lastGameView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+                    } catch (MalformedURLException ex) {
+                        // // do nothing, if toURL-conversion fails, program can continue
+                    }
+                    lastGameView.getScene().getWindow().sizeToScene();
+                    lastGameView.getScene().getWindow().setX(uiSettings.getResX()/4);
+                    lastGameView.getScene().getWindow().setY(uiSettings.getResY()/4);
+                    lastGameView.getScene().getWindow().setHeight(6 * uiSettings.getResY() / 10);
+                    lastGameView.getScene().getWindow().setWidth(9 * uiSettings.getResY() / 10);
+                    lastGamePresenter.windowsHandler();
+                } catch ( QuartoException e) {
+                    final Alert playGameFirst = new Alert(Alert.AlertType.ERROR);
+                    playGameFirst.setTitle("No games played");
+                    playGameFirst.setContentText("Play a game first to load animation");
+                    playGameFirst.showAndWait();
+                    actionEvent.consume();
                 }
-                LastGameView lastGameView = new LastGameView(uiSettings);
-                LastGamePresenter lastGamePresenter = new LastGamePresenter(model,lastGameView,uiSettings);
-                view.getScene().setRoot(lastGameView);
-                lastGameView.getScene().getWindow().sizeToScene();
-                try {
-                    lastGameView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-                } catch (MalformedURLException ex) {
-                    // // do nothing, if toURL-conversion fails, program can continue
-                }
-                lastGameView.getScene().getWindow().sizeToScene();
-                lastGameView.getScene().getWindow().setX(uiSettings.getResX()/4);
-                lastGameView.getScene().getWindow().setY(uiSettings.getResY()/4);
-                lastGameView.getScene().getWindow().setHeight(6 * uiSettings.getResY() / 10);
-                lastGameView.getScene().getWindow().setWidth(9 * uiSettings.getResY() / 10);
-                lastGamePresenter.windowsHandler();
+
             }
         });
     }

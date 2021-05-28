@@ -145,26 +145,7 @@ public class RankingPresenter {
                 menuScreenPresenter.windowsHandler();
             }
         });
-        rankingView.getLastGameItem().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                LastGameView lastGameView = new LastGameView(uiSettings);
-                LastGamePresenter lastGamePresenter = new LastGamePresenter(model,lastGameView,uiSettings);
-                rankingView.getScene().setRoot(lastGameView);
-                lastGameView.getScene().getWindow().sizeToScene();
-                try {
-                    lastGameView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-                } catch (MalformedURLException ex) {
-                    // // do nothing, if toURL-conversion fails, program can continue
-                }
-                lastGameView.getScene().getWindow().sizeToScene();
-                lastGameView.getScene().getWindow().setX(uiSettings.getResX()/4);
-                lastGameView.getScene().getWindow().setY(uiSettings.getResY()/4);
-                lastGameView.getScene().getWindow().setHeight(6 * uiSettings.getResY() / 10);
-                lastGameView.getScene().getWindow().setWidth(9 * uiSettings.getResY() / 10);
-                lastGamePresenter.windowsHandler();
-            }
-        });
+
 
         rankingView.getAboutItem().setOnAction(new EventHandler<ActionEvent>() {
             @Override

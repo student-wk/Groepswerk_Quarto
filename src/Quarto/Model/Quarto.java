@@ -71,7 +71,7 @@ public class Quarto {
      * This method initializes the two players for the game.
      * */
 
-    public  void setPlayers(String speler1, String speler2) throws QuartoException, IOException {
+    public  void setPlayers(String speler1, String speler2) throws QuartoException {
         if (speler1.isEmpty() || speler2.isEmpty()) {
             throw new QuartoException("Enter name for both players");
         } else if (speler1.equals(speler2)) {
@@ -195,8 +195,12 @@ public class Quarto {
         this.chosenPiece = chosenPiece;
     }
 
-    public void setPlayerForAnimation() throws IOException, QuartoException {
-        animationFileHandler.cteateActions();
+    public void setPlayerForAnimation() throws QuartoException {
+        try {
+            animationFileHandler.cteateActions();
+        } catch (IOException ioException) {
+            throw new QuartoException(ioException);
+        }
         String action = animationFileHandler.getAction();
         String player1FromAnimation = action.split("\\|")[1];
         String player2FromAnimation = action.split("\\|")[2];

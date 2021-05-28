@@ -73,6 +73,7 @@ public class LastGamePresenter extends MainScreenPresenter {
                             updatePiecesView();
                             updateTurnStatusView();
                         } catch (QuartoException | IOException exception) {
+                            exception.printStackTrace();
                             //DO nothing, this is an animation
                         }
                         break;
@@ -90,6 +91,7 @@ public class LastGamePresenter extends MainScreenPresenter {
                             view.setNode(model.getChosenPiece());
                         } catch (QuartoException | IOException e) {
                             //Do nothing, this is an animation
+                            e.printStackTrace();
                         }
                         break;
                     case "gamefinished":

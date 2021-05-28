@@ -19,7 +19,6 @@ public class RankingView extends BorderPane {
 
     private MenuItem exitMI;
     private MenuItem settingsMI;
-    private MenuItem lastGameMI;
     private MenuItem aboutMI;
     private MenuItem infoMI;
 
@@ -40,7 +39,6 @@ public class RankingView extends BorderPane {
     private void initialiseNodes() {
         this.exitMI = new MenuItem("Exit");
         this.settingsMI = new MenuItem("Main Menu");
-        this.lastGameMI = new MenuItem("Last Game");
         this.aboutMI = new MenuItem("About");
         this.infoMI = new MenuItem("Info");
 
@@ -59,7 +57,7 @@ public class RankingView extends BorderPane {
     }
 
     private void layoutNodes() {
-        Menu menuFile = new Menu("File",null, settingsMI,lastGameMI,new SeparatorMenuItem(),exitMI);
+        Menu menuFile = new Menu("File",null, settingsMI,new SeparatorMenuItem(),exitMI);
         Menu menuHelp = new Menu("Help",null, aboutMI, infoMI);
         MenuBar menuBar = new MenuBar(menuFile,menuHelp);
         setTop(menuBar);
@@ -91,7 +89,5 @@ public class RankingView extends BorderPane {
         return series;
     }
 
-    public MenuItem getLastGameItem() {
-        return lastGameMI;
-    }
+
 }

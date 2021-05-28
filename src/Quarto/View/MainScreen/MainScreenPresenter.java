@@ -346,10 +346,10 @@ public class MainScreenPresenter {
                     } catch (MalformedURLException ex) {
                         // // do nothing, if toURL-conversion fails, program can continue
                         menuScreenView.getScene().getWindow().sizeToScene();
-                        menuScreenView.getScene().getWindow().setX(uiSettings.getResX()/3);
-                        menuScreenView.getScene().getWindow().setY(uiSettings.getResY()/4);
-                        menuScreenView.getScene().getWindow().setHeight(5 * uiSettings.getResY() / 10);
-                        menuScreenView.getScene().getWindow().setWidth(3 * uiSettings.getResX() / 10);
+                        menuScreenView.getScene().getWindow().setX(uiSettings.getResX()/3.0);
+                        menuScreenView.getScene().getWindow().setY(uiSettings.getResY()/4.0);
+                        menuScreenView.getScene().getWindow().setHeight(5 * uiSettings.getResY() / 10.0);
+                        menuScreenView.getScene().getWindow().setWidth(3 * uiSettings.getResX() / 10.0);
                         menuScreenPresenter.windowsHandler();
                     }
                 }
@@ -370,10 +370,10 @@ public class MainScreenPresenter {
                     // // do nothing, if toURL-conversion fails, program can continue
                 }
                 rankingView.getScene().getWindow().sizeToScene();
-                rankingView.getScene().getWindow().setX(uiSettings.getResX()/6);
-                rankingView.getScene().getWindow().setY(uiSettings.getResY()/7);
-                rankingView.getScene().getWindow().setHeight(7 * uiSettings.getResY()/10);
-                rankingView.getScene().getWindow().setWidth(7 * uiSettings.getResX()/10);
+                rankingView.getScene().getWindow().setX(uiSettings.getResX()/6.0);
+                rankingView.getScene().getWindow().setY(uiSettings.getResY()/7.0);
+                rankingView.getScene().getWindow().setHeight(7 * uiSettings.getResY()/10.0);
+                rankingView.getScene().getWindow().setWidth(7 * uiSettings.getResX()/10.0);
                 rankingPresenter.windowsHandler();
             }
         });
@@ -383,26 +383,25 @@ public class MainScreenPresenter {
                 model = new Quarto(Boolean.FALSE);
                 try {
                     model.setPlayerForAnimation();
-                } catch (IOException ioException) {
-                    System.out.println("Something went wrong with setting player for animation");
+                    LastGameView lastGameView = new LastGameView(uiSettings);
+                    LastGamePresenter lastGamePresenter = new LastGamePresenter(model,lastGameView,uiSettings);
+                    view.getScene().setRoot(lastGameView);
+                    lastGameView.getScene().getWindow().sizeToScene();
+                    try {
+                        lastGameView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
+                    } catch (MalformedURLException ex) {
+                        // // do nothing, if toURL-conversion fails, program can continue
+                    }
+                    lastGameView.getScene().getWindow().sizeToScene();
+                    lastGameView.getScene().getWindow().setX(uiSettings.getResX()/4.0);
+                    lastGameView.getScene().getWindow().setY(uiSettings.getResY()/4.0);
+                    lastGameView.getScene().getWindow().setHeight(6 * uiSettings.getResY() / 10.0);
+                    lastGameView.getScene().getWindow().setWidth(9 * uiSettings.getResY() / 10.0);
+                    lastGamePresenter.windowsHandler();
+
                 } catch (QuartoException exception) {
                     exception.printStackTrace();
                 }
-                LastGameView lastGameView = new LastGameView(uiSettings);
-                LastGamePresenter lastGamePresenter = new LastGamePresenter(model,lastGameView,uiSettings);
-                view.getScene().setRoot(lastGameView);
-                lastGameView.getScene().getWindow().sizeToScene();
-                try {
-                    lastGameView.getScene().getStylesheets().add(uiSettings.getStyleSheetPath().toUri().toURL().toString());
-                } catch (MalformedURLException ex) {
-                    // // do nothing, if toURL-conversion fails, program can continue
-                }
-                lastGameView.getScene().getWindow().sizeToScene();
-                lastGameView.getScene().getWindow().setX(uiSettings.getResX()/4);
-                lastGameView.getScene().getWindow().setY(uiSettings.getResY()/4);
-                lastGameView.getScene().getWindow().setHeight(6 * uiSettings.getResY() / 10);
-                lastGameView.getScene().getWindow().setWidth(9 * uiSettings.getResY() / 10);
-                lastGamePresenter.windowsHandler();
             }
         });
         view.getExitItem().setOnAction(new EventHandler<ActionEvent>() {
@@ -422,8 +421,8 @@ public class MainScreenPresenter {
                 Scene scene = new Scene(aboutScreenView);
                 aboutScreenStage.setScene(scene);
                 aboutScreenStage.setTitle(uiSettings.getApplicationName() + " - About");
-                aboutScreenStage.setX(view.getScene().getWindow().getX() + uiSettings.getResX() / 25);
-                aboutScreenStage.setY(view.getScene().getWindow().getY() + uiSettings.getResY() / 30);
+                aboutScreenStage.setX(view.getScene().getWindow().getX() + uiSettings.getResX() / 25.0);
+                aboutScreenStage.setY(view.getScene().getWindow().getY() + uiSettings.getResY() / 30.0);
                 if (Files.exists(uiSettings.getApplicationIconPath())) {
                     try {
                         aboutScreenStage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
@@ -432,8 +431,8 @@ public class MainScreenPresenter {
                     }
                 } else { // do nothing, if ApplicationIconImage is not available, program can continue
                 }
-                aboutScreenView.getScene().getWindow().setHeight(uiSettings.getResY() / 2);
-                aboutScreenView.getScene().getWindow().setWidth(uiSettings.getResX() / 2);
+                aboutScreenView.getScene().getWindow().setHeight(uiSettings.getResY() / 2.0);
+                aboutScreenView.getScene().getWindow().setWidth(uiSettings.getResX() / 2.0);
                 if (uiSettings.styleSheetAvailable()) {
                     aboutScreenView.getScene().getStylesheets().removeAll();
                     try {
@@ -455,8 +454,8 @@ public class MainScreenPresenter {
                 Scene scene = new Scene(infoScreenView);
                 infoScreenStage.setScene(scene);
                 infoScreenStage.setTitle(uiSettings.getApplicationName()+ " - Info");
-                infoScreenStage.setX(view.getScene().getWindow().getX() + uiSettings.getResX() / 25);
-                infoScreenStage.setY(view.getScene().getWindow().getY() + uiSettings.getResY() / 30);
+                infoScreenStage.setX(view.getScene().getWindow().getX() + uiSettings.getResX() / 25.0);
+                infoScreenStage.setY(view.getScene().getWindow().getY() + uiSettings.getResY() / 30.0);
                 if (Files.exists(uiSettings.getApplicationIconPath())) {
                     try {
                         infoScreenStage.getIcons().add(new Image(uiSettings.getApplicationIconPath().toUri().toURL().toString()));
@@ -467,7 +466,7 @@ public class MainScreenPresenter {
                 } else { // do nothing, if ApplicationIconImage is not available, program can continue
                 }
                 infoScreenView.getScene().getWindow().setHeight(uiSettings.getResY()/2.5);
-                infoScreenView.getScene().getWindow().setWidth(uiSettings.getResX()/2);
+                infoScreenView.getScene().getWindow().setWidth(uiSettings.getResX()/2.0);
                 if (uiSettings.styleSheetAvailable()){
                     infoScreenView.getScene().getStylesheets().removeAll();
                     try {

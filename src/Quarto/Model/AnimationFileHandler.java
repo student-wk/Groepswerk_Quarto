@@ -64,26 +64,8 @@ public class AnimationFileHandler {
         }
     }
 
-    public static ArrayList<String> binFile2List(String bestand) throws QuartoException {
-        ArrayList<String> list = new ArrayList<>();
-        try (DataInputStream is = new DataInputStream(new BufferedInputStream(new FileInputStream(String.valueOf(ANIMATIONFILE))))) {
-            try {
-                while (true) {
-                    String action = is.readUTF();
-                    list.add(action);
-                }
-            } catch (EOFException e1) {
-                //Alles OK; bestand ten einde
-            } catch (IOException e2) {
-                throw new QuartoException("Error while reading source file " + bestand, e2);
-            }
-            return list;
-        } catch (IOException e3) {
-            throw new QuartoException("The source file " + bestand + " can't be opened",e3);
-        }
-    }
 
-    public void cteateActions() throws QuartoException, IOException {
+    public void cteateActions() throws IOException {
         this.actions = new ArrayList<>();
         try (DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(new FileInputStream(String.valueOf(ANIMATIONFILE))))) {
             while (dataInputStream.available() > 0) {
